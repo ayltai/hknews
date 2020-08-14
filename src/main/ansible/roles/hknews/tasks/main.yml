@@ -1,0 +1,31 @@
+---
+- name: Copy HK News application
+  copy:
+    src: hknews-2.0.0.jar
+    dest: "{{ ansible_env.HOME }}/hknews-2.0.0.jar"
+    mode: 0644
+
+- name: installs OpenSSL
+  package:
+    name: openssl
+
+- name: Copy Shell scripts
+  template:
+    src: "{{ item['src'] }}"
+    dest: "{{ ansible_env.HOME }}/{{ item['dest'] }}"
+    mode: 0755
+  with_items:
+    - { src: 'regenerate.sh.j2', dest: 'regenerate.sh' }
+    - { src: 'start.sh.j2', dest: 'start.sh' }
+
+- name: Create a cron job to run HK News application
+  cron:
+    name: hknews
+    special_time: reboot
+    job: "{{ ansible_env.HOME }}/start.sh > /dev/null 2>&1 &"
+
+- name: Regenerate PKCS12 key store and start HK News server
+  shell: "{{ ansible_env.HOME }}/regenerate.sh"
+  async: 3600
+  poll: no
+  changed_when: no

@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemShow /> renders without errors 1`] = `
+<div
+  className="show-page RaShow-root-2"
+>
+  
+  <div
+    className="RaShow-main-3 RaShow-noActions-4"
+  >
+    <div
+      className="MuiPaper-root MuiCard-root RaShow-card-5 MuiPaper-elevation1 MuiPaper-rounded"
+    />
+  </div>
+</div>
+`;

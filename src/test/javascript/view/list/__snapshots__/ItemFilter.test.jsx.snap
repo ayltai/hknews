@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemFilter /> renders without errors 1`] = `
+<form
+  className="RaFilter-form-2 RaFilterForm-form-3"
+  displayFilters={Object {}}
+  onSubmit={[Function]}
+>
+  <div
+    className="filter-field RaFilterFormInput-body-5"
+    data-source="source"
+  >
+    <div
+      className="MuiFormControl-root MuiFormControl-marginDense"
+    >
+      <label
+        className="MuiFormLabel-root MuiInputLabel-root RaLabeled-label-8 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense"
+        data-shrink={true}
+        htmlFor="source"
+      >
+        <span>
+          labels.publisher
+        </span>
+      </label>
+      <div
+        className="RaLabeled-value-9"
+      >
+        <div
+          className="MuiLinearProgress-root MuiLinearProgress-colorPrimary RaLinearProgress-root-10 MuiLinearProgress-indeterminate"
+          input={
+            Object {
+              "checked": undefined,
+              "name": "source",
+              "onBlur": [Function],
+              "onChange": [Function],
+              "onFocus": [Function],
+              "value": "",
+            }
+          }
+          resource="source"
+          role="progressbar"
+        >
+          <div
+            className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+            style={Object {}}
+          />
+          <div
+            className="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+            style={Object {}}
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      className="RaFilterFormInput-spacer-6"
+    >
+       
+    </div>
+  </div>
+  <div
+    className="RaFilterForm-clearFix-4"
+  />
+</form>
+`;

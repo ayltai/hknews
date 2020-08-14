@@ -1,0 +1,11 @@
+---
+system_vm_swappiness: 1
+system_vm_dirty_ratio: 15
+system_limits:
+  - { type: nofile, value: "{{ system_limit_nofile }}" }
+  - { type: nproc, value: "{{ system_limit_nproc }}" }
+  - { type: memlock, value: "{{ system_limit_memlock }}" }
+system_limit_nofile: 64000
+system_limit_nproc: 64000
+system_limit_memlock: 1024
+system_dns_timeout: 600

@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="zh-yue-Hant-HK">
+<head>
+<script src="//assets.adobedtm.com/launch-EN227213af532841a48cb92e23b43a2f63.min.js"></script>
+<script>
+//console.log(window.location.pathname);
+var current_url = window.location.href;
+var split_url = current_url.split("/");
+console.log(split_url);
+var digitalData = {};
+digitalData.page = {};
+digitalData.page.pageInfo = {};
+digitalData.page.pageInfo.pagename = "";
+digitalData.page.article = {};
+digitalData.page.article.name = "";
+
+var pageNameStr = "頭條日報";
+var priCat = "主頁";
+var artiName = "主頁";
+var cat_ch = {};
+
+var coloumnTitle = "";
+
+if(split_url.length >= 2){
+	if(split_url[3] == "life"){
+		pageNameStr += ".生活消費";
+		cat_ch = { "travel": "旅遊", "dining": "飲食", "digital": "影音", "car": "駕駛", "fashion": "時尚", "living": "健康", "fortune": "星相", "home": "家居"};
+		if(split_url.length > 6){
+			priCat = cat_ch[split_url[4]];
+			if(split_url.length == 8){
+				digitalData.page.article.id = split_url[6];
+			}
+		}
+	}else if(split_url[3] == "hdjetso"){
+		pageNameStr += ".頭條Jetso";
+	}else if(split_url[3] == "special"){
+		pageNameStr += ".銷售及推廣";
+		priCat = split_url[4];
+		artiName = "【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料";
+	}
+	
+	if(split_url.length >= 3){
+		if(split_url[4] == "ent"){
+			pageNameStr = "頭條日報.娛樂影視";
+			cat_ch = { "realtime": "即時娛樂", "daily": "日報娛樂", "columnist": "娛樂專欄", "mov": "電影"};
+		}else if(split_url[4] == "realtime"){
+			pageNameStr += ".即時新聞";
+			cat_ch = { "hk": "港聞", "chi": "中國", "wo": "國際", "pp": "地產", "fin": "財經", "spt": "體育"};
+		}else if(split_url[4] == "daily"){
+			pageNameStr += ".日報新聞";
+			cat_ch = { "hk": "港聞", "chi": "中國", "wo": "國際", "pp": "地產", "fin": "財經", "spt": "體育", "ls": "副刊", "columns": "專欄", "rac": "馬經"};
+		}else if(split_url[4] == "columns"){
+			pageNameStr += ".專欄";
+		}
+		
+		if(split_url.length >= 4){
+			var newsTitle = "【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料";
+			if(newsTitle !== ""){
+				artiName = newsTitle;
+			}
+			if(cat_ch[split_url[5]] !== undefined){
+				priCat = cat_ch[split_url[5]];
+				if(split_url.length == 8 & split_url[6].match(/^-{0,1}\d+$/)){
+					digitalData.page.article.id = split_url[6];
+				}
+			}else if(coloumnTitle !== ""){
+				priCat = coloumnTitle;
+				if(split_url.length == 9){
+					digitalData.page.article.id = split_url[7];
+				}
+			}
+		}
+	}
+}
+digitalData.page.pageInfo.pagename = pageNameStr;
+digitalData.page.article.name = artiName;
+if(priCat !== ""){
+	digitalData.page.pageInfo.primaryCategory = priCat;
+}
+
+console.log(digitalData);
+</script>
+<meta charset="utf-8"/>
+<title>【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料 | 頭條日報</title>
+<meta name="msvalidate.01" content="F27AA9FE2B5AD390A3D77D98446CAE90" />
+<meta name="author" content="頭條日報"/>
+<meta name="publisher" content="頭條日報"/>
+<meta name="viewport" content="width=device-width"/>
+<meta name="HandheldFriendly" content="True"/>
+<meta name="description" content="美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行..."/>
+<meta name="thumbnail" content="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg"/>
+<meta name="keywords" content="美國,制裁">
+<meta property="fb:app_id" content="978368502211772"/>
+<meta property="fb:admins" content="559263326"/>
+<meta property="fb:admins" content="744194229"/>
+<meta property="fb:admins" content="100006608170684"/>
+<meta property="og:title" content="【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料"/>
+<meta property="og:site_name" content="頭條日報 Headline Daily"/>
+<meta property="og:url" content="https://hd.stheadline.com/news/realtime/hk/1840833/即時-港聞-美國制裁-特區政府嚴批厚顏無恥及卑鄙-譴責公開官員個人資料"/>
+<meta property="og:description" content="美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行..."/>
+<meta property="og:image" content="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg"/>
+<meta property="og:type" content="article"/>
+<meta property="og:locale" content="zh_HK"/>
+<meta property="fb:pages" content="148108245239100"/>
+<meta property="fb:article_style" content="default"/>
+<meta property="op:markup_version" content="v1.0"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料"/>
+<meta name="twitter:description" content="美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行..."/>
+<meta name="twitter:image" content="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg"/>
+<meta name="twitter:domain" content="https://hd.stheadline.com"/>
+<meta name="weibo:title" content="【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料"/>
+<meta name="weibo:webpage:description" content="美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行..."/>
+<meta name="bingbot" content="index,follow"/>
+<meta name="robots" content="index,follow,noarchive"/>
+<meta name="distribution" content="global"/>
+<meta name="copyright" content="Copyright &copy; 2020 hkheadline.com"/>
+<meta name="apple-mobile-web-app-title" content="頭條日報 Headline Daily"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="#c7000a"/>
+<meta name="application-name" content="頭條日報 Headline Daily"/>
+<meta name="msapplication-TileImage" content="https://static.stheadline.com/stheadline/images/icon@2x.png"/>
+<!--[if IEMobile]><meta http-equiv="cleartype" content="on"><![endif]-->
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#c7000a"/>
+<link rel='amphtml' href='http://hd.stheadline.com/amp/news/realtime/hk/1840833'><link rel="canonical" href="https://hd.stheadline.com/news/realtime/hk/1840833/即時-港聞-美國制裁-特區政府嚴批厚顏無恥及卑鄙-譴責公開官員個人資料">
+<link rel="shortcut icon" href="https://static.stheadline.com/stheadline/images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://static.stheadline.com/stheadline/images/icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://static.stheadline.com/stheadline/images/icon_72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://static.stheadline.com/stheadline/images/icon@2x.png">
+<link rel="apple-touch-icon-precomposed" href="https://static.stheadline.com/stheadline/images/icon.png">
+<link rel="shortcut icon" sizes="196x196" href="https://static.stheadline.com/stheadline/images/icon@2x.png">
+<link rel="shortcut icon" sizes="128x128" href="https://static.stheadline.com/stheadline/images/icon_72.png">
+<link rel="stylesheet" href="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.min.css?v=2.1.5">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.6.3/css/font-awesome.min.css" integrity="sha256-AIodEDkC8V/bHBkfyxzolUMw57jeQ9CauwhVW6YJ9CA=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.css" integrity="sha256-8QAMQAQV/xaKEfq655eRuePVkcsARBWe9Mu/jW4QPkc=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/perfect-scrollbar/0.6.14/css/perfect-scrollbar.min.css" integrity="sha256-CXTV2mU3P5hIyO8CqwuckG7YVyTi0k97yZOL4jIhmQ4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://static.stheadline.com/stheadline/css/offcanvas.min.css">
+<link rel="stylesheet" href="/css/framework.min.css">
+<link rel="stylesheet" href="/css/framework2.css">
+<link rel="stylesheet" href="/css/styles.min.css">
+<link rel="stylesheet" href="/css/styles_ad.css">
+<link rel="stylesheet" href="/css/icover.css">
+<link rel="alternate" type="application/rss+xml" hreflang="zh-Hant" title="頭條日報 Headline Daily" href="https://hd.stheadline.com/rss/news/daily/">
+<script src="/js/_adv/btn_click_comscore.js"></script> 
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T3HQTH7');</script>
+<script async defer src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+<script src="/js/_adv/dfp.min.js"></script>
+<link rel="stylesheet" href="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.min.css?v=2.1.5">
+</head>
+<body>
+<script async defer src="https://code.hot-mob.com/api/javascript/sdk4/hotmobtag_min.js"></script>
+<script async defer src="/js/_adv/hotmob.min.js"></script>
+<div id="fb-root"></div>
+<script>window.fbAsyncInit=function(){FB.init({appId:"978368502211772",xfbml:!0,version:"v2.12"})}</script>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+	js.async=true;
+    js.src = "//connect.facebook.net/zh_HK/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+<script async defer src="https://apis.google.com/js/platform.js"></script><noscript><div class="no-js-message">For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.</div></noscript><!--[if lt IE 9 ]><div class="incompatibility-message">We noticed you are using an <strong>outdated version of Internet Explorer</strong>. Some features may not work correctly. For the full site experience, please <strong>update your Internet Explorer to version 9 or above</strong>.</div><![endif]-->
+<div class="body-wrapper offcanvas">
+<div class="sidebar-offcanvas sidebar-left" id="sidebar-left">
+<div class="scrollable">
+<div class="scrollable-content">
+<div class="lns-bar">
+<div class="clearfix">
+<div class="pull-left">
+<a href="/member/login/?backURL=https%3A%2F%2Fhd.stheadline.com%2Fnews%2Frealtime%2Fhk%2F1840833%2F----"><i class="fa fa-user"></i> 登入</a>
+</div>
+<div class="pull-right">
+<form action="/search" method="GET">
+<div class="form-group">
+<input type="text" class="form-control" name="keyword" placeholder="請輸入關鍵字句">
+<button type="submit" class="btn"><i class="fa fa-search"></i></button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="cats">
+<h2>即時新聞</h2>
+<ul class="inews row btn-group">
+<li class="col-xs-3 cat-in-a active"><a href="/news/realtime/hk/即時-港聞/">港聞</a></li> <li class="col-xs-3 cat-in-f"><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></li> <li class="col-xs-3 cat-in-e"><a href="/news/realtime/chi/即時-中國/">中國</a></li> <li class="col-xs-3 cat-in-b"><a href="/news/realtime/wo/即時-國際/">國際</a></li> <li class="col-xs-3 cat-in-h"><a href="/news/realtime/pp/即時-地產/">地產</a></li> <li class="col-xs-3 cat-in-d"><a href="/news/realtime/fin/即時-財經/">財經</a></li> <li class="col-xs-3 cat-in-c"><a href="/news/realtime/spt/即時-體育/">體育</a></li> </ul>
+<h2>日報新聞</h2>
+<ul class="daily row btn-group">
+<li class="col-xs-4 cat-dn-1"><a href="/news/daily/hk/日報-港聞/">港聞</a></li><li class="col-xs-4 cat-dn-2"><a href="/news/daily/chi/日報-中國/">中國</a></li><li class="col-xs-4 cat-dn-3"><a href="/news/daily/wo/日報-國際/">國際</a></li><li class="col-xs-4 cat-dn-4"><a href="/news/daily/pp/日報-地產/">地產</a></li><li class="col-xs-4 cat-dn-5"><a href="/news/daily/fin/日報-財經/">財經</a></li><li class="col-xs-4 cat-dn-6"><a href="/news/daily/spt/日報-體育/">體育</a></li><li class="col-xs-4 cat-dn-7"><a href="/life/生活/">Headlife</a></li><li class="col-xs-4 cat-dn-8"><a href="/life/生活/">娛樂</a></li><li class="col-xs-4 cat-dn-9"><a href="/news/columns/日報-專欄/">專欄</a></li><li class="col-xs-4 cat-dn-10"><a href="/news/daily/rac/日報-馬經/">馬經</a></li> </ul>
+</div>
+<div class="footer">
+<div class="contact-tel clearfix">
+<ul>
+<li><i class="fa fa-phone"></i>總機 : <a href="tel:27982323">2798 2323</a></li>
+<li><i class="fa fa-phone"></i><a href="http://paper.stheadline.com/html/callad.html" target="_blank">日報廣告查詢</a> : <a href="tel:31813000">3181 3666</a></li>
+<li><i class="fa fa-phone"></i><a href="http://hd.stheadline.com/adv_index.asp" target="_blank">網上廣告查詢</a> : <a href="tel:27982383">2798 2383</a></li>
+<li><i class="fa fa-envelope"></i>廣告查詢 : <a href="mailto:adv@hkheadline.com">adv@hkheadline.com</a></li>
+</ul>
+</div>
+<div class="contact-tel clearfix">
+<ul>
+<li><i class="fa fa-link"></i><a href="/privacy.php">私隱政策聲明</a></li>
+<li><i class="fa fa-link"></i><a href="/terms.php">使用條款</a></li>
+<li><i class="fa fa-link"></i><a href="/qrcode_terms.php">QR Code 使用條款及細則</a></li>
+<li><i class="fa fa-link"></i><a href="/privacy.php">私隱政策聲明</a></li>
+<li><i class="fa fa-envelope"></i>聯絡我們：<a href="mailto:web_info@hkheadline.com">web_info@hkheadline.com</a></li>
+</ul>
+</div>
+<div class="copyright">
+<p>Copyright 2020 hkheadline.com.</p>
+<p>All rights reserved.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="body-content">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T3HQTH7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="header">
+<div class="toolbar">
+<div class="container clearfix">
+<ul class="pull-left list-inline">
+<li><i class="fa fa-calendar"></i>2020年8月8日 星期六</li>
+<li class="warning">
+<i class="hi warning war-20" title="酷熱天氣警告"></i>
+</li>
+<li><i class="hi weather wea-04" title="間有陽光幾陣驟雨"></i> 34&#186;</li>
+<li><i class="hi humidity" title="濕度"></i> 62%</li>
+</ul>
+<ul class="pull-right list-inline">
+<li>
+<a href="https://www.facebook.com/headlinehk" target="_blank" class="btn btn-facebook"> <i class="fa fa-facebook-official"></i> facebook</a>
+</li>
+<li>
+<a href="http://www.weibo.com/hkheadline" target="_blank" class="btn btn-weibo"> <i class="fa fa-weibo"></i> Weibo </a>
+</li>
+<li>
+<a href="/rss/news/daily/" target="_blank" class="btn btn-rss"> <i class="fa fa-rss-square"></i> RSS </a>
+</li>
+<li class="dropdown" id="dropdown-apps"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">頭條Apps<span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li class="row">
+<div class="col-xs-6 active" data-target="ios"><i class="fa fa-apple"></i><b>IOS</b><span class="caret"></span></div>
+<div class="col-xs-6" data-target="android"><i class="fa fa-android"></i><b>Android</b><span class="caret"></span></div>
+</li>
+<li class="qrcodes">
+<p>掃描QR Code快速進入</p>
+<div class="rows">
+<div class="row in" data-content="ios">
+<div class="col-xs-6">
+<a href="https://itunes.apple.com/hk/app/tou-tiao-ri-bao/id348023216?mt=8" target="_blank">
+<div class="ios_hl_icon div_icon_style"></div>
+<span class="app-name">頭條日報</span>
+<div class="ios_hl_qr_icon div_icon_style"></div>
+</a>
+</div>
+<div class="col-xs-6">
+<a href="https://itunes.apple.com/hk/app/tou-tiao-ri-bao-gao-qing-jie/id379192563?mt=8" target="_blank">
+<div class="ios_hl_hd_icon div_icon_style"></div>
+<span class="app-name">頭條日報高清揭頁版</span>
+<div class="ios_hl_hd_qr_icon div_icon_style"></div>
+</a>
+</div>
+</div>
+<div class="row" data-content="android">
+<div class="col-xs-6">
+<a href="https://play.google.com/store/apps/details?id=singtao.android.hkheadline" target="_blank">
+<div class="an_hl_icon div_icon_style"></div>
+<span class="app-name">頭條日報</span>
+<div class="an_hl_qr_icon div_icon_style"></div>
+</a>
+</div>
+<div class="col-xs-6">
+<a href="https://play.google.com/store/apps/details?id=com.singtao.iread.headline" target="_blank">
+<div class="an_hl_hd_icon div_icon_style"></div>
+<span class="app-name">頭條日報高清揭頁版</span>
+<div class="an_hl_hd_qr_icon div_icon_style"></div>
+</a>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="wrapper">
+<div class="container clearfix">
+<div class="logo"><a href="/">頭條網 - 頭條日報 - 全港No.1最多人睇嘅報章</a></div>
+<input type="hidden" id="shk" name="shk" value="0">
+<div class="ad ad_dfp" id="top_728x90_banner"><script>	googletag.cmd.push(function(){googletag.display("top_728x90_banner");});</script></div>
+<div id="RP1_1x1_banner" style="height:1px; width:1px;"></div>
+</div>
+</div>
+<nav class="navbar" data-spy="affix" data-offset-top="142" data-offset-bottom="200">
+<div class="container">
+<div class="navbar-nav"><a href="/" class="logo-s">頭條日報</a>
+<div class="btn-group pull-left">
+<div class="btn" data-toggle="offcanvas-sidebar-left"><i class="fa fa-bars"></i></div>
+</div>
+<div class="btn-group pull-right">
+<div class="btn" data-toggle="offcanvas-sidebar-right"><i class="fa fa-th-large"></i></div>
+</div>
+<ul class="list-inline list-nav">
+<li class="active"><a href="/news/realtime/即時/">即時新聞</a></li>
+<li><a href="/news/daily/日報/">日報新聞</a></li>
+<li><a href="https://paper.stheadline.com/">揭頁版</a></li>
+<li><a href="/news/columns/日報-專欄/">專欄</a></li>
+<li><a href="https://pop.stheadline.com/">Popnews</a></li>
+<li><a href="/life/ent/">娛樂影視</a></li>
+<li><a href="https://hdfin.stheadline.com/">財經網</a></li>
+<li><a href="/life/生活/">Headlife</a></li>
+<li><a href="/racing/adult_warn.asp?back_to=/racing/">馬經網</a></li>
+<li><a href="http://blogcity.me/">Blogcity</a></li>
+<li><a href="/hdjetso/">頭條Jetso</a></li>
+</ul>
+</div>
+<div class="member-login">
+<a href="/member/login/?backURL=https%3A%2F%2Fhd.stheadline.com%2Fnews%2Frealtime%2Fhk%2F1840833%2F----"><i class="fa fa-user"></i> 登入</a>
+</div>
+<div class="searchbar-show-affix pull-right" id="searchbar-show-affix"><i class="fa fa-search"></i></div>
+</div>
+</nav>
+<div class="searchbar">
+<div class="container">
+<form class="form-inline" id="fullTextSeachFrom" action="/search" method="GET">
+<div class="form-group clearfix">
+<input type="text" class="form-control pull-left" id="fullTextSearchKeyword" name="keyword" placeholder="請輸入搜尋字句" value="">
+<button type="submit" class="btn"><i class="fa fa-search"></i> 搜尋</button>
+</div>
+<div class="form-group keywords"><strong>熱門： </strong>
+<a href="/search?keyword=&#26954;&#26126;">楊明</a><a href="/search?keyword=&#32654;&#22283;&#21046;&#35009;">美國制裁</a><a href="/search?keyword=SPT&#32;Mask">SPT Mask</a><a href="/search?keyword=&#26032;&#20896;&#32954;&#28814;">新冠肺炎</a><a href="/search?keyword=&#34892;&#36452;">行蹤</a> </div>
+</form>
+</div>
+</div>
+</div>
+<div class="mobile-body-wrapper">
+<div class="mobile-body-scrollable">
+<div class="mobile-body-scrollable-content">
+<div class="main ads-rp1-float-right detail">
+<div class="container">
+<div class="wrapper">
+<div class="sections-label">
+<div class="sections">
+<div class="section cat-in-a">
+<div class="heading italic">
+<h3><a href="/news/realtime/">即時新聞</a><span><a href="/news/realtime/hk/">港聞</a></span></h3>
+<div class="pull-right dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i></i>選擇分類 <i class="fa fa-caret-down"> </i></a>
+<ul class="dropdown-menu" role="menu">
+<li class="active"><a href="/news/realtime/hk/即時-港聞/">港聞</a></li>
+<li><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></li>
+<li><a href="/news/realtime/chi/即時-中國/">中國</a></li>
+<li><a href="/news/realtime/wo/即時-國際/">國際</a></li>
+<li><a href="/news/realtime/pp/即時-地產/">地產</a></li>
+<li><a href="/news/realtime/fin/即時-財經/">財經</a></li>
+<li><a href="/news/realtime/spt/即時-體育/">體育</a></li>
+</ul>
+</div>
+</div>
+<article>
+<header>
+<div class="topic">
+<h1>【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料</h1>
+</div>
+<div class="detail-heading-bar clearfix">
+<div class="pull-left share">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'facebook', 'false');"><i class="fa fa-facebook"></i></a>
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'google-plus', 'false');"><i class="fa fa-google-plus"></i></a>
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'twitter', 'false');"><i class="fa fa-twitter"></i></a>
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'whatsapp', 'false');"><i class="fa fa-whatsapp mobile-element" style="display: none;"></i></a>
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'weibo', 'false');"><i class="fa fa-weibo"></i></a>
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'email', 'false');"><i class="fa fa-envelope-o"></i></a>
+<a href="#"><i class="fa fa-arrow-up"></i></a>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840833/%E5%8D%B3%E6%99%82-%E6%B8%AF%E8%81%9E-%E7%BE%8E%E5%9C%8B%E5%88%B6%E8%A3%81-%E7%89%B9%E5%8D%80%E6%94%BF%E5%BA%9C%E5%9A%B4%E6%89%B9%E5%8E%9A%E9%A1%8F%E7%84%A1%E6%81%A5%E5%8F%8A%E5%8D%91%E9%84%99-%E8%AD%B4%E8%B2%AC%E5%85%AC%E9%96%8B%E5%AE%98%E5%93%A1%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99" data-layout="button_count" data-action="like" data-show-faces="false"></div>
+</div>
+<div class="pull-right option">
+<span class="date"><i class="fa fa-clock-o"></i><time class="op-published" dateTime="2020-08-08T12:46:00Z">2020-08-08 12:46</time></span>
+<span class="print"><a href="javascript:window.print()"><i class="fa fa-print"></i>列印</a></span>
+<span class="font dropdown">
+<a id="fontLabel" class="dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i class="fa fa-font"></i>文字大小</a>
+<ul class="dropdown-menu" role="menu" aria-labelledby="fontLabel">
+<li class="font-size-xs"><a href="javascript:adjustFontSize('14px');">仲細D都得</a></li>
+<li class="font-size-s"><a href="javascript:adjustFontSize('16px');">大小小啦唔該...</a></li>
+<li class="font-size-m"><a href="javascript:adjustFontSize('18px');">仲未夠？</a></li>
+<li class="font-size-l"><a href="javascript:adjustFontSize('20px');">起碼咁大啦！</a></li>
+<li class="font-size-xl"><a href="javascript:adjustFontSize('22px');">已經最大。</a></li>
+</ul>
+</span> </div>
+</div>
+<div class="content post-content">
+<div class="paragraph">
+<figure class="margin-top-1">
+<a class="fancybox image" rel="fancybox-thumb" href="https://image2.stheadline.com/f/1500p0/0x0/100/hd/46e339a990456c63d6add431d0cdce78/stheadline/inewsmedia/20200808/_2020080812521731954.jpg" title="特區政府嚴厲批評「所謂」制裁。資料圖片">
+<img src="https://image2.stheadline.com/f/874p0/0x0/100/hd/5685e0b7c16e8b1bfe2775ee04c2efc0/stheadline/inewsmedia/20200808/_2020080812521731954.jpg" class="size-full" alt="特區政府嚴厲批評「所謂」制裁。資料圖片">
+</a>
+<figcaption class="caption-text">特區政府嚴厲批評「所謂」制裁。資料圖片</figcaption>
+</figure>
+<div id="news-content" class="set-font-aera" style="visibility: visible;"><p>美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行政長官林鄭月娥以她本人名義和代表她各位被針對的同事表示，維護國家安全是使命光榮，責任重大，不僅是為了750萬香港市民，更是保護14億內地同胞的生命安全及利益，無懼任何威嚇。<br /><br />發言人譴責美方公開官員的個人資料，指此等差劣的行徑等同國家級認可的『起底』行為，嚴重侵犯私隱及危害個人安全，保留採取任何必要法律行動的權利，會全面支持中央政府採取反制措施，重申美方舉措粗暴干預本港內部事務，做法雙重標準，破壞國際關係準則，支持中央政府採取反制措施。<br /><br />發言人續指，美國國會及白宮利用去年六月以來在香港出現的反政府動亂，以人權、民主和自治為藉口，接連針對香港通過法案及宣布行政指令。美國的行徑暴露其雙重標準及虛偽，而且明顯違反國際法及國際關係基本準則，令香港及國際社會中很多人感到憤慨。」發言人指，香港是中華人民共和國不可分離的部分，貫徹落實『一國兩制』符合香港市民的利益，亦是所有中國人的共同願望。<br />      <br />發言人表示，已不厭其煩地向美方指出《基本法》的有關條文，包括第十二條訂明香港特別行政區是中華人民共和國的一個享有高度自治權的地方行政區域，直轄於中央人民政府；而《中華人民共和國憲法》及香港特區《基本法》共同構成香港特區的憲制基礎。不幸地，美方對此置若罔聞。美國政府訛稱實施所謂『制裁』是回應香港推行《香港國安法》，這是完全站不住腳的藉口。<br />      <br />發言人表示，相關美國官員刻意無視法律條文，以及香港的法治和獨立的司法制度，為其一己私利作出毫無根據及以偏概全的言論。發言人指，自去年六月以來香港出現不斷升級的暴力、混亂狀態和社會騷動情況，明顯須要警方履行法定職責，採取合法措施以維持公共安全及公共秩序，這與世界各地的警察履行維護生命財產安全的天職無異。<br />      <br />制裁名單包括特首林鄭月娥、警務處處長鄧炳強、保安局局長李家超、律政司長鄭若驊、特首辦主任陳國基、政制及內地事務局局長曾國衞、已離任的警務處處長盧偉聰，以及中聯辦主任駱惠寧、港澳辦主任夏寶龍、港澳辦副主任張曉明、駐港國安公署署長鄭雁雄。</p></div>
+</div>
+<div class="paragraph">
+<div class="row">
+</div>
+<div id="news-content" class="set-font-aera" style="visibility: visible;"><p></p></div>
+</div>
+<div class="paragraph">
+<div class="row">
+</div>
+<div id="news-content" class="set-font-aera" style="visibility: visible;"><p></p></div>
+</div>
+<div class="paragraph">
+</div> <div class="paragraph">
+<div id="news-content" class="set-font-aera" style="visibility: visible;"><p>
+相關新聞：<br><br> <a href="/news/realtime/hk/1840794/" target="_blank">●【美國制裁】中聯辦指絕不畏懼任何蠻橫霸道 稱美打錯算盤枉費心機(按這裏)</a><br><br>
+<a href="/news/realtime/hk/1840788/" target="_blank">●【美國制裁】指國外無資產 駱惠寧:我可向特朗普寄100美元供其凍結(按這裏)</a><br><br>
+<a href="/news/realtime/hk/1840767/" target="_blank">●美國制裁11名中港官員 蓬佩奧：國安法成壓迫工具不可接受(按這裏)</a><br><br>
+<a href="/news/realtime/hk/1840617/" target="_blank">●【國安法】美國財政部宣布制裁11名中港官員 包括林鄭月娥(按這裏)</a><br><br>
+<a href="/news/realtime/hk/1840803/" target="_blank">●【美國制裁】指維護國家及香港安全屬榮譽 鄧炳強：制裁毫無意義(按這裏)</a><br><br>
+</p></div>
+</div>
+</div>
+</header>
+</article>
+<div class="content-fb-landing"><a href="https://www.facebook.com/headlinehk" target="_blank">想睇最新消息，立即 like 頭條日報FB專頁！&gt;&gt;</a></div>
+<div class="related">
+<div class="heading">
+<h3><i class="fa fa-link fa-primary-o"></i>相關新聞</h3>
+</div>
+<ul>
+<li><a href="/news/realtime/wo/1839884/">美國將對加拿大鋁材重新徵收10%關稅</a></li>
+<li><a href="/news/realtime/chi/1840170/">據報美將售台至少4架先進無人偵察機</a></li>
+<li><a href="/news/realtime/wo/1840191/">Twitter為各國官員媒體加標籤 特朗普個人帳戶可獲豁免</a></li>
+<li><a href="/news/realtime/hk/1840617/">【國安法】美國財政部宣布制裁11名中港官員 包括林鄭月娥</a></li>
+<li><a href="/news/realtime/wo/1840728/">加拿大宣布將向美國鋁產品 徵收36億加元報復性關稅</a></li>
+<li><a href="/news/realtime/hk/1840734/">美制裁中港11名官員 邱騰華指手法橫蠻無理及粗暴干預</a></li>
+<li><a href="/news/realtime/hk/1840767/">美國制裁11名中港官員 蓬佩奧：國安法成壓迫工具不可接受</a></li>
+<li><a href="/news/realtime/hk/1840788/">【美國制裁】指國外無資產 駱惠寧:我可向特朗普寄100美元供其凍結</a></li>
+<li><a href="/news/realtime/hk/1840794/">【美國制裁】中聯辦指絕不畏懼任何蠻橫霸道 稱美打錯算盤枉費心機</a></li>
+<li><a href="/news/realtime/hk/1840803/">【美國制裁】指維護國家及香港安全屬榮譽 鄧炳強：制裁毫無意義</a></li>
+</ul>
+</div>
+<div id="RP1_300_banner" class="text-center"></div>
+<div class="pagination clearfix">
+<div class="control pull-right next">
+<a href="/news/realtime/hk/1840983/即時-港聞-本港增69宗確診-旺角中醫中招九龍灣港鐵車廠現小型爆發"><i class="fa fa-arrow-right"></i><span>本港增69宗確診 旺角中醫中招九龍灣港鐵車廠現小型爆發</span></a>
+</div>
+</div>
+<div class="hidden-sm hidden-md hidden-lg">
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840833/%E5%8D%B3%E6%99%82-%E6%B8%AF%E8%81%9E-%E7%BE%8E%E5%9C%8B%E5%88%B6%E8%A3%81-%E7%89%B9%E5%8D%80%E6%94%BF%E5%BA%9C%E5%9A%B4%E6%89%B9%E5%8E%9A%E9%A1%8F%E7%84%A1%E6%81%A5%E5%8F%8A%E5%8D%91%E9%84%99-%E8%AD%B4%E8%B2%AC%E5%85%AC%E9%96%8B%E5%AE%98%E5%93%A1%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99" data-layout="button_count" data-action="like" data-show-faces="false"></div>
+</div>
+<br/>
+<div class="fb-comments" data-href="https://hd.stheadline.com/news/realtime/hk/1840833/%E5%8D%B3%E6%99%82-%E6%B8%AF%E8%81%9E-%E7%BE%8E%E5%9C%8B%E5%88%B6%E8%A3%81-%E7%89%B9%E5%8D%80%E6%94%BF%E5%BA%9C%E5%9A%B4%E6%89%B9%E5%8E%9A%E9%A1%8F%E7%84%A1%E6%81%A5%E5%8F%8A%E5%8D%91%E9%84%99-%E8%AD%B4%E8%B2%AC%E5%85%AC%E9%96%8B%E5%AE%98%E5%93%A1%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99" data-numposts="5" data-colorscheme="light" data-width="100%" data-mobile="true"></div> <div class="other-cat-tabs nocontent" style="display: none;">
+<ul class="nav nav-tabs">
+<li class="cat-in-a active"><a href="#dailynews-a" role="tab" data-toggle="tab">港聞</a></li>
+<li class="cat-in-f"><a href="#dailynews-f" role="tab" data-toggle="tab">娛樂</a></li>
+<li class="cat-in-e"><a href="#dailynews-e" role="tab" data-toggle="tab">中國</a></li>
+<li class="cat-in-b"><a href="#dailynews-b" role="tab" data-toggle="tab">國際</a></li>
+<li class="cat-in-h"><a href="#dailynews-h" role="tab" data-toggle="tab">地產</a></li>
+<li class="cat-in-d"><a href="#dailynews-d" role="tab" data-toggle="tab">財經</a></li>
+<li class="cat-in-c"><a href="#dailynews-c" role="tab" data-toggle="tab">體育</a></li>
+</ul>
+<div class="tab-content">
+<div role="tabpanel" class="tab-pane cat-in-a fade in active" id="dailynews-a">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/hk/1840833/即時-港聞-美國制裁-特區政府嚴批厚顏無恥及卑鄙-譴責公開官員個人資料" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954_popup.jpg"></a>
+<h5><a href="/news/realtime/hk/1840833/即時-港聞-美國制裁-特區政府嚴批厚顏無恥及卑鄙-譴責公開官員個人資料">【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料</a></h5>
+<div class="text">美國財政部宣布制裁11名中港官員，包括特首林鄭月娥、中聯辦主任駱惠寧等。特區政府發言人嚴厲批評「所謂」制裁，形容厚顏無恥及卑鄙。發言人指，行政長官林鄭月娥以她本人名義和代表她各位被針對的同事表示，維護...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 12:46</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/hk/1840983/即時-港聞-本港增69宗確診-旺角中醫中招九龍灣港鐵車廠現小型爆發">本港增69宗確診 旺角中醫中招九龍灣港鐵車廠現小型爆發</a></li>
+<li><a href="/news/realtime/hk/1840977/即時-港聞-楊奇煜閃婚晒驗孕棒再報喜-16周可以說了">楊奇煜閃婚晒驗孕棒再報喜：16周可以說了</a></li>
+<li><a href="/news/realtime/hk/1840968/即時-港聞-美國制裁-曾偉雄-不折不扣霸權行為-料中央將作合適反制">【美國制裁】曾偉雄：不折不扣霸權行為 料中央將作合適反制</a></li>
+<li><a href="/news/realtime/hk/1840962/即時-港聞-未來3日-12公眾街市關早1小時消毒">未來3日 12公眾街市關早1小時消毒</a></li>
+<li><a href="/news/realtime/hk/1840953/即時-港聞-遭美制裁中港官員-將被Facebook禁帳戶支付服務">遭美制裁中港官員 將被Facebook禁帳戶支付服務</a></li>
+<li><a href="/news/realtime/hk/1840950/即時-港聞-翔龍灣兩度遭誤報確診-物業處稱保留追究權利">翔龍灣兩度遭誤報確診 物業處稱保留追究權利</a></li>
+<li><a href="/news/realtime/hk/1840854/即時-港聞-熱帶氣旋形成中或移向日韓-本港下周四狂風雷暴">熱帶氣旋形成中或移向日韓 本港下周四狂風雷暴</a></li>
+<li><a href="/news/realtime/hk/1840932/即時-港聞-美國制裁-金管局指外國單方面制裁-在港無法律效力">【美國制裁】金管局指外國單方面制裁 在港無法律效力　</a></li>
+<li><a href="/news/realtime/hk/1840926/即時-港聞-Kelly-Online-美國制裁名單出爐-李梓敬疑-篤灰-點解冇張建宗">【Kelly Online】美國制裁名單出爐 李梓敬疑「篤灰」:點解冇張建宗？</a></li>
+<li><a href="/news/realtime/hk/1840923/即時-港聞-美國制裁-民建聯-美方嘴臉令人嘔心-籲少搞損人傷己政治操作">【美國制裁】民建聯：美方嘴臉令人嘔心 籲少搞損人傷己政治操作</a></li>
+<li><a href="/news/realtime/hk/1840911/即時-港聞-警員勞工處食環職員-外傭聚集熱點派傳單籲防疫">警員勞工處食環職員 外傭聚集熱點派傳單籲防疫</a></li>
+<li><a href="/news/realtime/hk/1840896/即時-港聞-與初步確診個案有關-沙田街巿提早關閉消毒">與初步確診個案有關 沙田街巿提早關閉消毒</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-f fade in" id="dailynews-f">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/life/ent/realtime/1840647/即時-娛樂-疑自炒涉醉駕-楊明滿身酒氣送院" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080803442358754_popup.jpg"></a>
+<h5><a href="/life/ent/realtime/1840647/即時-娛樂-疑自炒涉醉駕-楊明滿身酒氣送院">疑自炒涉醉駕　楊明滿身酒氣送院　</a></h5>
+<div class="text">今日（8日）凌晨零時許，一架平治私家車沿半山馬己仙峽道落山，駛至玫瑰別墅附近一個左彎時，疑失控越過對面行車線，再撞到防撞欄，繼而衝前約60米，再撞毀另一防撞欄及石壆後停下，其他駕駛人士見狀報警。警員趕...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 03:16</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/life/ent/realtime/1840965/即時-娛樂-雨僑入院待產-羅力威發文為妻女集氣">雨僑入院待產 羅力威發文為妻女集氣</a></li>
+<li><a href="/life/ent/realtime/1840947/即時-娛樂-楊明短訊回覆已出院-女友莊思明未有回應">楊明短訊回覆已出院 女友莊思明未有回應</a></li>
+<li><a href="/life/ent/realtime/1840917/即時-娛樂-江美儀演悲劇人物過足戲癮-龔嘉欣感謝Dark-Angel">江美儀演悲劇人物過足戲癮 龔嘉欣感謝Dark Angel</a></li>
+<li><a href="/life/ent/realtime/1840881/即時-娛樂-楊明撞車-樂易玲稱因壓力過大兼疲勞所致">楊明撞車 樂易玲稱因壓力過大兼疲勞所致</a></li>
+<li><a href="/life/ent/realtime/1840857/即時-娛樂-殺手-圓滿結局-黎耀祥捨身救女-陳豪假死重生">《殺手》圓滿結局 黎耀祥捨身救女 陳豪假死重生</a></li>
+<li><a href="/life/ent/realtime/1840815/即時-娛樂-港姐-同余德丞即席鬥戲-張盈悅自爆曾被黑人追求">【港姐】同余德丞即席鬥戲 張盈悅自爆曾被黑人追求</a></li>
+<li><a href="/life/ent/realtime/1840800/即時-娛樂-港姐-餵食蝦成功掂手仔-謝嘉怡嫌坤哥個樣唔Pure">【港姐】餵食蝦成功掂手仔 謝嘉怡嫌坤哥個樣唔Pure</a></li>
+<li><a href="/life/ent/realtime/1840791/即時-娛樂-李榮浩罕讚-天下第一美人-楊丞琳相隔10年再剪短髮">李榮浩罕讚「天下第一美人」　楊丞琳相隔10年再剪短髮</a></li>
+<li><a href="/life/ent/realtime/1840656/即時-娛樂-繼-美女郊遊遊-再晒身材-Double-S-下周-辣火頭-水着上陣">繼《美女郊遊遊》再晒身材　「Double S」下周《辣火頭》水着上陣</a></li>
+<li><a href="/life/ent/realtime/1840653/即時-娛樂-方媛捲入天王嫂訓練營-郭富城狂like老婆晒命帖文撐到底">方媛捲入天王嫂訓練營 郭富城狂like老婆晒命帖文撐到底</a></li>
+<li><a href="/life/ent/realtime/1840557/即時-娛樂-山本美月貼型格婚照-甜嫁瀨戶康史">山本美月貼型格婚照 甜嫁瀨戶康史</a></li>
+<li><a href="/life/ent/realtime/1840536/即時-娛樂-港姐-候選佳麗要檢點-黃嘉雯-公眾人物要做榜樣">【港姐】候選佳麗要檢點？黃嘉雯：公眾人物要做榜樣</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-e fade in" id="dailynews-e">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/chi/1840809/即時-中國-供女友食住卻劈腿-遭狠男連砍63刀身亡" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080811542780214_popup.jpg"></a>
+<h5><a href="/news/realtime/chi/1840809/即時-中國-供女友食住卻劈腿-遭狠男連砍63刀身亡">供女友食住卻劈腿 遭狠男連砍63刀身亡</a></h5>
+<div class="text">台灣新竹縣發生恐怖情殺案，一名39歲女子遭45歲男友連砍63刀死亡。男子行凶後自刺胸部被送院，警方依殺人罪嫌漏夜偵辦。案發在周五（7日）早上10時20分，警方接報，指按摩店傳出女子尖叫聲。警員到場，發...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 12:10</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/chi/1840944/即時-中國-南京鼓樓區火警釀3死-電動自行車失火肇禍">南京鼓樓區火警釀3死 電動自行車失火肇禍</a></li>
+<li><a href="/news/realtime/chi/1840935/即時-中國-中國人大常委會將修法-禁倒掛隨意丟棄國旗">中國人大常委會將修法 禁倒掛隨意丟棄國旗</a></li>
+<li><a href="/news/realtime/chi/1840884/即時-中國-美日政要入境獲豁免隔離惹爭議-陳時中強調防疫會到位">美日政要入境獲豁免隔離惹爭議 陳時中強調防疫會到位</a></li>
+<li><a href="/news/realtime/chi/1840908/即時-中國-外交部批評BBC新疆拘留營報導是-假新聞">外交部批評BBC新疆拘留營報導是「假新聞」</a></li>
+<li><a href="/news/realtime/chi/1840845/即時-中國-西安明秦王府城牆遺址倒塌-4人受輕傷">西安明秦王府城牆遺址倒塌 4人受輕傷</a></li>
+<li><a href="/news/realtime/chi/1840830/即時-中國-內蒙古出現第2宗鼠疫死亡病例-兩地發布鼠疫Ⅲ級預警">內蒙古出現第2宗鼠疫死亡病例 兩地發布鼠疫Ⅲ級預警</a></li>
+<li><a href="/news/realtime/chi/1840779/即時-中國-出生3天黑豹姐妹成-棄嬰-動物園成功徵得-狗奶媽">出生3天黑豹姐妹成「棄嬰」動物園成功徵得「狗奶媽」</a></li>
+<li><a href="/news/realtime/chi/1840761/即時-中國-人大常委會今起一連四日北京開會">人大常委會今起一連四日北京開會</a></li>
+<li><a href="/news/realtime/chi/1840740/即時-中國-內地新增31宗確診-25宗本土病例來自新疆">內地新增31宗確診 25宗本土病例來自新疆</a></li>
+<li><a href="/news/realtime/chi/1840707/即時-中國-廣西3男下腹劇痛難當-入院揭酒後誤吞牙籤致盲腸炎">廣西3男下腹劇痛難當 入院揭酒後誤吞牙籤致盲腸炎</a></li>
+<li><a href="/news/realtime/chi/1840638/即時-中國-陳其邁申報財產僅3萬多港幣">陳其邁申報財產僅3萬多港幣</a></li>
+<li><a href="/news/realtime/chi/1840623/即時-中國-楊潔篪-美方干涉台灣香港主權等問題-破壞中方核心利益">楊潔篪：美方干涉台灣香港主權等問題 破壞中方核心利益</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-b fade in" id="dailynews-b">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/wo/1840758/即時-國際-哥斯拉65周年慶生活動-因應疫情改網上舉行" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080810232929103_popup.jpg"></a>
+<h5><a href="/news/realtime/wo/1840758/即時-國際-哥斯拉65周年慶生活動-因應疫情改網上舉行">哥斯拉65周年慶生活動 因應疫情改網上舉行</a></h5>
+<div class="text">日本電影史上最經典怪獸角色，被喻為日本怪獸之王的哥斯拉，今年11月3日將是65周年生日，往年盛況空前的哥斯拉慶生活動，今年因新冠肺炎疫情的關係，將改成在首次在網上舉辦。日本去年舉辦「哥斯拉慶生活動 2...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 13:12</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/wo/1840980/即時-國際-印度尋回失事客機黑盒-1遇難者確診搜救人員要接受檢測">印度尋回失事客機黑盒 1遇難者確診搜救人員要接受檢測</a></li>
+<li><a href="/news/realtime/wo/1840956/即時-國際-東京新增429確診-連續2天破400宗">東京新增429確診 連續2天破400宗</a></li>
+<li><a href="/news/realtime/wo/1840941/即時-國際-上載同學無戴口罩圖片-喬州女生遭校方勒令停學">上載同學無戴口罩圖片 喬州女生遭校方勒令停學</a></li>
+<li><a href="/news/realtime/wo/1840914/即時-國際-紐約州長宣布-州內學區新學年可復課">紐約州長宣布 州內學區新學年可復課</a></li>
+<li><a href="/news/realtime/wo/1840920/即時-國際-自由大學校長福爾韋爾發不雅照-被無限期休假">自由大學校長福爾韋爾發不雅照 被無限期休假</a></li>
+<li><a href="/news/realtime/wo/1840821/即時-國際-美軍轟炸機飛近邊界-俄派3戰機攔截">美軍轟炸機飛近邊界 俄派3戰機攔截</a></li>
+<li><a href="/news/realtime/wo/1840686/即時-國際-印度客機暴雨中降落-衝出跑道斷開兩截增至18死">印度客機暴雨中降落 衝出跑道斷開兩截增至18死</a></li>
+<li><a href="/news/realtime/wo/1840860/即時-國際-聯合國警告黎巴嫩或引發人道危機">聯合國警告黎巴嫩或引發人道危機</a></li>
+<li><a href="/news/realtime/wo/1840782/即時-國際-美國反情報首長警告中俄伊圖干預大選-北京不希望特朗普連任">美國反情報首長警告中俄伊圖干預大選 北京不希望特朗普連任</a></li>
+<li><a href="/news/realtime/wo/1840752/即時-國際-美國近500萬人確診-預測12月累計30萬人染疫亡">美國近500萬人確診 預測12月累計30萬人染疫亡</a></li>
+<li><a href="/news/realtime/wo/1840746/即時-國際-福奇料能製出高效疫苗機會很微-大選前不可能面世">福奇料能製出高效疫苗機會很微 大選前不可能面世</a></li>
+<li><a href="/news/realtime/wo/1840728/即時-國際-加拿大宣布將向美國鋁產品-徵收36億加元報復性關稅">加拿大宣布將向美國鋁產品 徵收36億加元報復性關稅</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-h fade in" id="dailynews-h">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/pp/1840899/即時-地產-城中駅3房戶1000萬沽-低市價15" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080814564982221_popup.jpeg"></a>
+<h5><a href="/news/realtime/pp/1840899/即時-地產-城中駅3房戶1000萬沽-低市價15">城中駅3房戶1000萬沽 低市價15%</a></h5>
+<div class="text">利嘉閣經理黃金欽透露，將軍澳都會駅2期城中駅9座低層B室，面積約731方呎，為3房套連多用途房間隔。單位早於5月叫價1200萬放售，經議價後減價200萬或17%，以1000萬交吉形式易手，呎價約136...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 14:56</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/pp/1840938/即時-地產-太古城2房戶-1000萬市價沽">太古城2房戶 1000萬市價沽</a></li>
+<li><a href="/news/realtime/pp/1840929/即時-地產-荃灣中心高層戶458萬沽-低市價5">荃灣中心高層戶458萬沽 低市價5%</a></li>
+<li><a href="/news/realtime/pp/1840905/即時-地產-天寰2房戶月租1-8萬-低市價3">天寰2房戶月租1.8萬 低市價3%</a></li>
+<li><a href="/news/realtime/pp/1840893/即時-地產-曉峰灣畔2房戶773萬元沽">曉峰灣畔2房戶773萬元沽</a></li>
+<li><a href="/news/realtime/pp/1840635/即時-地產-按證每呎53元續租中遠-重回七年前水平">按證每呎53元續租中遠 重回七年前水平</a></li>
+<li><a href="/news/realtime/pp/1840629/即時-地產-實用家居-拼出型燈">【實用家居】拼出型燈</a></li>
+<li><a href="/news/realtime/pp/1840602/即時-地產-中上價屋苑直擊-聽濤雅苑-時尚設計洋溢暖意">【中上價屋苑直擊】聽濤雅苑 時尚設計洋溢暖意</a></li>
+<li><a href="/news/realtime/pp/1840599/即時-地產-豪宅直擊-禮頓山-高曠大廳望馬場景">【豪宅直擊】禮頓山 高曠大廳望馬場景</a></li>
+<li><a href="/news/realtime/pp/1840275/即時-地產-失守屋苑-嘉湖山莊2房498萬成交">【失守屋苑】嘉湖山莊2房498萬成交</a></li>
+<li><a href="/news/realtime/pp/1840590/即時-地產-加州花園單號洋房1200萬沽">加州花園單號洋房1200萬沽</a></li>
+<li><a href="/news/realtime/pp/1840584/即時-地產-藍灣半島低層戶-1000萬沽">藍灣半島低層戶 1000萬沽</a></li>
+<li><a href="/news/realtime/pp/1840581/即時-地產-丹拿花園兩房戶908萬沽">丹拿花園兩房戶908萬沽</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-d fade in" id="dailynews-d">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/fin/1840650/即時-財經-美股受壓-杜指先跌後升46點" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080803371886081_popup.jpg"></a>
+<h5><a href="/news/realtime/fin/1840650/即時-財經-美股受壓-杜指先跌後升46點">美股受壓 杜指先跌後升46點</a></h5>
+<div class="text">市場憂慮美國封殺微信以及Tik Tok之後，或惹來中方的報復行動，杜指早段跌88點，見27298點，跌幅相當於0.3%，中段跌幅一度擴大到163點，其後跌勢減弱。杜指今晨四時收市報27,433.48點...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 04:15</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/fin/1840503/即時-財經-即月恒指夜期初段報24416-升25點">即月恒指夜期初段報24416 升25點</a></li>
+<li><a href="/news/realtime/fin/1840500/即時-財經-歐洲主要股市初段下滑">歐洲主要股市初段下滑</a></li>
+<li><a href="/news/realtime/fin/1840512/即時-財經-2005-石四藥料中期純利跌50-至60">【2005】石四藥料中期純利跌50%至60%</a></li>
+<li><a href="/news/realtime/fin/1840452/即時-財經-272-瑞房發盈警-料半年轉蝕約16億人幣">【272】瑞房發盈警 料半年轉蝕約16億人幣</a></li>
+<li><a href="/news/realtime/fin/1840449/即時-財經-2788-精熙國際中期盈利大減86-不派息">【2788】精熙國際中期盈利大減86% 不派息</a></li>
+<li><a href="/news/realtime/fin/1840446/即時-財經-743-亞洲水泥中期少賺41-8-不派息">【743】亞洲水泥中期少賺41.8% 不派息</a></li>
+<li><a href="/news/realtime/fin/1840443/即時-財經-人民幣即期收跌157點子">人民幣即期收跌157點子</a></li>
+<li><a href="/news/realtime/fin/1840437/即時-財經-即月夜期開報24380-低水151點">即月夜期開報24380 低水151點</a></li>
+<li><a href="/news/realtime/fin/1840419/即時-財經-收市總結-騰訊遭美封殺曾失500元關-累恒指跌398點">【收市總結】騰訊遭美封殺曾失500元關 累恒指跌398點</a></li>
+<li><a href="/news/realtime/fin/1840395/即時-財經-697-首程控股盈喜料上半年盈利增長不少於30">【697】首程控股盈喜料上半年盈利增長不少於30%</a></li>
+<li><a href="/news/realtime/fin/1840353/即時-財經-全日沽空195-84億">全日沽空195.84億</a></li>
+<li><a href="/news/realtime/fin/1840392/即時-財經-220-統一企業中期多賺7-至10-65億人幣-不派息">【220】統一企業中期多賺7%至10.65億人幣 不派息</a></li>
+</ul>
+</div>
+</div>
+</div>
+<div role="tabpanel" class="tab-pane cat-in-c fade in" id="dailynews-c">
+<div class="row">
+<div class="col-xs-12 col-sm-6">
+<div class="top has-image">
+<a href="/news/realtime/spt/1840764/即時-體育-歐聯-C朗省兩粒都無用-祖記失作客入球16強止步" class="img-link"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080810330428136_popup.jpg"></a>
+<h5><a href="/news/realtime/spt/1840764/即時-體育-歐聯-C朗省兩粒都無用-祖記失作客入球16強止步">【歐聯】C朗省兩粒都無用 祖記失作客入球16強止步</a></h5>
+<div class="text">歐聯16強次回合，首回合落後一球的祖雲達斯雖有基斯坦奴朗拿度（C朗）梅開二度，但在先失一個關鍵作客入球下，主場2:1擊敗里昂，但兩回合計打成2:2，因作客入球不及對手，16強行人止步。開賽10分鐘，祖...</div>
+<div class="text-left"><span class="time"><i class="fa fa-clock-o"></i>2020-08-08 10:27</span></div>
+</div>
+</div>
+<div class="col-xs-12 col-sm-6">
+<ul>
+<li><a href="/news/realtime/spt/1840530/即時-體育-杜國榆羅素延續外闖夢">杜國榆羅素延續外闖夢</a></li>
+<li><a href="/news/realtime/spt/1840485/即時-體育-艾簡達拿欲離拜仁-紅軍老婦人掀爭奪戰">艾簡達拿欲離拜仁 紅軍老婦人掀爭奪戰</a></li>
+<li><a href="/news/realtime/spt/1840440/即時-體育-NBA-字母哥率公鹿反勝熱火-下仗再贏即成聯盟一哥">【NBA】字母哥率公鹿反勝熱火 下仗再贏即成聯盟一哥</a></li>
+<li><a href="/news/realtime/spt/1840434/即時-體育-NBA-連納三分雨創歷史-劍指灰熊西八席位">【NBA】連納三分雨創歷史 劍指灰熊西八席位</a></li>
+<li><a href="/news/realtime/spt/1839765/即時-體育-歐霸盃-占美尼斯一箭定江山-狼隊相隔48年再殺入八強">【歐霸盃】占美尼斯一箭定江山 狼隊相隔48年再殺入八強</a></li>
+<li><a href="/news/realtime/spt/1839396/即時-體育-山神免費投國米-紅魔每球值億二">山神免費投國米 紅魔每球值億二</a></li>
+<li><a href="/news/realtime/spt/1839369/即時-體育-連買費蘭托利斯阿基-傳哥迪奧拿再買三將">連買費蘭托利斯阿基 傳哥迪奧拿再買三將</a></li>
+<li><a href="/news/realtime/spt/1839327/即時-體育-江旻憓網授瑜伽齊心抗疫">江旻憓網授瑜伽齊心抗疫</a></li>
+<li><a href="/news/realtime/spt/1838682/即時-體育-歐霸盃-曼聯輕取入八強-將鬥哥本哈根">【歐霸盃】曼聯輕取入八強 將鬥哥本哈根</a></li>
+<li><a href="/news/realtime/spt/1838462/即時-體育-加時2-1險勝賓福特-史葛柏加率富咸衝超">加時2:1險勝賓福特 史葛柏加率富咸衝超</a></li>
+<li><a href="/news/realtime/spt/1838459/即時-體育-宣傳片段穿阿仙奴球衣-傳韋利安下周入廠">宣傳片段穿阿仙奴球衣 傳韋利安下周入廠</a></li>
+<li><a href="/news/realtime/spt/1838450/即時-體育-NBA-禾倫率溜馬挫魔術-三戰119分冠絕聯盟">【NBA】禾倫率溜馬挫魔術 三戰119分冠絕聯盟</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar">
+<script>
+//console.log('/components/common/sidebar.php');
+// console.log('test-/news/realtime/hk/1840833/%E5%8D%B3%E6%99%82-%E6%B8%AF%E8%81%9E-%E7%BE%8E%E5%9C%8B%E5%88%B6%E8%A3%81-%E7%89%B9%E5%8D%80%E6%94%BF%E5%BA%9C%E5%9A%B4%E6%89%B9%E5%8E%9A%E9%A1%8F%E7%84%A1%E6%81%A5%E5%8F%8A%E5%8D%91%E9%84%99-%E8%AD%B4%E8%B2%AC%E5%85%AC%E9%96%8B%E5%AE%98%E5%93%A1%E5%80%8B%E4%BA%BA%E8%B3%87%E6%96%99');
+</script>
+<div id="RP1_300_banner" class="ad_w300"></div>
+<div class="section section-sb section-popular nocontent">
+<div class="heading">
+<h3><i class="fa fa-thumbs-o-up"></i>熱門文章</h3>
+<div class="hit-sections">
+<a href="#" class="section-select active" rel="day">今天</a>
+<a href="#" class="section-select" rel="week">本週</a>
+<a href="#" class="section-select" rel="month">本月</a>
+</div>
+</div>
+<div class="content">
+<div class="news-list-scrollable hit-section-list section-month" style="display: none;">
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1833445/即時-娛樂-新冠肺炎-同房唔戴口罩不斷咳-鄧達智-幫我-救我"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200730/_2020073019011712417_popup.jpg" width="130" height="82" alt="【新冠肺炎】同房唔戴口罩不斷咳 鄧達智：幫我、救我"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1833445/即時-娛樂-新冠肺炎-同房唔戴口罩不斷咳-鄧達智-幫我-救我">【新冠肺炎】同房唔戴口罩不斷咳 鄧達智：幫我、救我</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1833445/即時-娛樂-新冠肺炎-同房唔戴口罩不斷咳-鄧達智-幫我-救我" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1828798/即時-港聞-行蹤曝光-3麥記4大快活上榜-女患者遊遍全港17處地方"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200725/_2020072511062388036_popup.jpg" width="130" height="82" alt="【行蹤曝光】3麥記4大快活上榜 女患者遊遍全港17處地方"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1828798/即時-港聞-行蹤曝光-3麥記4大快活上榜-女患者遊遍全港17處地方">【行蹤曝光】3麥記4大快活上榜 女患者遊遍全港17處地方</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1828798/即時-港聞-行蹤曝光-3麥記4大快活上榜-女患者遊遍全港17處地方" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right has-video">
+<a href="/life/ent/realtime/1828581/即時-娛樂-大媽台上伴唱-疑-播毒-短片流出-嬲爆麥德羅-係咪想我死"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200724/_2020072419240076596_popup.jpg" width="130" height="82" alt="【大媽台上伴唱】疑「播毒」短片流出 嬲爆麥德羅：係咪想我死？"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1828581/即時-娛樂-大媽台上伴唱-疑-播毒-短片流出-嬲爆麥德羅-係咪想我死">【大媽台上伴唱】疑「播毒」短片流出 嬲爆麥德羅：係咪想我死？</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1828581/即時-娛樂-大媽台上伴唱-疑-播毒-短片流出-嬲爆麥德羅-係咪想我死" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1835182/即時-港聞-天水圍23歲散工被搶160萬名表-母-兒子數月前購買"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200802/_2020080208221484007_popup.jpg" width="130" height="82" alt="天水圍23歲散工被搶160萬名表 母：兒子數月前購買"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1835182/即時-港聞-天水圍23歲散工被搶160萬名表-母-兒子數月前購買">天水圍23歲散工被搶160萬名表 母：兒子數月前購買</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1835182/即時-港聞-天水圍23歲散工被搶160萬名表-母-兒子數月前購買" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200802/_2020080212594129169_popup.jpg" width="130" height="82" alt="Lucas 13歲生日 張栢芝晒牽手依偎合照"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照">Lucas 13歲生日 張栢芝晒牽手依偎合照</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200806/_2020080612095388566_popup.jpg" width="130" height="82" alt="逸東酒店3間餐廳捐贈餐點 鼓勵食客購待用餐予基層"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層">逸東酒店3間餐廳捐贈餐點 鼓勵食客購待用餐予基層</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1828984/即時-港聞-確診女文員遊遍全港17處地方-張竹君籲市民盡量留在家中"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200725/_2020072517423051853_popup.jpg" width="130" height="82" alt="確診女文員遊遍全港17處地方 張竹君籲市民盡量留在家中"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1828984/即時-港聞-確診女文員遊遍全港17處地方-張竹君籲市民盡量留在家中">確診女文員遊遍全港17處地方 張竹君籲市民盡量留在家中</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1828984/即時-港聞-確診女文員遊遍全港17處地方-張竹君籲市民盡量留在家中" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1829785/即時-港聞-臨危受命複檢口罩-理大教授掀打假戰"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200727/_2020072708572359863_popup.jpg" width="130" height="82" alt="臨危受命複檢口罩 理大教授掀打假戰"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1829785/即時-港聞-臨危受命複檢口罩-理大教授掀打假戰">臨危受命複檢口罩 理大教授掀打假戰</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1829785/即時-港聞-臨危受命複檢口罩-理大教授掀打假戰" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1833490/即時-港聞-譚耀宗-持BNO港人或失永久居民資格"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200730/_2020073019583822234_popup.jpg" width="130" height="82" alt="譚耀宗:持BNO港人或失永久居民資格"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1833490/即時-港聞-譚耀宗-持BNO港人或失永久居民資格">譚耀宗:持BNO港人或失永久居民資格</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1833490/即時-港聞-譚耀宗-持BNO港人或失永久居民資格" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/wo/1822681/即時-國際-106公斤肥妹被嘲配不起靚仔老公-1年發奮減肥變索爆人妻"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200717/_2020071719304816324_popup.jpg" width="130" height="82" alt="106公斤肥妹被嘲配不起靚仔老公 1年發奮減肥變索爆人妻"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/wo/1822681/即時-國際-106公斤肥妹被嘲配不起靚仔老公-1年發奮減肥變索爆人妻">106公斤肥妹被嘲配不起靚仔老公 1年發奮減肥變索爆人妻</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/wo/1822681/即時-國際-106公斤肥妹被嘲配不起靚仔老公-1年發奮減肥變索爆人妻" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+<div class="news-list-scrollable hit-section-list section-week" style="display: none;">
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200802/_2020080212594129169_popup.jpg" width="130" height="82" alt="Lucas 13歲生日 張栢芝晒牽手依偎合照"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照">Lucas 13歲生日 張栢芝晒牽手依偎合照</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1835338/即時-娛樂-Lucas-13歲生日-張栢芝晒牽手依偎合照" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200806/_2020080612095388566_popup.jpg" width="130" height="82" alt="逸東酒店3間餐廳捐贈餐點 鼓勵食客購待用餐予基層"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層">逸東酒店3間餐廳捐贈餐點 鼓勵食客購待用餐予基層</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1838841/即時-港聞-逸東酒店3間餐廳捐贈餐點-鼓勵食客購待用餐予基層" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1836055/即時-娛樂-細佬來了-陳凱琳鄭嘉穎晒一家四口照報喜"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200803/_2020080313265735972_popup.jpg" width="130" height="82" alt="細佬來了 陳凱琳鄭嘉穎晒一家四口照報喜"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1836055/即時-娛樂-細佬來了-陳凱琳鄭嘉穎晒一家四口照報喜">細佬來了 陳凱琳鄭嘉穎晒一家四口照報喜</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1836055/即時-娛樂-細佬來了-陳凱琳鄭嘉穎晒一家四口照報喜" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right has-video">
+<a href="/news/realtime/hk/1837417/即時-港聞-大圍站兩賊持刀狂斬男子-搶27萬勞力士Daytona手錶逃去"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200804/_2020080420502389104_popup.jpg" width="130" height="82" alt="大圍站兩賊持刀狂斬男子 搶27萬勞力士Daytona手錶逃去"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1837417/即時-港聞-大圍站兩賊持刀狂斬男子-搶27萬勞力士Daytona手錶逃去">大圍站兩賊持刀狂斬男子 搶27萬勞力士Daytona手錶逃去</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1837417/即時-港聞-大圍站兩賊持刀狂斬男子-搶27萬勞力士Daytona手錶逃去" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1836535/即時-港聞-181宗本地確診個案待入院-觀塘最多佔22宗-其次為黃大仙-附患者地點"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200803/_2020080319465915810_popup.jpg" width="130" height="82" alt="181宗本地確診個案待入院 觀塘最多佔22宗 其次為黃大仙(附患者地點)"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1836535/即時-港聞-181宗本地確診個案待入院-觀塘最多佔22宗-其次為黃大仙-附患者地點">181宗本地確診個案待入院 觀塘最多佔22宗 其次為黃大仙(附患者地點)</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1836535/即時-港聞-181宗本地確診個案待入院-觀塘最多佔22宗-其次為黃大仙-附患者地點" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1839498/即時-港聞-梁振英-中方可不容許擁雙重國籍-未來5至6年隨時不認受BNO"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200806/_2020080621432924437_popup.jpg" width="130" height="82" alt="梁振英：中方可不容許擁雙重國籍 未來5至6年隨時不認受BNO"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1839498/即時-港聞-梁振英-中方可不容許擁雙重國籍-未來5至6年隨時不認受BNO">梁振英：中方可不容許擁雙重國籍 未來5至6年隨時不認受BNO</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1839498/即時-港聞-梁振英-中方可不容許擁雙重國籍-未來5至6年隨時不認受BNO" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1838637/即時-港聞-Kelly-Online-籲支持者課金-黃之鋒擬請保鑣司機"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200806/_2020080606381767511_popup.jpg" width="130" height="82" alt="【Kelly Online】籲支持者課金 黃之鋒擬請保鑣司機"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1838637/即時-港聞-Kelly-Online-籲支持者課金-黃之鋒擬請保鑣司機">【Kelly Online】籲支持者課金 黃之鋒擬請保鑣司機</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1838637/即時-港聞-Kelly-Online-籲支持者課金-黃之鋒擬請保鑣司機" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1836955/即時-港聞-林鄭與小師妹合照無-打格-荃灣貼通街-有人報警"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200804/_2020080412573493806_popup.jpg" width="130" height="82" alt="林鄭與小師妹合照無「打格」荃灣貼通街 有人報警"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1836955/即時-港聞-林鄭與小師妹合照無-打格-荃灣貼通街-有人報警">林鄭與小師妹合照無「打格」荃灣貼通街 有人報警　</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1836955/即時-港聞-林鄭與小師妹合照無-打格-荃灣貼通街-有人報警" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1839692/即時-港聞-短裙女中環繞道離奇行走-赤腳無戴口罩惹討論"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200807/_2020080708555561282_popup.jpg" width="130" height="82" alt="短裙女中環繞道離奇行走 赤腳無戴口罩惹討論"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1839692/即時-港聞-短裙女中環繞道離奇行走-赤腳無戴口罩惹討論">短裙女中環繞道離奇行走 赤腳無戴口罩惹討論</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1839692/即時-港聞-短裙女中環繞道離奇行走-赤腳無戴口罩惹討論" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1836166/即時-港聞-Kelly-Online-萬寧買牙膏送近200蚊贈品-商界老總讚超值"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200803/_2020080315234977894_popup.jpg" width="130" height="82" alt="【Kelly Online】萬寧買牙膏送近200蚊贈品 商界老總讚超值"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1836166/即時-港聞-Kelly-Online-萬寧買牙膏送近200蚊贈品-商界老總讚超值">【Kelly Online】萬寧買牙膏送近200蚊贈品 商界老總讚超值</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1836166/即時-港聞-Kelly-Online-萬寧買牙膏送近200蚊贈品-商界老總讚超值" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+<div class="news-list-scrollable hit-section-list section-day">
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840659/即時-港聞-藝人楊明涉醉駕被捕-馬己仙峽道自炒撞壆"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080804533338714_popup.jpg" width="130" height="82" alt="藝人楊明涉醉駕被捕 馬己仙峽道自炒撞壆"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840659/即時-港聞-藝人楊明涉醉駕被捕-馬己仙峽道自炒撞壆">藝人楊明涉醉駕被捕 馬己仙峽道自炒撞壆　</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840659/即時-港聞-藝人楊明涉醉駕被捕-馬己仙峽道自炒撞壆" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840770/即時-港聞-行蹤曝光-Café-Landmark上榜-白田邨45歲男遊走油尖旺九龍城23處"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080810571975984_popup.jpg" width="130" height="82" alt="【行蹤曝光】Café Landmark上榜 白田邨45歲男遊走油尖旺九龍城23處"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840770/即時-港聞-行蹤曝光-Café-Landmark上榜-白田邨45歲男遊走油尖旺九龍城23處">【行蹤曝光】Café Landmark上榜 白田邨45歲男遊走油尖旺九龍城23處</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840770/即時-港聞-行蹤曝光-Café-Landmark上榜-白田邨45歲男遊走油尖旺九龍城23處" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1840422/即時-娛樂-曾華倩繑手男生慶55歲生日-囝囝貼照急解畫"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200807/_2020080717245625757_popup.jpg" width="130" height="82" alt="曾華倩繑手男生慶55歲生日 囝囝貼照急解畫"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1840422/即時-娛樂-曾華倩繑手男生慶55歲生日-囝囝貼照急解畫">曾華倩繑手男生慶55歲生日 囝囝貼照急解畫</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1840422/即時-娛樂-曾華倩繑手男生慶55歲生日-囝囝貼照急解畫" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840848/即時-港聞-Kelly-Online-金價破頂-市民金鋪外排長龍等買金"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080813112894186_popup.jpeg" width="130" height="82" alt="【Kelly Online】金價破頂 市民金鋪外排長龍等買金"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840848/即時-港聞-Kelly-Online-金價破頂-市民金鋪外排長龍等買金">【Kelly Online】金價破頂 市民金鋪外排長龍等買金</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840848/即時-港聞-Kelly-Online-金價破頂-市民金鋪外排長龍等買金" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840704/即時-港聞-SPT-Mask銷毀口罩遭非法盜賣"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080808364888597_popup.jpg" width="130" height="82" alt="SPT Mask銷毀口罩遭非法盜賣"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840704/即時-港聞-SPT-Mask銷毀口罩遭非法盜賣">SPT Mask銷毀口罩遭非法盜賣</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840704/即時-港聞-SPT-Mask銷毀口罩遭非法盜賣" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840749/即時-港聞-楊明有醉駕前科-曾襲保安員毀便利店物品"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080810013581730_popup.jpg" width="130" height="82" alt="楊明有醉駕前科 曾襲保安員毀便利店物品"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840749/即時-港聞-楊明有醉駕前科-曾襲保安員毀便利店物品">楊明有醉駕前科 曾襲保安員毀便利店物品</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840749/即時-港聞-楊明有醉駕前科-曾襲保安員毀便利店物品" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1840182/即時-娛樂-楊思琦42歲生日-晒留母子合照留家度過"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200807/_2020080715120221822_popup.jpg" width="130" height="82" alt="楊思琦42歲生日 晒留母子合照留家度過"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1840182/即時-娛樂-楊思琦42歲生日-晒留母子合照留家度過">楊思琦42歲生日 晒留母子合照留家度過</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1840182/即時-娛樂-楊思琦42歲生日-晒留母子合照留家度過" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840668/即時-港聞-iPhone倘禁微信-內地網民將棄用"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080807495578738_popup.jpg" width="130" height="82" alt="iPhone倘禁微信 內地網民將棄用"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840668/即時-港聞-iPhone倘禁微信-內地網民將棄用">iPhone倘禁微信 內地網民將棄用</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840668/即時-港聞-iPhone倘禁微信-內地網民將棄用" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/realtime/1840296/即時-娛樂-晒溫馨全家福-徐榮46歲生日獲仔女送吻"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200807/_2020080716161238995_popup.jpg" width="130" height="82" alt="晒溫馨全家福 徐榮46歲生日獲仔女送吻"></a>
+</div>
+<div>
+<h5><a href="/life/ent/realtime/1840296/即時-娛樂-晒溫馨全家福-徐榮46歲生日獲仔女送吻">晒溫馨全家福 徐榮46歲生日獲仔女送吻</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/realtime/1840296/即時-娛樂-晒溫馨全家福-徐榮46歲生日獲仔女送吻" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/realtime/hk/1840788/即時-港聞-美國制裁-指國外無資產-駱惠寧-我可向特朗普寄100美元供其凍結"><img src="https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080811213429387_popup.jpg" width="130" height="82" alt="【美國制裁】指國外無資產 駱惠寧:我可向特朗普寄100美元供其凍結"></a>
+</div>
+<div>
+<h5><a href="/news/realtime/hk/1840788/即時-港聞-美國制裁-指國外無資產-駱惠寧-我可向特朗普寄100美元供其凍結">【美國制裁】指國外無資產 駱惠寧:我可向特朗普寄100美元供其凍結</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/realtime/hk/1840788/即時-港聞-美國制裁-指國外無資產-駱惠寧-我可向特朗普寄100美元供其凍結" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="RP2_300_banner" class="ad_w300"></div>
+<div class="section section-sb nocontent" style="display:none;">
+<div class="heading">
+<h3><a href="/news/daily/日報主頁/">日報新聞</a></h3>
+<span class="more"><a href="/news/daily/日報主頁/"><i class="fa fa-ellipsis-h"></i> 更多</a></span>
+</div>
+<div class="content">
+<div class="news-list-scrollable">
+<div class="caption"> <span class="hang cat-dn-1"><a href="/news/daily/hk/日報-港聞/">港聞</a></span>
+<h5><a href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開">﻿全民免費檢測 最快兩周後展開</a></h5>
+<div>第三波疫情爆發近一個月，特首林...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-1"><a href="/news/daily/hk/日報-港聞/">港聞</a></span>
+<h5><a href="/news/daily/hk/874107/日報-港聞-美制裁中港11官員包括林鄭">﻿美制裁中港11官員包括林鄭</a></h5>
+<div>《港區國安法》觸發國際社會關注...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-2"><a href="/news/daily/chi/日報-中國/">中國</a></span>
+<h5><a href="/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉">《哆啦AV夢》插畫家微博被封 作品含色情元素Twitter上致歉 </a></h5>
+<div>同人漫畫作品《哆啦AV夢》近日...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-06</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-3"><a href="/news/daily/wo/日報-國際/">國際</a></span>
+<h5><a href="/news/daily/wo/874197/日報-國際-特朗普叫停美企與TikTok微信交易">﻿特朗普﻿﻿﻿叫停美企與TikTok微信交易 </a></h5>
+<div>美國總統特朗普簽署了兩項行政命...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-3"><a href="/news/daily/wo/日報-國際/">國際</a></span>
+<h5><a href="/news/daily/wo/873888/日報-國際-無視海關六度促移易燃物-貝魯特港口人員候懲">﻿無視海關六度促移易燃物﻿ 貝魯特港口人員候懲</a></h5>
+<div>震動全球的黎巴嫩貝魯特港區大爆...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-07</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-4"><a href="/news/daily/pp/日報-地產/">地產</a></span>
+<h5><a href="/news/daily/pp/874152/日報-地產-御龍山特色戶空中暢泳">御龍山特色戶空中暢泳</a></h5>
+<div>特色戶向來有捧場客，火炭指標屋...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-4"><a href="/news/daily/pp/日報-地產/">地產</a></span>
+<h5><a href="/news/daily/pp/873840/日報-地產-屋苑頻錄用家承接">屋苑頻錄用家承接</a></h5>
+<div>據《星島地產網》報道，二手再錄...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-07</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-5"><a href="/news/daily/fin/日報-財經/">財經</a></span>
+<h5><a href="/news/daily/fin/874155/日報-財經-騰訊曾瀉一成-恒指插398點">騰訊曾瀉一成 恒指插398點</a></h5>
+<div>科技巨擘（700）受累美國總統...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-5"><a href="/news/daily/fin/日報-財經/">財經</a></span>
+<h5><a href="/news/daily/fin/874158/日報-財經-TVB料中期轉蝕2-9億">TVB料中期轉蝕2.9億</a></h5>
+<div>於新冠肺炎疫情肆虐下，電視廣播...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-6"><a href="/news/daily/spt/日報-體育/">體育</a></span>
+<h5><a href="/news/daily/spt/873903/日報-體育-歐聯復賽-祖記反擊-疫鬥士昂首">﻿歐聯復賽 祖記反擊 疫鬥士昂首</a></h5>
+<div>祖雲達斯鋒將保羅戴巴拿在歐聯十...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-07</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-8"><a href="/life/ent/daily/日報-娛樂/">娛樂</a></span>
+<h5><a href="/life/ent/daily/874188/日報-娛樂-沈殷怡獻熒幕初吻-Anson-Kong被彈未夠靚仔">沈殷怡獻熒幕初吻 Anson Kong被彈未夠靚仔</a></h5>
+<div>Mirror成員Anson K...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-9"><a href="/news/columns/日報-專欄/">專欄</a></span>
+<h5><a href="/news/columns/17/20200808/874206/專欄-好好過日子-知識份子對話">好好過日子——知識份子對話</a></h5>
+<div>一連三天沒出家門，朋友問，你不...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-10"><a href="/news/daily/rac/日報-馬經/">馬經</a></span>
+<h5><a href="/news/daily/rac/874164/日報-馬經-馬場浮世繪-史卓豐復課操希廄馬">馬場浮世繪——史卓豐復課操希廄馬</a></h5>
+<div>繼薛恩、莫雷拉和田泰安之後，另...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="caption"> <span class="hang cat-dn-10"><a href="/news/daily/rac/日報-馬經/">馬經</a></span>
+<h5><a href="/news/daily/rac/874167/日報-馬經-馬場浮世繪-英國冠軍錦標賽日獎金大減">馬場浮世繪——英國冠軍錦標賽日獎金大減</a></h5>
+<div>英國賽馬會一星期前公布，由九月...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+</div>
+</div>
+</div>
+<div id="jetso-wrapper"><div class="section section-sb jetso"><div class="heading"><h3><a href="/jeso/">會員著數</a></h3><h3><a href="/hdjetso/">頭條Jetso</a></h3><div class="winners"><a href="/jeso/winners/"><i class="fa fa-trophy"></i>得獎名單</a></div></div><div id="jetso-carousel-1"></div></div><div class="section section-sb jetso"id="jetso-carousel-1"style="border:none;"></div><script>var right_ads_groupList_sub=[];if(right_ads_groupList_sub.length>0){var htmlStrRightAdsSub=[];htmlStrRightAdsSub.push('<div class="content">');htmlStrRightAdsSub.push('<div id="jetso-carousel-sub" class="carousel slide" data-ride="carousel">');htmlStrRightAdsSub.push('   <ol class="carousel-indicators">');for(idx=0;idx<right_ads_groupList_sub.length;idx++){htmlStrRightAdsSub.push('       <li data-target="#jetso-carousel-sub" data-slide-to="'+idx+'" '+((idx==0)?'class="active"':'')+'></li>')}htmlStrRightAdsSub.push('   </ol>');htmlStrRightAdsSub.push('   <div class="carousel-inner" role="listbox">');for(idx=0;idx<right_ads_groupList_sub.length;idx++){htmlStrRightAdsSub.push('   <div class="item'+((idx==0)?' active':'')+'">'+right_ads_groupList_sub[idx]+'</div>')}htmlStrRightAdsSub.push('   </div>');htmlStrRightAdsSub.push('   <a class="left carousel-control" href="#jetso-carousel-sub" role="button" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#jetso-carousel-sub" role="button" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>');htmlStrRightAdsSub.push('</div>');htmlStrRightAdsSub.push('</div>');document.getElementById("jetso-carousel-1").innerHTML=htmlStrRightAdsSub.join("")}</script><script>var right_ads_groupList=[];right_ads_groupList.push('<a href="https://bit.ly/2Z5gjkZ" target="_blank"><img src="//static.stheadline.com/stheadline/images/banner/2020/rp_hd_ask_20200728.gif" border="0" alt="ASK Redemption"></a>');right_ads_groupList.push('<a href="https://hd.stheadline.com/special/2122pri_redemp/" target="_blank"><img src="//static.stheadline.com/stheadline/images/banner/2020/rp_hd_pr2122_20200623.jpg" border="0" alt="21／22 小一入學家長天書"></a>');if(right_ads_groupList.length>0){var htmlStrRightAds=[];htmlStrRightAds.push('<div class="content" id="jetsoCotent">');htmlStrRightAds.push('<div id="jetso-carousel" class="carousel slide" data-ride="carousel">');htmlStrRightAds.push('  <div class="carousel-inner" role="listbox">');for(var idx=0;idx<right_ads_groupList.length;idx++){htmlStrRightAds.push('  <div class="item'+((idx==0)?' active':'')+'">'+right_ads_groupList[idx]+'</div>')}htmlStrRightAds.push('  </div>');htmlStrRightAds.push('  <a class="left carousel-control" href="#jetso-carousel" role="button" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#jetso-carousel" role="button" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>');htmlStrRightAds.push('  <ol class="carousel-indicators">');for(idx=0;idx<right_ads_groupList.length;idx++){htmlStrRightAds.push('      <li data-target="#jetso-carousel" data-slide-to="'+idx+'" '+((idx==0)?'class="active"':'')+'></li>')}htmlStrRightAds.push('  </ol>');htmlStrRightAds.push('</div>');htmlStrRightAds.push('</div>');document.getElementById("jetso-carousel-1").innerHTML=htmlStrRightAds.join("")}</script></div>
+<div id="RP2_300_banner" class="ad_w300"></div>
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/64888526/HL-300x250-Innity-Animation', [300, 250], 'div-gpt-ad-1523938221490-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<div style="visibility:hidden;">
+<div id='div-gpt-ad-1523938221490-0' style='height:250px; width:300px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1523938221490-0'); });
+</script>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div id="footer" class="footer footer-pb">
+<div class="container">
+<div class="txt-link">
+<table class="table">
+<tbody>
+<tr>
+<td><h5><a href="/news/daily/">新聞</a></h5>
+<ul>
+<li><a href="/news/realtime/即時/">即時新聞</a></li>
+<li><a href="/news/daily/日報主頁/">日報新聞</a></li>
+<li><a href="/news/columns/日報-專欄/">專欄</a></li>
+<li><a href="https://pop.stheadline.com/">POPNEWS</a></li>
+</ul></td>
+<td><h5><a href="https://hdfin.stheadline.com/">財經</a></h5>
+<ul>
+<li><a href="https://hdfin.stheadline.com/inews_finance_news_list.php">財經新聞</a></li>
+<li><a href="https://hdfin.stheadline.com/realtime_info.php">即時報價</a></li>
+<li><a href="https://hdfin.stheadline.com/basket_index.php">一籃指數</a></li>
+<li><a href="https://hdfin.stheadline.com/specialist_main.php">專家指路</a></li>
+<li><a href="https://hdfin.stheadline.com/broker_main.php">大行精點</a></li>
+<li><a href="https://hdfin.stheadline.com/warrants_main.php">輪證心法</a></li>
+<li><a href="https://hdfin.stheadline.com/wealth_mgt_list.php">增值快線</a></li>
+<li><a href="https://hdfin.stheadline.com/ipo_list.php">新股專區</a></li>
+<li><a href="https://hdfin.stheadline.com/property_list.php">地產快遞</a></li>
+<li><a href="https://hdfin.stheadline.com/exchange_list.php">外匯行情</a></li>
+<li><a href="https://hdfin.stheadline.com/lunch_analyse_content.php">頭條解籤</a></li>
+</ul></td>
+<td><h5><a href="/life/ent/">娛樂</a></h5>
+<ul>
+<li><a href="/life/ent/realtime/">即時娛樂</a></li>
+<li><a href="/life/ent/daily/">日報娛樂</a></li>
+<li><a href="/life/ent/popnews/">POPNews娛樂</a></li>
+<li><a href="/life/ent/columnist/">娛樂專欄</a></li>
+<li><a href="/life/ent/mov/">電影</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/dining/">飲食</a></h5>
+<ul>
+<li><a href="/life/dining/395/">頭條飯堂</a></li>
+<li><a href="/life/dining/398/">搵食攻略</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/travel/">旅遊</a></h5>
+<ul>
+<li><a href="/life/travel/389/">專題故事</a></li>
+<li><a href="/life/travel/392/">旅遊Hot News</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/fashion/">時尚</a></h5>
+<ul>
+<li><a href="/life/fashion/566/">潮流</a></li>
+<li><a href="/life/fashion/569/">美容</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/car/">駕駛</a></h5>
+<ul>
+<li><a href="/life/car/419/">新車專訊</a></li>
+<li><a href="/life/car/422/">車壇速遞</a></li>
+<li><a href="/life/car/561/">車盤快訊</a></li>
+<li><a href="/life/car/425/">加料站</a></li>
+</ul></td>
+<td><h5><a href="/life/living/">健康生活</a></h5>
+<ul>
+<li><a href="/life/living/434/">保健養生</a></li>
+<li><a href="/life/living/428/">醫療專題</a></li>
+<li><a href="/life/living/431/">醫療新知</a></li>
+<li><a href="/life/living/437/">孕產育兒</a></li>
+<li><a href="/life/living/440/">生活百科</a></li>
+<li><a href="/life/living/443/">健康講座</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/home/">家居</a></h5>
+<ul>
+<li><a href="/life/home/464/">樓市行情</a></li>
+<li><a href="/life/home/473/">精選家品</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/digital/">影音</a></h5>
+<ul>
+<li><a href="/life/digital/404/">手機通訊</a></li>
+<li><a href="/life/digital/407/">數碼影樓</a></li>
+<li><a href="/life/digital/416/">遊戲特區</a></li>
+<li><a href="/life/digital/410/">電腦科技</a></li>
+<li><a href="/life/digital/413/">影音生活</a></li>
+</ul></td>
+<td><h5><a href="/life/fortune/">星相</a></h5>
+<ul>
+<li><a href="/life/fortune/41/">解夢解謎</a></li>
+<li><a href="/life/fortune/42/">鬼話連篇</a></li>
+<li><a href="/life/fortune/43/">雜談</a></li>
+</ul></td>
+<td><h5><a href="/racing/adult_warn.asp?back_to=/racing/index.asp">馬經</a></h5>
+<ul>
+<li><a href="/racing/racing_subindex.asp?catid=797">賽馬新聞</a></li>
+<li><a href="/racing/racing_position.asp">賽事資料</a></li>
+<li><a href="/racing/racing_odds_livebet.asp">賠率速遞</a></li>
+<li><a href="/racing/racing_professional_tips.asp">名家貼士</a></li>
+<li><a href="http://blogcity.me/blog/list_blog_express.asp?f=W2F8PPC12T72154">名家BLOG</a></li>
+<li><a href="/racing/racing_db_01.asp">資料庫</a></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="copyright">
+<div class="p"><span class="tel">總機 : 2798 2323</span><span class="tel"><a href="http://paper.stheadline.com/html/callad.html" target="_blank">日報(祇適用廣告查詢)</a> : 3181 3666</span><span class="tel"><a href="https://static.stheadline.com/stheadline/pdf/stheadlineOnlineRatecard.pdf" target="_blank">網上(祇適用廣告查詢)</a> : 2798 2845</span><span class="tel">廣告查詢電郵 : <a href="mailto:adv@hkheadline.com" target="_blank">adv@hkheadline.com</a></span></div>
+<div class="p"><a href="/privacy.php">私隱政策聲明</a> │ <a href="/terms.php">使用條款</a> │ <a href="/qrcode_terms.php">QR Code 使用條款及細則</a> │ <a href="/copyright.php">版權告示</a></div>
+<div class="p">聯絡我們： <a href="mailto:web_info@hkheadline.com" target="_blank">web_info@hkheadline.com</a> Copyright 2020 hkheadline.com. All rights reserved. </div>
+</div>
+<div class="img-link">
+<ul class="list-inline"><li><a target="_blank" href="http://www.singtaonewscorp.com/"><div class="footer_icon_logo_01"></div></a></li><li><a target="_blank" href="http://std.stheadline.com/"><div class="footer_icon_logo_02"></div></a></li><li><a target="_blank" href="http://www.thestandard.com.hk/"><div class="footer_icon_logo_03"></div></a></li><li><a target="_blank" href="/"><div class="footer_icon_logo_04"></div></a></li><li><a target="_blank" href="http://easttouch.my-magazine.me/"><div class="footer_icon_logo_07"></div></a></li><li><a target="_blank" href="http://eastweek.my-magazine.me/"><div class="footer_icon_logo_08"></div></a></li><li><a target="_blank" href="https://hdfin.stheadline.com/"><div class="footer_icon_logo_10"></div></a></li><li><a target="_blank" href="http://headlinejobs.hk/"><div class="footer_icon_logo_11"></div></a></li><li><a target="_blank" href="http://www.singtaoopo.com/"><div class="footer_icon_logo_12"></div></a></li></ul>
+</div>
+</div>
+</div>
+</div>
+<div class="detail-ctrl-bar">
+<div class="pull-right">
+<div class="control share"><a href="#" data-toggle="modal" data-target="#mobileShareModal"><i class="fa fa-share-alt"></i></a></div>
+<div class="control list"><a href="/news/realtime/hk/" data-target="list"><i class="fa fa-list"></i></a></div>
+<div class="control next"><a href="/news/realtime/hk/1840983/即時-港聞-本港增69宗確診-旺角中醫中招九龍灣港鐵車廠現小型爆發" data-target="next"><i class="fa fa-arrow-right"></i></a></div>
+</div>
+<div class="pull-left">
+<div class="control download">
+<a href="http://hd.stheadline.com/special/redirectApp_hl.php" target="_blank" title="下載頭條App">下載頭條App</a>
+</div>
+</div>
+</div> 
+</div>
+</div>
+</div>
+<div class="sidebar-offcanvas sidebar-right" id="sidebar-right">
+<div class="scrollable">
+<h2><i class="fa fa-star"></i> 熱門推介</h2>
+<div class="scrollable-content">
+<div class="list-group">
+<a class="list-group-item" href="/news/columns/日報-專欄/"><span><i class="fa fa-users"></i> 專欄</span></a>
+<a class="list-group-item" href="https://pop.stheadline.com/"><span><i class="fa fa-play-circle-o"></i> POPNews</span></a>
+<a class="list-group-item" href="/ent/娛樂-影視/"><span><i class="fa fa-film"></i> 娛樂影視</span></a>
+<a class="list-group-item" href="https://hdfin.stheadline.com/"><span><i class="fa fa-line-chart"></i> 財經網</span></a>
+<a class="list-group-item" href="/life/"><span><i class="fa fa-gittip"></i> Headlife</span></a>
+<a class="list-group-item" href="/racing/adult_warn.asp?back_to=/racing/index.asp"><span><i class="fa horse"></i> 馬經網</span></a>
+<a class="list-group-item" href="http://blogcity.me/"><span><i class="fa fa-comments-o"></i> Blog City</span></a>
+<a class="list-group-item" href="http://pop.stheadline.com/hlEpaperApp.php"><span><i class="fa epaper"></i> 頭條揭頁版</span></a>
+<a class="list-group-item" href="/hdjetso/"><span class="hd-jetso">頭條Jetso</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mobileShareModal modal fade" id="mobileShareModal" tabindex="-1" role="dialog" aria-labelledby="mobileShareModalLabel" aria-hidden="true">
+<div class="modal-dialog">
+<div class="modal-content">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+<h4 class="modal-title" id="mobileShareModalLabel">分享</h4>
+</div>
+<div class="modal-body">
+<div class="row">
+<div class="col-xs-3 facebook">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'facebook', 'false');">
+<i class="fa fa-facebook"></i>
+<em>Facebook</em>
+</a>
+</div>
+<div class="col-xs-3 google-plus mobile-element">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'google-plus', 'false');">
+<i class="fa fa-google-plus"></i>
+<em>Google+</em>
+</a>
+</div>
+<div class="col-xs-3 twitter">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'twitter', 'false');">
+<i class="fa fa-twitter"></i>
+<em>Twitter</em>
+</a>
+</div>
+<div class="col-xs-3 whatsapp mobile-element" style="display: none;">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'whatsapp', 'false');">
+<i class="fa fa-whatsapp"></i>
+<em>Whatsapp</em>
+</a>
+</div>
+<div class="col-xs-3 weibo">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'weibo', 'false');">
+<i class="fa fa-weibo"></i>
+<em>Weibo</em>
+</a>
+</div>
+<div class="col-xs-3 envelope">
+<a href="javascript:shareStory('【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料', '', 'https://static.stheadline.com/stheadline/inewsmedia/20200808/_2020080812521731954.jpg', 'email', 'false');">
+<i class="fa fa-envelope"></i>
+<em>Email</em>
+</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+var popnewsWebRoot = 'https://pop.stheadline.com/';
+var comscoreBasesiteUrlInews = 'https://sb.scorecardresearch.com/p?c1=2&c2=9053246&ns_site=news&ns_vsite=headline';
+var videoHttpSourceRoot = 'http://static.stheadline.com/stheadline/';
+var newsID = "1840833";
+var newsTitle = "【美國制裁】特區政府嚴批厚顏無恥及卑鄙 譴責公開官員個人資料";
+var newsCat = "a";
+var statHitcountSeverRoot = "https://stat.stheadline.com/";
+</script>
+<!--[if lt IE 9]>
+    <script src="https://static.stheadline.com/stheadline/js/html5shiv.min.js"></script>
+    <script src="https://static.stheadline.com/stheadline/js/respond.min.js"></script>
+<![endif]-->
+<script src="//cdn.jsdelivr.net/g/jquery@1.12.4,bootstrap@3.3.7,perfect-scrollbar@0.6.14(js/perfect-scrollbar.jquery.min.js),sweetalert2@5.3.5"></script>
+<script type="text/javascript" src="/js/wurfl.js"></script>
+<script>
+window.jQuery || document.write('<script src="https://static.stheadline.com/stheadline/js/jquery.min.js">\x3C/script>');
+$.fn.modal || document.write('<script src="https://static.stheadline.com/stheadline/js/bootstrap.min.js">\x3C/script>');
+$.fn.perfectScrollbar || document.write('<script src="https://static.stheadline.com/stheadline/js/jquery.perfect-scrollbar.min.js">\x3C/script>');
+window.sweetAlert || document.write('<script src="https://static.stheadline.com/stheadline/js/sweetalert2.min.js">x3C/script>');
+googletag.cmd.push(function(){[detected_ads.main, detected_ads.right].forEach(function(ads) {for (var div in ads) { googletag.display(div);}});});
+var metaPlatform="computer";
+
+// console.log('metaPlatform : '+metaPlatform);
+//var metaPlatform="computer";
+</script>
+<div id="FontAwesome_fallback" class="fa" style="display:none"></div>
+<script>!function(e){var s=e("#FontAwesome_fallback");var a=s.css("fontFamily");"FontAwesome"!==a&&e("head").append('<link href="https://static.stheadline.com/stheadline/css/font-awesome.min.css" rel="stylesheet">')}(jQuery);</script>
+<script async defer src="https://static.stheadline.com/stheadline/js/offcanvas.min.js"></script>
+<script src="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script defer src="/js/modernizr-custom.js"></script>
+<script defer src="/js/custom.js"></script>
+<script> var _comscore = _comscore || []; _comscore.push({ c1: "2", c2: "9053246", c3: "", c4: "" }); (function() { var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true; s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js"; el.parentNode.insertBefore(s, el); })(); </script>
+<noscript>
+<img src="http://b.scorecardresearch.com/p?c1=2&c2=&c3=&c4=&c5=&c6=&c15=&cv=2.0&cj=1" />
+</noscript>
+<script defer src="https://static.stheadline.com/stheadline/js/comscore/comscore.streaming.min.js"></script>
+<script type="text/javascript">_satellite.pageBottom();</script>
+<script src="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script>$(document).ready(function(){updateHitcount('1840833', 'a', 'instant');});</script>
+<img src="/wt/MTU5HLN2kr30HLX3dzQmZIOFRnYlZ2b18xblZqR2FLQQNjg3NjU2Nw.gif" style="visibility:hidden;display:none" alt="hd"/></body>
+</html>

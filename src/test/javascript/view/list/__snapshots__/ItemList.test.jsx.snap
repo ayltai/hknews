@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ItemList /> renders without errors 1`] = `
+<div
+  className="list-page RaList-root-1"
+  error={null}
+  filter={Object {}}
+>
+  <div
+    className="MuiToolbar-root MuiToolbar-regular RaListToolbar-toolbar-7 MuiToolbar-gutters"
+  >
+    <form
+      className="RaFilter-form-10 RaFilterForm-form-11"
+      onSubmit={[Function]}
+    >
+      <div
+        className="filter-field RaFilterFormInput-body-13"
+        data-source="source"
+      >
+        <div
+          className="MuiFormControl-root MuiFormControl-marginDense"
+        >
+          <label
+            className="MuiFormLabel-root MuiInputLabel-root RaLabeled-label-16 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense"
+            data-shrink={true}
+            htmlFor="source"
+          >
+            <span>
+              labels.publisher
+            </span>
+          </label>
+          <div
+            className="RaLabeled-value-17"
+          >
+            <div
+              className="MuiLinearProgress-root MuiLinearProgress-colorPrimary RaLinearProgress-root-18 MuiLinearProgress-indeterminate"
+              input={
+                Object {
+                  "checked": undefined,
+                  "name": "source",
+                  "onBlur": [Function],
+                  "onChange": [Function],
+                  "onFocus": [Function],
+                  "value": "",
+                }
+              }
+              resource="source"
+              role="progressbar"
+            >
+              <div
+                className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
+                style={Object {}}
+              />
+              <div
+                className="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
+                style={Object {}}
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          className="RaFilterFormInput-spacer-14"
+        >
+           
+        </div>
+      </div>
+      <div
+        className="RaFilterForm-clearFix-12"
+      />
+    </form>
+    <span />
+    <div
+      className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-19 RaListToolbar-actions-8 MuiToolbar-gutters"
+    />
+  </div>
+  <div
+    className="RaList-main-2"
+  >
+    <div
+      className="MuiPaper-root MuiCard-root RaList-content-3 MuiPaper-elevation1 MuiPaper-rounded"
+    >
+      <div
+        className="makeStyles-container-26"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+        />
+      </div>
+      <div
+        className="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
+      />
+    </div>
+  </div>
+</div>
+`;

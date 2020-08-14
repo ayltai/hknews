@@ -1,0 +1,48 @@
+---
+- name: Keep system up-to-date
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Keep system up-to-date
+  apt:
+    update_cache: yes
+    upgrade: dist
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Change sysctl parameters
+  sysctl:
+    name: "{{ item['type'] }}"
+    value: "{{ item['value'] }}"
+  loop:
+    - { type: 'vm.swappiness',  value: "{{ system_vm_swappiness }}" }
+    - { type: 'vm.dirty_ratio', value: "{{ system_vm_dirty_ratio }}" }
+
+- name: Change PAM limits
+  pam_limits:
+    domain: '*'
+    limit_type: "{{ item[1] }}"
+    limit_item: "{{ item[0]['type'] }}"
+    value: "{{ item[0]['value'] }}"
+  with_nested:
+    - "{{ system_limits }}"
+    - [ 'hard', 'soft', ]
+
+- name: Wait for DNS record update from external DNS provider
+  wait_for:
+    timeout: "{{ system_dns_timeout }}"
+    host: "{{ system_domain_name }}"
+    port: 22
+    delay: 60
+    search_regex: OpenSSH
+
+- name: Change hostname
+  hostname:
+    name: "{{ system_domain_name }}"
+
+- name: Add hostname entry to /etc/hosts
+  lineinfile:
+    path: /etc/hosts
+    line: "{{ system_ip_address }} {{ system_domain_name }}"

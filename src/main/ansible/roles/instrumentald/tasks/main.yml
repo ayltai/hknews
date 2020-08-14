@@ -1,0 +1,63 @@
+---
+- name: Download instrumentald package
+  get_url:
+    url: "{{ instrumentald_package_url }}"
+    dest: "{{ ansible_env.HOME }}"
+    mode: 0644
+
+- name: Decompress instrumentald package
+  unarchive:
+    src: "{{ ansible_env.HOME }}/{{ instrumentald_package_filename }}"
+    dest: "{{ ansible_env.HOME }}"
+    mode: 0644
+    remote_src: yes
+
+- name: Move instrumentald files
+  copy:
+    src: "{{ ansible_env.HOME }}/{{ instrumentald_package_name }}/opt/"
+    dest: /opt/
+    mode: preserve
+    remote_src: yes
+
+- name: Set instrumentald executable permission
+  file:
+    path: "{{ item }}"
+    mode: 0755
+  with_items:
+    - /opt/instrumentald
+    - /opt/instrumentald/instrumentald
+    - /opt/instrumentald/lib/app/bin/instrumentald
+    - /opt/instrumentald/lib/app/lib/telegraf/amd64/telegraf
+    - /opt/instrumentald/lib/app/lib/telegraf/darwin/telegraf
+    - /opt/instrumentald/lib/app/lib/telegraf/i386/telegraf
+    - /opt/instrumentald/lib/ruby/bin/ruby
+    - /opt/instrumentald/lib/ruby/bin/ruby_environment
+    - /opt/instrumentald/lib/ruby/bin.real/ruby
+
+- name: Copy instrumentald configurations file
+  template:
+    src: instrumentald.toml.j2
+    dest: /etc/instrumentald.toml
+    mode: 0644
+
+- name: Install cron
+  apt:
+    name: cron
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install cronie
+  yum:
+    name: cronie
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Create cron job for instrumentald
+  cron:
+    name: instrumentald
+    special_time: reboot
+    job: /opt/instrumentald/instrumentald start
+
+- name: Start instrumentd
+  command: /opt/instrumentald/instrumentald start
+  changed_when: no

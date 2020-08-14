@@ -1,0 +1,5 @@
+#!/bin/bash
+# {{ ansible_managed }}
+
+openssl pkcs12 -export -in /etc/letsencrypt/live/{{ domain_name }}/fullchain.pem -inkey /etc/letsencrypt/live/{{ domain_name }}/privkey.pem -out /etc/letsencrypt/live/{{ domain_name }}/keystore.p12 -name hknews -CAfile /etc/letsencrypt/live/{{ domain_name }}/chain.pem -caname root -passout pass:{{ key_store_password }}
+{{ ansible_env.HOME }}/start.sh > /dev/null 2>&1 &

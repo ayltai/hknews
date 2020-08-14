@@ -1,0 +1,10 @@
+---
+- name: Check instrumentald file status
+  stat:
+    path: "{{ ansible_env.HOME }}/{{ instrumentald_package_name }}/opt/instrumentald/lib/app/bin/instrumentald"
+  register: instrumentald
+
+- name: Test if instrumentald is installed
+  assert:
+    that:
+      - instrumentald.stat.exists

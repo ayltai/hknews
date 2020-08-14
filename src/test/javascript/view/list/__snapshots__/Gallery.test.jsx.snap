@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Gallery /> renders without errors 1`] = `
+<div
+  className="RaSingleFieldList-root-1"
+  label="label"
+>
+  <img
+    onClick={[Function]}
+    record={
+      Object {
+        "label": "1",
+        "source": "image1",
+      }
+    }
+    src="image1"
+  />
+  <img
+    onClick={[Function]}
+    record={
+      Object {
+        "label": "2",
+        "source": "image2",
+      }
+    }
+    src="image1"
+  />
+</div>
+`;

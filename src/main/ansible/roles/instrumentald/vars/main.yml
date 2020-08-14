@@ -1,0 +1,4 @@
+---
+instrumentald_package_name: instrumentald_1.1.1_linux-x86_64
+instrumentald_package_filename: "{{ instrumentald_package_name }}.tar.gz"
+instrumentald_package_url: "https://github.com/Instrumental/instrumentald/releases/download/v1.1.1/{{ instrumentald_package_filename }}"

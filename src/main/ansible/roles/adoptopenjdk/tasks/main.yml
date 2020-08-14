@@ -1,0 +1,91 @@
+---
+- block:
+    - name: Install GnuPG
+      apt:
+        name: gnupg
+        update_cache: yes
+
+    - name: Add AdoptOpenJDK repository key
+      apt_key:
+        url: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+
+    - name: Add AdoptOpenJDK repository
+      apt_repository:
+        repo: "deb https://adoptopenjdk.jfrog.io/adoptopenjdk/deb {{ ansible_facts['distribution_release'] }} main"
+
+    - name: Update apt cache
+      apt:
+        name: software-properties-common
+        update_cache: yes
+
+    - name: Install OpenJDK
+      apt:
+        name: "{{ adoptopenjdk_package }}"
+  when: ansible_facts['os_family'] == 'Debian'
+
+- block:
+    - name: Add AdoptOpenJDK repository
+      yum_repository:
+        name: AdoptOpenJDK
+        description: AdoptOpenJDK
+        baseurl: http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/centos/$releasever/$basearch
+        gpgcheck: yes
+        gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+      when: ansible_facts['distribution'] == 'CentOS'
+
+    - name: Add AdoptOpenJDK repository
+      yum_repository:
+        name: AdoptOpenJDK
+        description: AdoptOpenJDK
+        baseurl: http://adoptopenjdk.jfrog.io/adoptopenjdk/rpm/fedora/$releasever/$basearch
+        gpgcheck: yes
+        gpgkey: https://adoptopenjdk.jfrog.io/adoptopenjdk/api/gpg/key/public
+      when: ansible_facts['distribution'] == 'Fedora'
+
+    - name: Install OpenJDK
+      yum:
+        name: "{{ adoptopenjdk_package }}"
+        update_cache: yes
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Copy CA certificates
+  copy:
+    src: "{{ item }}"
+    dest: "{{ ansible_env.HOME }}"
+    mode: 0600
+  with_items:
+    - root_ca_1.der
+    - root_ca_2.der
+    - root_ca_3.der
+
+- name: Import CA certificates to Java keystore
+  command: |
+    keytool \
+    -import \
+    -alias root_ca_{{ item.0 }} \
+    -keystore /usr/lib/jvm/{{ adoptopenjdk_package }}-amd64/lib/security/cacerts \
+    -storepass changeit \
+    -file {{ item.1 }} \
+    -noprompt
+  changed_when: no
+  with_indexed_items:
+    - "{{ ansible_env.HOME }}/root_ca_1.der"
+    - "{{ ansible_env.HOME }}/root_ca_2.der"
+    - "{{ ansible_env.HOME }}/root_ca_3.der"
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Import CA certificates to Java keystore
+  command: |
+    keytool \
+    -import \
+    -alias root_ca_{{ item.0 }} \
+    -keystore /usr/lib/jvm/{{ adoptopenjdk_package }}/lib/security/cacerts \
+    -storepass changeit \
+    -file {{ item.1 }} \
+    -noprompt
+  changed_when: no
+  with_indexed_items:
+    - "{{ ansible_env.HOME }}/root_ca_1.der"
+    - "{{ ansible_env.HOME }}/root_ca_2.der"
+    - "{{ ansible_env.HOME }}/root_ca_3.der"
+  when: ansible_facts['os_family'] == 'RedHat'

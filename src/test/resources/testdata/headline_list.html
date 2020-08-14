@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="zh-yue-Hant-HK">
+<head>
+<script src="//assets.adobedtm.com/launch-EN227213af532841a48cb92e23b43a2f63.min.js"></script>
+<script>
+//console.log(window.location.pathname);
+var current_url = window.location.href;
+var split_url = current_url.split("/");
+console.log(split_url);
+var digitalData = {};
+digitalData.page = {};
+digitalData.page.pageInfo = {};
+digitalData.page.pageInfo.pagename = "";
+digitalData.page.article = {};
+digitalData.page.article.name = "";
+
+var pageNameStr = "頭條日報";
+var priCat = "主頁";
+var artiName = "主頁";
+var cat_ch = {};
+
+var coloumnTitle = "";
+
+if(split_url.length >= 2){
+	if(split_url[3] == "life"){
+		pageNameStr += ".生活消費";
+		cat_ch = { "travel": "旅遊", "dining": "飲食", "digital": "影音", "car": "駕駛", "fashion": "時尚", "living": "健康", "fortune": "星相", "home": "家居"};
+		if(split_url.length > 6){
+			priCat = cat_ch[split_url[4]];
+			if(split_url.length == 8){
+				digitalData.page.article.id = split_url[6];
+			}
+		}
+	}else if(split_url[3] == "hdjetso"){
+		pageNameStr += ".頭條Jetso";
+	}else if(split_url[3] == "special"){
+		pageNameStr += ".銷售及推廣";
+		priCat = split_url[4];
+		artiName = "港聞 | 每日新聞";
+	}
+	
+	if(split_url.length >= 3){
+		if(split_url[4] == "ent"){
+			pageNameStr = "頭條日報.娛樂影視";
+			cat_ch = { "realtime": "即時娛樂", "daily": "日報娛樂", "columnist": "娛樂專欄", "mov": "電影"};
+		}else if(split_url[4] == "realtime"){
+			pageNameStr += ".即時新聞";
+			cat_ch = { "hk": "港聞", "chi": "中國", "wo": "國際", "pp": "地產", "fin": "財經", "spt": "體育"};
+		}else if(split_url[4] == "daily"){
+			pageNameStr += ".日報新聞";
+			cat_ch = { "hk": "港聞", "chi": "中國", "wo": "國際", "pp": "地產", "fin": "財經", "spt": "體育", "ls": "副刊", "columns": "專欄", "rac": "馬經"};
+		}else if(split_url[4] == "columns"){
+			pageNameStr += ".專欄";
+		}
+		
+		if(split_url.length >= 4){
+			var newsTitle = "";
+			if(newsTitle !== ""){
+				artiName = newsTitle;
+			}
+			if(cat_ch[split_url[5]] !== undefined){
+				priCat = cat_ch[split_url[5]];
+				if(split_url.length == 8 & split_url[6].match(/^-{0,1}\d+$/)){
+					digitalData.page.article.id = split_url[6];
+				}
+			}else if(coloumnTitle !== ""){
+				priCat = coloumnTitle;
+				if(split_url.length == 9){
+					digitalData.page.article.id = split_url[7];
+				}
+			}
+		}
+	}
+}
+digitalData.page.pageInfo.pagename = pageNameStr;
+digitalData.page.article.name = artiName;
+if(priCat !== ""){
+	digitalData.page.pageInfo.primaryCategory = priCat;
+}
+
+console.log(digitalData);
+</script>
+<meta charset="utf-8"/>
+<title>港聞 | 每日新聞 | 頭條日報</title>
+<meta name="msvalidate.01" content="F27AA9FE2B5AD390A3D77D98446CAE90" />
+<meta name="author" content="頭條日報"/>
+<meta name="publisher" content="頭條日報"/>
+<meta name="viewport" content="width=device-width"/>
+<meta name="HandheldFriendly" content="True"/>
+<meta name="description" content="新聞頻道，提供專業的即時新聞分析、評論及多元化資訊，包括突發新聞、法庭新聞、政府政策訊息、城中熱話等。"/>
+<meta name="thumbnail" content=""/>
+<meta name="keywords" content="頭條日報,新聞,香港新聞,頭條新聞,港聞,h1.hk,突發,法庭">
+<meta property="fb:app_id" content="978368502211772"/>
+<meta property="fb:admins" content="559263326"/>
+<meta property="fb:admins" content="744194229"/>
+<meta property="fb:admins" content="100006608170684"/>
+<meta property="og:title" content="港聞 | 每日新聞"/>
+<meta property="og:site_name" content="頭條日報 Headline Daily"/>
+<meta property="og:url" content="https://hd.stheadline.com/news/daily/hk/日報-港聞/"/>
+<meta property="og:description" content="新聞頻道，提供專業的即時新聞分析、評論及多元化資訊，包括突發新聞、法庭新聞、政府政策訊息、城中熱話等。"/>
+<meta property="og:image" content="https://static.stheadline.com/stheadline/images/hd_logo.jpg"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="zh_HK"/>
+<meta property="fb:pages" content="148108245239100"/>
+<meta property="fb:article_style" content="default"/>
+<meta property="op:markup_version" content="v1.0"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="港聞 | 每日新聞"/>
+<meta name="twitter:description" content="新聞頻道，提供專業的即時新聞分析、評論及多元化資訊，包括突發新聞、法庭新聞、政府政策訊息、城中熱話等。"/>
+<meta name="twitter:image" content="https://static.stheadline.com/stheadline/images/hd_logo.jpg"/>
+<meta name="twitter:domain" content="https://hd.stheadline.com"/>
+<meta name="weibo:title" content="港聞 | 每日新聞"/>
+<meta name="weibo:webpage:description" content="新聞頻道，提供專業的即時新聞分析、評論及多元化資訊，包括突發新聞、法庭新聞、政府政策訊息、城中熱話等。"/>
+<meta name="bingbot" content="index,follow"/>
+<meta name="robots" content="index,follow,noarchive"/>
+<meta name="distribution" content="global"/>
+<meta name="copyright" content="Copyright &copy; 2020 hkheadline.com"/>
+<meta name="apple-mobile-web-app-title" content="頭條日報 Headline Daily"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="#c7000a"/>
+<meta name="application-name" content="頭條日報 Headline Daily"/>
+<meta name="msapplication-TileImage" content="https://static.stheadline.com/stheadline/images/icon@2x.png"/>
+<!--[if IEMobile]><meta http-equiv="cleartype" content="on"><![endif]-->
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#c7000a"/>
+<link rel='amphtml' href='http://hd.stheadline.com/amp/news/daily/hk/%E6%97%A5%E5%A0%B1-%E6%B8%AF%E8%81%9E'><link rel="canonical" href="https://hd.stheadline.com/news/daily/hk/日報-港聞/">
+<link rel="shortcut icon" href="https://static.stheadline.com/stheadline/images/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="https://static.stheadline.com/stheadline/images/icon.png">
+<link rel="apple-touch-icon" sizes="72x72" href="https://static.stheadline.com/stheadline/images/icon_72.png">
+<link rel="apple-touch-icon" sizes="114x114" href="https://static.stheadline.com/stheadline/images/icon@2x.png">
+<link rel="apple-touch-icon-precomposed" href="https://static.stheadline.com/stheadline/images/icon.png">
+<link rel="shortcut icon" sizes="196x196" href="https://static.stheadline.com/stheadline/images/icon@2x.png">
+<link rel="shortcut icon" sizes="128x128" href="https://static.stheadline.com/stheadline/images/icon_72.png">
+<link rel="stylesheet" href="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.min.css?v=2.1.5">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.6.3/css/font-awesome.min.css" integrity="sha256-AIodEDkC8V/bHBkfyxzolUMw57jeQ9CauwhVW6YJ9CA=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/sweetalert2/5.3.5/sweetalert2.min.css" integrity="sha256-8QAMQAQV/xaKEfq655eRuePVkcsARBWe9Mu/jW4QPkc=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/perfect-scrollbar/0.6.14/css/perfect-scrollbar.min.css" integrity="sha256-CXTV2mU3P5hIyO8CqwuckG7YVyTi0k97yZOL4jIhmQ4=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://static.stheadline.com/stheadline/css/offcanvas.min.css">
+<link rel="stylesheet" href="/css/framework.min.css">
+<link rel="stylesheet" href="/css/framework2.css">
+<link rel="stylesheet" href="/css/styles.min.css">
+<link rel="stylesheet" href="/css/styles_ad.css">
+<link rel="stylesheet" href="/css/icover.css">
+<link rel="alternate" type="application/rss+xml" hreflang="zh-Hant" title="頭條日報 Headline Daily" href="https://hd.stheadline.com/rss/news/daily/">
+<script src="/js/_adv/btn_click_comscore.js"></script> 
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start': new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0], j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','GTM-T3HQTH7');</script>
+<script async defer src="https://www.googletagservices.com/tag/js/gpt.js"></script>
+<script src="/js/_adv/dfp.min.js"></script>
+</head>
+<body>
+<script async defer src="https://code.hot-mob.com/api/javascript/sdk4/hotmobtag_min.js"></script>
+<script async defer src="/js/_adv/hotmob.min.js"></script>
+<div id="fb-root"></div>
+<script>window.fbAsyncInit=function(){FB.init({appId:"978368502211772",xfbml:!0,version:"v2.12"})}</script>
+<script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+	js.async=true;
+    js.src = "//connect.facebook.net/zh_HK/all.js#xfbml=1";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+<noscript><div class="no-js-message">For full functionality of this site it is necessary to enable JavaScript. Here are the <a href="http://www.enable-javascript.com/" target="_blank">instructions how to enable JavaScript in your web browser</a>.</div></noscript><!--[if lt IE 9 ]><div class="incompatibility-message">We noticed you are using an <strong>outdated version of Internet Explorer</strong>. Some features may not work correctly. For the full site experience, please <strong>update your Internet Explorer to version 9 or above</strong>.</div><![endif]-->
+<div class="body-wrapper offcanvas">
+<div class="sidebar-offcanvas sidebar-left" id="sidebar-left">
+<div class="scrollable">
+<div class="scrollable-content">
+<div class="lns-bar">
+<div class="clearfix">
+<div class="pull-left">
+<a href="/member/login/?backURL=https%3A%2F%2Fhd.stheadline.com%2Fnews%2Fdaily%2Fhk%2F-%2F"><i class="fa fa-user"></i> 登入</a>
+</div>
+<div class="pull-right">
+<form action="/search" method="GET">
+<div class="form-group">
+<input type="text" class="form-control" name="keyword" placeholder="請輸入關鍵字句">
+<button type="submit" class="btn"><i class="fa fa-search"></i></button>
+</div>
+</form>
+</div>
+</div>
+</div>
+<div class="cats">
+<h2>即時新聞</h2>
+<ul class="inews row btn-group">
+<li class="col-xs-3 cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></li> <li class="col-xs-3 cat-in-f"><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></li> <li class="col-xs-3 cat-in-e"><a href="/news/realtime/chi/即時-中國/">中國</a></li> <li class="col-xs-3 cat-in-b"><a href="/news/realtime/wo/即時-國際/">國際</a></li> <li class="col-xs-3 cat-in-h"><a href="/news/realtime/pp/即時-地產/">地產</a></li> <li class="col-xs-3 cat-in-d"><a href="/news/realtime/fin/即時-財經/">財經</a></li> <li class="col-xs-3 cat-in-c"><a href="/news/realtime/spt/即時-體育/">體育</a></li> </ul>
+<h2>日報新聞</h2>
+<ul class="daily row btn-group">
+<li class="col-xs-4 cat-dn-1 active"><a href="/news/daily/hk/日報-港聞/">港聞</a></li><li class="col-xs-4 cat-dn-2"><a href="/news/daily/chi/日報-中國/">中國</a></li><li class="col-xs-4 cat-dn-3"><a href="/news/daily/wo/日報-國際/">國際</a></li><li class="col-xs-4 cat-dn-4"><a href="/news/daily/pp/日報-地產/">地產</a></li><li class="col-xs-4 cat-dn-5"><a href="/news/daily/fin/日報-財經/">財經</a></li><li class="col-xs-4 cat-dn-6"><a href="/news/daily/spt/日報-體育/">體育</a></li><li class="col-xs-4 cat-dn-7"><a href="/life/生活/">Headlife</a></li><li class="col-xs-4 cat-dn-8"><a href="/life/生活/">娛樂</a></li><li class="col-xs-4 cat-dn-9"><a href="/news/columns/日報-專欄/">專欄</a></li><li class="col-xs-4 cat-dn-10"><a href="/news/daily/rac/日報-馬經/">馬經</a></li> </ul>
+</div>
+<div class="footer">
+<div class="contact-tel clearfix">
+<ul>
+<li><i class="fa fa-phone"></i>總機 : <a href="tel:27982323">2798 2323</a></li>
+<li><i class="fa fa-phone"></i><a href="http://paper.stheadline.com/html/callad.html" target="_blank">日報廣告查詢</a> : <a href="tel:31813000">3181 3666</a></li>
+<li><i class="fa fa-phone"></i><a href="http://hd.stheadline.com/adv_index.asp" target="_blank">網上廣告查詢</a> : <a href="tel:27982383">2798 2383</a></li>
+<li><i class="fa fa-envelope"></i>廣告查詢 : <a href="mailto:adv@hkheadline.com">adv@hkheadline.com</a></li>
+</ul>
+</div>
+<div class="contact-tel clearfix">
+<ul>
+<li><i class="fa fa-link"></i><a href="/privacy.php">私隱政策聲明</a></li>
+<li><i class="fa fa-link"></i><a href="/terms.php">使用條款</a></li>
+<li><i class="fa fa-link"></i><a href="/qrcode_terms.php">QR Code 使用條款及細則</a></li>
+<li><i class="fa fa-link"></i><a href="/privacy.php">私隱政策聲明</a></li>
+<li><i class="fa fa-envelope"></i>聯絡我們：<a href="mailto:web_info@hkheadline.com">web_info@hkheadline.com</a></li>
+</ul>
+</div>
+<div class="copyright">
+<p>Copyright 2020 hkheadline.com.</p>
+<p>All rights reserved.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="body-content">
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T3HQTH7" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<div class="header">
+<div class="toolbar">
+<div class="container clearfix">
+<ul class="pull-left list-inline">
+<li><i class="fa fa-calendar"></i>2020年8月8日 星期六</li>
+<li class="warning">
+<i class="hi warning war-20" title="酷熱天氣警告"></i>
+</li>
+<li><i class="hi weather wea-04" title="間有陽光幾陣驟雨"></i> 33&#186;</li>
+<li><i class="hi humidity" title="濕度"></i> 63%</li>
+</ul>
+<ul class="pull-right list-inline">
+<li>
+<a href="https://www.facebook.com/headlinehk" target="_blank" class="btn btn-facebook"> <i class="fa fa-facebook-official"></i> facebook</a>
+</li>
+<li>
+<a href="http://www.weibo.com/hkheadline" target="_blank" class="btn btn-weibo"> <i class="fa fa-weibo"></i> Weibo </a>
+</li>
+<li>
+<a href="/rss/news/daily/" target="_blank" class="btn btn-rss"> <i class="fa fa-rss-square"></i> RSS </a>
+</li>
+<li class="dropdown" id="dropdown-apps"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">頭條Apps<span class="caret"></span></a>
+<ul class="dropdown-menu" role="menu">
+<li class="row">
+<div class="col-xs-6 active" data-target="ios"><i class="fa fa-apple"></i><b>IOS</b><span class="caret"></span></div>
+<div class="col-xs-6" data-target="android"><i class="fa fa-android"></i><b>Android</b><span class="caret"></span></div>
+</li>
+<li class="qrcodes">
+<p>掃描QR Code快速進入</p>
+<div class="rows">
+<div class="row in" data-content="ios">
+<div class="col-xs-6">
+<a href="https://itunes.apple.com/hk/app/tou-tiao-ri-bao/id348023216?mt=8" target="_blank">
+<div class="ios_hl_icon div_icon_style"></div>
+<span class="app-name">頭條日報</span>
+<div class="ios_hl_qr_icon div_icon_style"></div>
+</a>
+</div>
+<div class="col-xs-6">
+<a href="https://itunes.apple.com/hk/app/tou-tiao-ri-bao-gao-qing-jie/id379192563?mt=8" target="_blank">
+<div class="ios_hl_hd_icon div_icon_style"></div>
+<span class="app-name">頭條日報高清揭頁版</span>
+<div class="ios_hl_hd_qr_icon div_icon_style"></div>
+</a>
+</div>
+</div>
+<div class="row" data-content="android">
+<div class="col-xs-6">
+<a href="https://play.google.com/store/apps/details?id=singtao.android.hkheadline" target="_blank">
+<div class="an_hl_icon div_icon_style"></div>
+<span class="app-name">頭條日報</span>
+<div class="an_hl_qr_icon div_icon_style"></div>
+</a>
+</div>
+<div class="col-xs-6">
+<a href="https://play.google.com/store/apps/details?id=com.singtao.iread.headline" target="_blank">
+<div class="an_hl_hd_icon div_icon_style"></div>
+<span class="app-name">頭條日報高清揭頁版</span>
+<div class="an_hl_hd_qr_icon div_icon_style"></div>
+</a>
+</div>
+</div>
+</div>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="wrapper">
+<div class="container clearfix">
+<div class="logo"><a href="/">頭條網 - 頭條日報 - 全港No.1最多人睇嘅報章</a></div>
+<input type="hidden" id="shk" name="shk" value="0">
+<div class="ad ad_dfp" id="top_728x90_banner"><script>	googletag.cmd.push(function(){googletag.display("top_728x90_banner");});</script></div>
+<div id="RP1_1x1_banner" style="height:1px; width:1px;"></div>
+</div>
+</div>
+<nav class="navbar" data-spy="affix" data-offset-top="142" data-offset-bottom="200">
+<div class="container">
+<div class="navbar-nav"><a href="/" class="logo-s">頭條日報</a>
+<div class="btn-group pull-left">
+<div class="btn" data-toggle="offcanvas-sidebar-left"><i class="fa fa-bars"></i></div>
+</div>
+<div class="btn-group pull-right">
+<div class="btn" data-toggle="offcanvas-sidebar-right"><i class="fa fa-th-large"></i></div>
+</div>
+<ul class="list-inline list-nav">
+<li><a href="/news/realtime/即時/">即時新聞</a></li>
+<li class="active"><a href="/news/daily/日報/">日報新聞</a></li>
+<li><a href="https://paper.stheadline.com/">揭頁版</a></li>
+<li><a href="/news/columns/日報-專欄/">專欄</a></li>
+<li><a href="https://pop.stheadline.com/">Popnews</a></li>
+<li><a href="/life/ent/">娛樂影視</a></li>
+<li><a href="https://hdfin.stheadline.com/">財經網</a></li>
+<li><a href="/life/生活/">Headlife</a></li>
+<li><a href="/racing/adult_warn.asp?back_to=/racing/">馬經網</a></li>
+<li><a href="http://blogcity.me/">Blogcity</a></li>
+<li><a href="/hdjetso/">頭條Jetso</a></li>
+</ul>
+</div>
+<div class="member-login">
+<a href="/member/login/?backURL=https%3A%2F%2Fhd.stheadline.com%2Fnews%2Fdaily%2Fhk%2F-%2F"><i class="fa fa-user"></i> 登入</a>
+</div>
+<div class="searchbar-show-affix pull-right" id="searchbar-show-affix"><i class="fa fa-search"></i></div>
+</div>
+</nav>
+<div class="searchbar">
+<div class="container">
+<form class="form-inline" id="fullTextSeachFrom" action="/search" method="GET">
+<div class="form-group clearfix">
+<input type="text" class="form-control pull-left" id="fullTextSearchKeyword" name="keyword" placeholder="請輸入搜尋字句" value="">
+<button type="submit" class="btn"><i class="fa fa-search"></i> 搜尋</button>
+</div>
+<div class="form-group keywords"><strong>熱門： </strong>
+<a href="/search?keyword=&#26954;&#26126;">楊明</a><a href="/search?keyword=&#32654;&#22283;&#21046;&#35009;">美國制裁</a><a href="/search?keyword=SPT&#32;Mask">SPT Mask</a><a href="/search?keyword=&#26032;&#20896;&#32954;&#28814;">新冠肺炎</a><a href="/search?keyword=&#34892;&#36452;">行蹤</a> </div>
+</form>
+</div>
+</div>
+</div>
+<div class="mobile-body-wrapper">
+<div class="mobile-body-scrollable">
+<div class="mobile-body-scrollable-content">
+<div class="main ads-rp1-float-right main-dailynews-list">
+<div class="container">
+<div class="wrapper">
+<div class="sections-label">
+<div class="sections">
+<div class="section cat-dn-1">
+<div class="heading">
+<h3><a href="/news/daily/日報/">日報新聞</a><span> &gt; 港聞</span></h3>
+<div class="pull-right dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" role="button" aria-expanded="false"><i></i>選擇分類 <i class="fa fa-caret-down"> </i></a>
+<ul class="dropdown-menu" role="menu">
+<li class="active"><a href="/news/daily/hk/日報-港聞/">港聞</a></li>
+<li><a href="/news/daily/chi/日報-中國/">中國</a></li>
+<li><a href="/news/daily/wo/日報-國際/">國際</a></li>
+<li><a href="/news/daily/pp/日報-地產/">地產</a></li>
+<li><a href="/news/daily/fin/日報-財經/">財經</a></li>
+<li><a href="/news/daily/spt/日報-體育/">體育</a></li>
+<li><a href="/life/生活/日報-Headlife/">Headlife</a></li>
+<li><a href="/life/ent/daily/日報-娛樂/">娛樂</a></li>
+<li><a href="/news/columns/日報-專欄/">專欄</a></li>
+<li><a href="/news/daily/rac/日報-馬經/">馬經</a></li>
+</ul>
+</div>
+</div>
+<div class="row" id="detailList">
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h1><a href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開" title="﻿全民免費檢測 最快兩周後展開">﻿全民免費檢測 最快兩周後展開</a></h1> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637017/i_315x197_041335961.jpg"/></a>
+<p class="text">第三波疫情爆發近一個月，特首林鄭月娥昨天公佈推行全民自願性免費病毒檢測，最快兩周後展開，西區的中山紀念公園體育館將改裝成臨時實驗室。特首指出，特定群組將進行逾十三萬個檢測，推算本港可能仍有一千五百名隱性患者，多做檢測可阻截社區播毒。政府亦會推出孕婦檢測計劃，及擴大社區檢測至經常接觸市民的收銀員、郵差等。
+林鄭月娥昨天指出，本地確診數目仍然高企，涉及各行各業，政府上月起對特定群組進行十三萬七千個病毒...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874107/日報-港聞-美制裁中港11官員包括林鄭" title="﻿美制裁中港11官員包括林鄭">﻿美制裁中港11官員包括林鄭</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874107/日報-港聞-美制裁中港11官員包括林鄭" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637020/i_315x197_240468615.jpg"/></a>
+<p class="text">《港區國安法》觸發國際社會關注，美國總統特朗普上月簽署《香港自治法案》以制裁內地及香港政府官員。美國財政部根據《香港自治法案》，公佈制裁十一名中國及香港官員，包括特首林鄭月娥及國務院港澳辦主任夏寶龍等。根據美國財政部網頁，制裁包括凍結上述人士的在美資產，並且禁止美國國民與他們進行商業往來。
+凍結在美資產禁商業往來
+按照美國財政部的制裁名單，包括特首林鄭月娥、律政司司長鄭若驊、保安局局長李家超、政制...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874107/日報-港聞-美制裁中港11官員包括林鄭"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874110/日報-港聞-薄扶林檢疫中心員工確診-曾任職港泰護老疫源未明" title="﻿薄扶林檢疫中心員工確診﻿﻿  曾任職港泰護老疫源未明﻿">﻿薄扶林檢疫中心員工確診﻿﻿ 曾任職港泰護老疫源未明﻿</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874110/日報-港聞-薄扶林檢疫中心員工確診-曾任職港泰護老疫源未明" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637023/i_315x197_951004515.jpg"/></a>
+<p class="text">本港連續第五日新冠肺炎確診個案維持雙位數，昨日再多八十九人染疫，當中三十二宗源頭不明，另有約五十宗初步確診。薄扶林檢疫中心有一名員工確診，病人曾在慈雲山港泰護老中心工作，暫時未知其感染源頭。此外，早前確診的印傭曾入住銅鑼灣希雲大廈，但當局未能聯絡業主入內調查。
+新增個案中有八十一宗屬本地感染，當中四十九宗與之前個案相關，三十二宗源頭不明。薄扶林檢疫中心有一名女員工確診，已暫時停收檢疫人士，其他員工...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874110/日報-港聞-薄扶林檢疫中心員工確診-曾任職港泰護老疫源未明"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874113/日報-港聞-12外傭違限聚遭票控-警預告今全港聯合執法" title="12外傭違限聚遭票控  警預告今全港聯合執法">12外傭違限聚遭票控 警預告今全港聯合執法</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<p class="text">近日有外傭確診令不少人憂慮，勞福局局長羅致光昨日表示，截至本月二日，共十二名外傭因違反限聚令，被定額罰款二千元。
+另外，警方亦於社交媒體發文，將在今天於全港不同地方就限聚令進行聯合執法行動。
+羅致光指至本月二日，共有十二名外傭因屢次勸告仍不遵守防疫規定，被定額罰款二千元。他說會盡快為居於中介宿舍的外傭進行檢測，下周一亦會派口罩予職業介紹所。因疫情關係，多了需延長合約或更換僱主的外傭需入住宿舍等待...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874113/日報-港聞-12外傭違限聚遭票控-警預告今全港聯合執法"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874116/日報-港聞-建制派倡設-港版-健康碼" title="建制派倡設  港版「健康碼」">建制派倡設 港版「健康碼」</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<p class="text">立法會建制派議員昨向政府建議參考內地的做法，推出港版健康碼，讓持有「港康碼」的市民可以到食肆堂食，並引述政府回應指技術上可行。
+議員廖長江在與政務司司長張建宗會面後表示，已促請政府向市民澄清內地核酸檢測支援隊來港的角色、建議推出「港康碼」，以及堵塞社區防疫漏洞，以應對秋冬季有可能發生的第四波疫情。身兼行政會議成員的自由黨主席張宇人表示，持有「港康碼」的市民可以到食肆堂食，食肆亦可以全日開放堂食。
+...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874116/日報-港聞-建制派倡設-港版-健康碼"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874119/日報-港聞-特朗普稱疫苗於大選前面世樂觀" title="特朗普稱疫苗於大選前面世樂觀">特朗普稱疫苗於大選前面世樂觀</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<p class="text">美國總統特朗普早前接受訪問時指，對新冠疫苗可以在十一月總統選舉前面世感到樂觀，強調加速研發疫苗並不是為了自己的選情，而是希望可以挽救更多生命，特朗普再次堅稱疫情在美國已經受控，又認為自己在抗疫工作的表現十分出色。他又再批評中國只阻止病毒在國內擴散，沒有阻止病毒傳到國外。美國疫情嚴重，單日新增超過五萬宗確診，一千多人死亡。
+日本東京都單日新增四百六十多宗新型肺炎確診病例，當地政府呼籲民眾晚上不要外出...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874119/日報-港聞-特朗普稱疫苗於大選前面世樂觀"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874122/日報-港聞-慈雲山派咽喉拭子套裝-專家憂自行採樣有難度" title="慈雲山派咽喉拭子套裝  專家憂自行採樣有難度">慈雲山派咽喉拭子套裝 專家憂自行採樣有難度</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874122/日報-港聞-慈雲山派咽喉拭子套裝-專家憂自行採樣有難度" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637035/i_315x197_041747562.jpg"/></a>
+<p class="text">政府擴大社區檢測計劃範圍，昨早在慈雲山慈愛苑五幢大廈派發咽喉拭子採樣套裝，並向每戶派發一盒口罩。身穿保護衣的職員在場教導住戶咽喉拭子採樣方法，亦在各大廈大堂播放採樣教學。有專家擔心，由居民自行採樣，樣本質素或欠佳，對長者亦有難度，建議安排佩戴N95的醫護協助市民。
+穿上全套保護衣的職員昨早在慈愛苑向居民派發一盒口罩，咽拭子採樣套裝和登記表格。大廈大堂附近放置電腦播放片段，教居民如何使用咽拭子採集口...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874122/日報-港聞-慈雲山派咽喉拭子套裝-專家憂自行採樣有難度"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874125/日報-港聞-美解除最高級別旅遊警示" title="美解除最高級別旅遊警示">美解除最高級別旅遊警示</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<p class="text">美國國務院宣佈解除要求美國公民避免所有出境旅行的最高級別旅遊警示，改為採取針對個別國家情況的旅遊警示，為美國公民提供不同國家與地區詳細的疫情資訊，以制定旅行決定。不過絕大部份國家及地區，包括中國和香港仍列為「疫情風險高」的區域，建議美國國民避免不必要的前往。另七個國家和地區被列為「疫情風險低」，包括泰國、紐西蘭等。
+被列為「疫情風險極低」的國家和地區有十三個，包括老撾、澳門和台灣等。立法會旅遊界議...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874125/日報-港聞-美解除最高級別旅遊警示"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874128/日報-港聞-海逸旗下2500員工做檢測" title="海逸旗下2500員工做檢測 ">海逸旗下2500員工做檢測 </a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874128/日報-港聞-海逸旗下2500員工做檢測" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637041/i_315x197_041665256.jpg"/></a>
+<p class="text">特首林鄭月娥昨宣佈免費為全港市民進行病毒檢測，海逸國際酒店集團董事高寶珍表示對政策深表支持，並將動員旗下十五家酒店，包括歷山酒店、紅磡灣海灣軒、嘉湖海逸酒店(見圖)等，合共約二千五百名員工積極參與。
+高寶珍指相信進行病毒檢測，不但能讓員工安心，亦能在工作上為顧客提供信心；廣泛而言，可望加強抗疫成效，有助本地各行業早日復甦。</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874128/日報-港聞-海逸旗下2500員工做檢測"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+<div class="col-xs-12 dailynews-list-1">
+<div class="topic">
+<h4><a href="/news/daily/hk/874131/日報-港聞-多啦A夢-漫畫改圖吸年輕人-下海-社媒被利用販毒拘41人" title="「多啦A夢」漫畫改圖吸年輕人「下海」  社媒被利用販毒拘41人">「多啦A夢」漫畫改圖吸年輕人「下海」 社媒被利用販毒拘41人</a></h4> <span class="time"><i class="fa fa-clock-o"></i>2020-08-08</span>
+</div>
+<div class="des">
+<a href="/news/daily/hk/874131/日報-港聞-多啦A夢-漫畫改圖吸年輕人-下海-社媒被利用販毒拘41人" class="img-link"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637044/i_315x197_707664155.jpg"/></a>
+<p class="text">警方日前展開掃毒行動，拘捕三十四男七女，年齡介乎十四至四十五歲，並檢獲總值約一百三十二萬元的懷疑大麻及氯胺酮等毒品。警方指疑犯涉嫌利用Instagram、facebook及Telegram等熱門平台「販毒」，更將「多啦A夢」漫畫改圖，吸引年輕人吸毒。
+警方毒品調查科根據線報及深入調查，於本月四日至六日展開行動，拘捕三十四男七女，年齡介乎十四至四十五歲，當中包括五名中學生、兩名大專生、十八人報稱無業...</p>
+<p class="text-left">
+<a class="btn btn-default" href="/news/daily/hk/874131/日報-港聞-多啦A夢-漫畫改圖吸年輕人-下海-社媒被利用販毒拘41人"><i class="fa fa-angle-right"></i> 詳細</a>
+</p>
+</div>
+</div>
+</div>
+<div class="load-more text-center">
+<a id="but-more-news" class="btn btn-default" href="javascript:loadOtherDailyNews();"><i class="fa fa-refresh"></i> 載入更多</a>
+<a id="but-more-news-loading" class="btn btn-default btn-active hidden"><i class="fa fa-refresh fa-spin"></i> 載入更多</a>
+</div>
+<div id="RP1_300_banner" class="text-center"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar">
+<script>
+//console.log('/components/common/sidebar.php');
+// console.log('test-/news/daily/hk/%E6%97%A5%E5%A0%B1-%E6%B8%AF%E8%81%9E/');
+</script>
+<div id="RP1_300_banner" class="ad_w300"></div>
+<div class="section section-sb section-popular nocontent">
+<div class="heading">
+<h3><i class="fa fa-thumbs-o-up"></i>熱門文章</h3>
+<div class="hit-sections">
+<a href="#" class="section-select active" rel="day">今天</a>
+<a href="#" class="section-select" rel="week">本週</a>
+<a href="#" class="section-select" rel="month">本月</a>
+</div>
+</div>
+<div class="content">
+<div class="news-list-scrollable hit-section-list section-month" style="display: none;">
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/daily/hk/871458/日報-港聞-持BNO入英籍港人-或失港永久居留權"><img src="https://static.stheadline.com/stheadline/news_res/2020/07/28/611850/i_315x197_041051577.jpg" width="130" height="82"alt="持BNO入英籍港人  或失港永久居留權"/></a>
+</div>
+<div>
+<h5><a href="/news/daily/hk/871458/日報-港聞-持BNO入英籍港人-或失港永久居留權">持BNO入英籍港人 或失港永久居留權</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/daily/hk/871458/日報-港聞-持BNO入英籍港人-或失港永久居留權" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200717/869085/專欄-巴士的點評-為何硬要迫到中央血腥鎮壓香港">巴士的點評——為何硬要迫到中央血腥鎮壓香港？</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200717/869085/專欄-巴士的點評-為何硬要迫到中央血腥鎮壓香港" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/398/20200714/868188/專欄-人生馬拉松-是誰讓瘟重臨">人生馬拉松——是誰讓瘟重臨？</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/398/20200714/868188/專欄-人生馬拉松-是誰讓瘟重臨" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200718/869364/專欄-巴士的點評-中美終須一戰">巴士的點評——中美終須一戰……</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200718/869364/專欄-巴士的點評-中美終須一戰" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/daily/870420/日報-娛樂-陳自瑤拋胸找數 張寶兒透視誘惑"><img src="https://static.stheadline.com/stheadline/news_res/2020/07/23/599631/i_315x197_041150120.jpg" width="130" height="82"alt="陳自瑤拋胸找數張寶兒透視誘惑"/></a>
+</div>
+<div>
+<h5><a href="/life/ent/daily/870420/日報-娛樂-陳自瑤拋胸找數 張寶兒透視誘惑">陳自瑤拋胸找數 張寶兒透視誘惑</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/daily/870420/日報-娛樂-陳自瑤拋胸找數 張寶兒透視誘惑" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200725/871053/專欄-巴士的點評-要麼不做-要麼做絕">巴士的點評——要麼不做 要麼做絕</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200725/871053/專欄-巴士的點評-要麼不做-要麼做絕" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界">巴士的點評——美國這樣搞TikTok 開了我們這一代人眼界</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200723/870450/專欄-巴士的點評-一個充斥著謊言和死亡的國度">巴士的點評——一個充斥著謊言和死亡的國度</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200723/870450/專欄-巴士的點評-一個充斥著謊言和死亡的國度" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/15/20200728/871560/專欄-幸福摩天輪-誰是施嘉雯">幸福摩天輪——誰是施嘉雯？</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/15/20200728/871560/專欄-幸福摩天輪-誰是施嘉雯" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/columns/33/20200718/869367/專欄-好味大過天-別了-豉油雞"><img src="https://static.stheadline.com/stheadline/news_res/2020/07/18/587274/i_315x197_040166134.jpg" width="130" height="82"alt="好味大過天——別了，豉油雞！"/></a>
+</div>
+<div>
+<h5><a href="/news/columns/33/20200718/869367/專欄-好味大過天-別了-豉油雞">好味大過天——別了，豉油雞！</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/33/20200718/869367/專欄-好味大過天-別了-豉油雞" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+<div class="news-list-scrollable hit-section-list section-week" style="display: none;">
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界">巴士的點評——美國這樣搞TikTok 開了我們這一代人眼界</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200804/873117/專欄-巴士的點評-戰時狀態與長期防控">巴士的點評——戰時狀態與長期防控</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200804/873117/專欄-巴士的點評-戰時狀態與長期防控" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200807/873921/專欄-巴士的點評-美國人的性命也是命">巴士的點評——美國人的性命也是命</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200807/873921/專欄-巴士的點評-美國人的性命也是命" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200805/873372/專欄-巴士的點評-四個DQ議員出局-維持政策完整性">巴士的點評——四個DQ議員出局 維持政策完整性</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200805/873372/專欄-巴士的點評-四個DQ議員出局-維持政策完整性" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200808/874203/專欄-巴士的點評-一場背痛救了馬化騰-看看阿爾斯通的下場">巴士的點評——一場背痛救了馬化騰 看看阿爾斯通的下場</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200808/874203/專欄-巴士的點評-一場背痛救了馬化騰-看看阿爾斯通的下場" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200801/872634/專欄-巴士的點評-激進政治的相反結局—東歐民主經驗">巴士的點評——激進政治的相反結局—東歐民主經驗</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200801/872634/專欄-巴士的點評-激進政治的相反結局—東歐民主經驗" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/398/20200804/873147/專欄-人生馬拉松-殺一-是用來儆百的">人生馬拉松——殺一，是用來儆百的</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/398/20200804/873147/專欄-人生馬拉松-殺一-是用來儆百的" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/4/20200803/872883/專欄-金融High-Tea-從四條主線看股市">金融High Tea——從四條主線看股市</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/4/20200803/872883/專欄-金融High-Tea-從四條主線看股市" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/06/632734/i_315x197_015487116.jpg" width="130" height="82"alt="《哆啦AV夢》插畫家微博被封 作品含色情元素Twitter上致歉"/></a>
+</div>
+<div>
+<h5><a href="/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉">《哆啦AV夢》插畫家微博被封 作品含色情元素Twitter上致歉 </a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/4/20200807/874056/專欄-金融High-Tea-特朗普無差別轟炸香港股民">金融High Tea——特朗普無差別轟炸香港股民</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/4/20200807/874056/專欄-金融High-Tea-特朗普無差別轟炸香港股民" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+<div class="news-list-scrollable hit-section-list section-day">
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200808/874203/專欄-巴士的點評-一場背痛救了馬化騰-看看阿爾斯通的下場">巴士的點評——一場背痛救了馬化騰 看看阿爾斯通的下場</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200808/874203/專欄-巴士的點評-一場背痛救了馬化騰-看看阿爾斯通的下場" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/columns/0/20200808/874212/專欄-Executive日記-股價低過11年前海嘯價-青姐評滙豐唔再喊-叫股民要狠心割愛"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637125/i_315x197_551103339.jpg" width="130" height="82"alt="Executive日記——股價低過11年前海嘯價  青姐評滙豐唔再喊  叫股民要狠心割愛"/></a>
+</div>
+<div>
+<h5><a href="/news/columns/0/20200808/874212/專欄-Executive日記-股價低過11年前海嘯價-青姐評滙豐唔再喊-叫股民要狠心割愛">Executive日記——股價低過11年前海嘯價 青姐評滙豐唔再喊 叫股民要狠心割愛</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/0/20200808/874212/專欄-Executive日記-股價低過11年前海嘯價-青姐評滙豐唔再喊-叫股民要狠心割愛" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/17/20200808/874206/專欄-好好過日子-知識份子對話">好好過日子——知識份子對話</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/17/20200808/874206/專欄-好好過日子-知識份子對話" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/columns/48/20200808/874242/專欄-葉Sir食經-中環-港大校友會-餐廳-食超值懷舊粵菜"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637155/i_315x197_404616664.jpg" width="130" height="82"alt="葉Sir食經——中環「港大校友會」餐廳  食超值懷舊粵菜"/></a>
+</div>
+<div>
+<h5><a href="/news/columns/48/20200808/874242/專欄-葉Sir食經-中環-港大校友會-餐廳-食超值懷舊粵菜">﻿葉Sir食經——中環「港大校友會」餐廳 食超值懷舊粵菜</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/48/20200808/874242/專欄-葉Sir食經-中環-港大校友會-餐廳-食超值懷舊粵菜" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200807/873921/專欄-巴士的點評-美國人的性命也是命">巴士的點評——美國人的性命也是命</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200807/873921/專欄-巴士的點評-美國人的性命也是命" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/life/ent/daily/873885/日報-娛樂-三代同堂-霍震霆沙灘湊孫曬太陽-霍啟剛做外賣仔-照顧老嫩"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/07/634899/i_315x197_004160786.jpg" width="130" height="82"alt="三代同堂 霍震霆沙灘湊孫曬太陽  霍啟剛做外賣仔  照顧老嫩"/></a>
+</div>
+<div>
+<h5><a href="/life/ent/daily/873885/日報-娛樂-三代同堂-霍震霆沙灘湊孫曬太陽-霍啟剛做外賣仔-照顧老嫩">三代同堂 霍震霆沙灘湊孫曬太陽 霍啟剛做外賣仔 照顧老嫩</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/life/ent/daily/873885/日報-娛樂-三代同堂-霍震霆沙灘湊孫曬太陽-霍啟剛做外賣仔-照顧老嫩" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/06/632734/i_315x197_015487116.jpg" width="130" height="82"alt="《哆啦AV夢》插畫家微博被封 作品含色情元素Twitter上致歉"/></a>
+</div>
+<div>
+<h5><a href="/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉">《哆啦AV夢》插畫家微博被封 作品含色情元素Twitter上致歉 </a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/daily/chi/873610/日報-中國-哆啦AV夢-插畫家微博被封-作品含色情元素Twitter上致歉" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/columns/0/20200724/870783/專欄-Executive日記-做一日-救火勇士-拯救走失啤啤熊-三歲病童圓消防英雄夢"><img src="https://static.stheadline.com/stheadline/news_res/2020/07/24/602439/i_315x197_580384117.jpg" width="130" height="82"alt="Executive日記——做一日「救火勇士」 拯救走失啤啤熊  三歲病童圓消防英雄夢"/></a>
+</div>
+<div>
+<h5><a href="/news/columns/0/20200724/870783/專欄-Executive日記-做一日-救火勇士-拯救走失啤啤熊-三歲病童圓消防英雄夢">Executive日記——做一日「救火勇士」 拯救走失啤啤熊 三歲病童圓消防英雄夢</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/0/20200724/870783/專欄-Executive日記-做一日-救火勇士-拯救走失啤啤熊-三歲病童圓消防英雄夢" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div>
+<h5><a href="/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界">巴士的點評——美國這樣搞TikTok 開了我們這一代人眼界</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/columns/417/20200806/873625/專欄-巴士的點評-美國這樣搞TikTok-開了我們這一代人眼界" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+<div class="caption clearfix">
+<div class="pull-right">
+<a href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開"><img src="https://static.stheadline.com/stheadline/news_res/2020/08/08/637017/i_315x197_041335961.jpg" width="130" height="82"alt="全民免費檢測 最快兩周後展開"/></a>
+</div>
+<div>
+<h5><a href="/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開">﻿全民免費檢測 最快兩周後展開</a></h5>
+<div class="fb-like" data-href="https://hd.stheadline.com/news/daily/hk/874104/日報-港聞-全民免費檢測-最快兩周後展開" data-layout="button_count" data-action="like" data-show-faces="true"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="RP2_300_banner" class="ad_w300"></div>
+<div class="section section-sb nocontent" style="display:none;">
+<div class="heading">
+<h3><a href="/news/realtime/即時/">即時新聞</a></h3>
+<span class="more"><a href="/news/realtime/即時/"><i class="fa fa-ellipsis-h"></i> 更多</a></span>
+</div>
+<div class="content">
+<div class="news-list-scrollable">
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840989/即時-港聞-仁濟醫院44歲病人檢測-陰轉陽-3病房助理需檢疫">仁濟醫院44歲病人檢測「陰轉陽」 3病房助理需檢疫</a></h5>
+<div>醫院管理局總行政經理（質素及標...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 17:03</span>
+</div>
+<div class="caption"> <span class="hang cat-in-f"><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></span>
+<h5><a href="/life/ent/realtime/1840965/即時-娛樂-羅小姐報到-35歲雨僑誕6磅B女-首抱囡囡即想再追多個">【羅小姐報到】35歲雨僑誕6磅B女 首抱囡囡即想再追多個</a></h5>
+<div>35歲的雨僑今日順利為34歲的...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:45</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840983/即時-港聞-本港增69宗確診-九龍灣港鐵車廠現小型爆發">本港增69宗確診 九龍灣港鐵車廠現小型爆發</a></h5>
+<div>衞生署衞生防護中心傳染病處主任...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:43</span>
+</div>
+<div class="caption"> <span class="hang cat-in-b"><a href="/news/realtime/wo/即時-國際/">國際</a></span>
+<h5><a href="/news/realtime/wo/1840980/即時-國際-印度尋回失事客機黑盒-1遇難者確診搜救人員要接受檢測">印度尋回失事客機黑盒 1遇難者確診搜救人員要接受檢測</a></h5>
+<div>印度傳媒報道，當局已尋回出事印...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:40</span>
+</div>
+<div class="caption"> <span class="hang cat-in-f"><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></span>
+<h5><a href="/life/ent/realtime/1840977/即時-娛樂-楊奇煜閃婚晒驗孕棒再報喜-16周可以說了">楊奇煜閃婚晒驗孕棒再報喜：16周可以說了</a></h5>
+<div>台灣男團Lollipop@F成...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:33</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840968/即時-港聞-美國制裁-曾偉雄-不折不扣霸權行為-料中央將作合適反制">【美國制裁】曾偉雄：不折不扣霸權行為 料中央將作合適反制</a></h5>
+<div>就美國提出制裁11名中港高官，...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:19</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840962/即時-港聞-未來3日-12公眾街市關早1小時消毒">未來3日 12公眾街市關早1小時消毒</a></h5>
+<div>食環署表示，鑑於疫情仍然嚴峻，...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:18</span>
+</div>
+<div class="caption"> <span class="hang cat-in-b"><a href="/news/realtime/wo/即時-國際/">國際</a></span>
+<h5><a href="/news/realtime/wo/1840956/即時-國際-東京新增429確診-連續2天破400宗">東京新增429確診 連續2天破400宗</a></h5>
+<div>日本新冠肺炎疫情持續反彈，東京...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:13</span>
+</div>
+<div class="caption"> <span class="hang cat-in-e"><a href="/news/realtime/chi/即時-中國/">中國</a></span>
+<h5><a href="/news/realtime/chi/1840944/即時-中國-南京鼓樓區火警釀3死-電動自行車失火肇禍">南京鼓樓區火警釀3死 電動自行車失火肇禍</a></h5>
+<div>南京市鼓樓區金陵村小區發生火警...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:02</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840953/即時-港聞-遭美制裁中港官員-將被Facebook禁帳戶支付服務">遭美制裁中港官員 將被Facebook禁帳戶支付服務</a></h5>
+<div>美國財政部昨日宣佈制裁11名中...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:01</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840950/即時-港聞-翔龍灣兩度遭誤報確診-物業處稱保留追究權利">翔龍灣兩度遭誤報確診 物業處稱保留追究權利</a></h5>
+<div>本港第三波疫情持續，多區的大廈...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 16:00</span>
+</div>
+<div class="caption"> <span class="hang cat-in-f"><a href="/life/ent/realtime/即時-娛樂/">娛樂</a></span>
+<h5><a href="/life/ent/realtime/1840947/即時-娛樂-楊明短訊回覆已出院-女友莊思明未有回應">楊明短訊回覆已出院 女友莊思明未有回應</a></h5>
+<div>楊明今日凌晨爆出涉酒駕導致交通...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 15:52</span>
+</div>
+<div class="caption"> <span class="hang cat-in-b"><a href="/news/realtime/wo/即時-國際/">國際</a></span>
+<h5><a href="/news/realtime/wo/1840941/即時-國際-上載同學無戴口罩圖片-喬州女生遭校方勒令停學">上載同學無戴口罩圖片 喬州女生遭校方勒令停學</a></h5>
+<div>美國喬治亞州一名女學生用手機拍...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 15:47</span>
+</div>
+<div class="caption"> <span class="hang cat-in-a"><a href="/news/realtime/hk/即時-港聞/">港聞</a></span>
+<h5><a href="/news/realtime/hk/1840854/即時-港聞-熱帶氣旋形成中或移向日韓-本港下周四狂風雷暴">熱帶氣旋形成中或移向日韓 本港下周四狂風雷暴</a></h5>
+<div>天文台表示，副熱帶高壓脊正為中...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 15:43</span>
+</div>
+<div class="caption"> <span class="hang cat-in-h"><a href="/news/realtime/pp/即時-地產/">地產</a></span>
+<h5><a href="/news/realtime/pp/1840938/即時-地產-太古城2房戶-1000萬市價沽">太古城2房戶 1000萬市價沽</a></h5>
+<div>美聯區域經理范浩銘表示，鰂魚涌...</div>
+<span class="time"><i class="fa fa-clock-o"></i>2020-08-08 15:38</span>
+</div>
+</div>
+</div>
+</div>
+<div id="jetso-wrapper"><div class="section section-sb jetso"><div class="heading"><h3><a href="/jeso/">會員著數</a></h3><h3><a href="/hdjetso/">頭條Jetso</a></h3><div class="winners"><a href="/jeso/winners/"><i class="fa fa-trophy"></i>得獎名單</a></div></div><div id="jetso-carousel-1"></div></div><div class="section section-sb jetso"id="jetso-carousel-1"style="border:none;"></div><script>var right_ads_groupList_sub=[];if(right_ads_groupList_sub.length>0){var htmlStrRightAdsSub=[];htmlStrRightAdsSub.push('<div class="content">');htmlStrRightAdsSub.push('<div id="jetso-carousel-sub" class="carousel slide" data-ride="carousel">');htmlStrRightAdsSub.push('   <ol class="carousel-indicators">');for(idx=0;idx<right_ads_groupList_sub.length;idx++){htmlStrRightAdsSub.push('       <li data-target="#jetso-carousel-sub" data-slide-to="'+idx+'" '+((idx==0)?'class="active"':'')+'></li>')}htmlStrRightAdsSub.push('   </ol>');htmlStrRightAdsSub.push('   <div class="carousel-inner" role="listbox">');for(idx=0;idx<right_ads_groupList_sub.length;idx++){htmlStrRightAdsSub.push('   <div class="item'+((idx==0)?' active':'')+'">'+right_ads_groupList_sub[idx]+'</div>')}htmlStrRightAdsSub.push('   </div>');htmlStrRightAdsSub.push('   <a class="left carousel-control" href="#jetso-carousel-sub" role="button" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#jetso-carousel-sub" role="button" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>');htmlStrRightAdsSub.push('</div>');htmlStrRightAdsSub.push('</div>');document.getElementById("jetso-carousel-1").innerHTML=htmlStrRightAdsSub.join("")}</script><script>var right_ads_groupList=[];right_ads_groupList.push('<a href="https://bit.ly/2Z5gjkZ" target="_blank"><img src="//static.stheadline.com/stheadline/images/banner/2020/rp_hd_ask_20200728.gif" border="0" alt="ASK Redemption"></a>');right_ads_groupList.push('<a href="https://hd.stheadline.com/special/2122pri_redemp/" target="_blank"><img src="//static.stheadline.com/stheadline/images/banner/2020/rp_hd_pr2122_20200623.jpg" border="0" alt="21／22 小一入學家長天書"></a>');if(right_ads_groupList.length>0){var htmlStrRightAds=[];htmlStrRightAds.push('<div class="content" id="jetsoCotent">');htmlStrRightAds.push('<div id="jetso-carousel" class="carousel slide" data-ride="carousel">');htmlStrRightAds.push('  <div class="carousel-inner" role="listbox">');for(var idx=0;idx<right_ads_groupList.length;idx++){htmlStrRightAds.push('  <div class="item'+((idx==0)?' active':'')+'">'+right_ads_groupList[idx]+'</div>')}htmlStrRightAds.push('  </div>');htmlStrRightAds.push('  <a class="left carousel-control" href="#jetso-carousel" role="button" data-slide="prev"><span class="fa fa-angle-left" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="right carousel-control" href="#jetso-carousel" role="button" data-slide="next"><span class="fa fa-angle-right" aria-hidden="true"></span><span class="sr-only">Next</span></a>');htmlStrRightAds.push('  <ol class="carousel-indicators">');for(idx=0;idx<right_ads_groupList.length;idx++){htmlStrRightAds.push('      <li data-target="#jetso-carousel" data-slide-to="'+idx+'" '+((idx==0)?'class="active"':'')+'></li>')}htmlStrRightAds.push('  </ol>');htmlStrRightAds.push('</div>');htmlStrRightAds.push('</div>');document.getElementById("jetso-carousel-1").innerHTML=htmlStrRightAds.join("")}</script></div>
+<div id="RP2_300_banner" class="ad_w300"></div>
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('/64888526/HL-300x250-Innity-Animation', [300, 250], 'div-gpt-ad-1523938221490-0').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<div style="visibility:hidden;">
+<div id='div-gpt-ad-1523938221490-0' style='height:250px; width:300px;'>
+<script>
+googletag.cmd.push(function() { googletag.display('div-gpt-ad-1523938221490-0'); });
+</script>
+</div>
+</div>
+</div> 
+</div>
+</div>
+<div id="footer" class="footer">
+<div class="container">
+<div class="txt-link">
+<table class="table">
+<tbody>
+<tr>
+<td><h5><a href="/news/daily/">新聞</a></h5>
+<ul>
+<li><a href="/news/realtime/即時/">即時新聞</a></li>
+<li><a href="/news/daily/日報主頁/">日報新聞</a></li>
+<li><a href="/news/columns/日報-專欄/">專欄</a></li>
+<li><a href="https://pop.stheadline.com/">POPNEWS</a></li>
+</ul></td>
+<td><h5><a href="https://hdfin.stheadline.com/">財經</a></h5>
+<ul>
+<li><a href="https://hdfin.stheadline.com/inews_finance_news_list.php">財經新聞</a></li>
+<li><a href="https://hdfin.stheadline.com/realtime_info.php">即時報價</a></li>
+<li><a href="https://hdfin.stheadline.com/basket_index.php">一籃指數</a></li>
+<li><a href="https://hdfin.stheadline.com/specialist_main.php">專家指路</a></li>
+<li><a href="https://hdfin.stheadline.com/broker_main.php">大行精點</a></li>
+<li><a href="https://hdfin.stheadline.com/warrants_main.php">輪證心法</a></li>
+<li><a href="https://hdfin.stheadline.com/wealth_mgt_list.php">增值快線</a></li>
+<li><a href="https://hdfin.stheadline.com/ipo_list.php">新股專區</a></li>
+<li><a href="https://hdfin.stheadline.com/property_list.php">地產快遞</a></li>
+<li><a href="https://hdfin.stheadline.com/exchange_list.php">外匯行情</a></li>
+<li><a href="https://hdfin.stheadline.com/lunch_analyse_content.php">頭條解籤</a></li>
+</ul></td>
+<td><h5><a href="/life/ent/">娛樂</a></h5>
+<ul>
+<li><a href="/life/ent/realtime/">即時娛樂</a></li>
+<li><a href="/life/ent/daily/">日報娛樂</a></li>
+<li><a href="/life/ent/popnews/">POPNews娛樂</a></li>
+<li><a href="/life/ent/columnist/">娛樂專欄</a></li>
+<li><a href="/life/ent/mov/">電影</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/dining/">飲食</a></h5>
+<ul>
+<li><a href="/life/dining/395/">頭條飯堂</a></li>
+<li><a href="/life/dining/398/">搵食攻略</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/travel/">旅遊</a></h5>
+<ul>
+<li><a href="/life/travel/389/">專題故事</a></li>
+<li><a href="/life/travel/392/">旅遊Hot News</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/fashion/">時尚</a></h5>
+<ul>
+<li><a href="/life/fashion/566/">潮流</a></li>
+<li><a href="/life/fashion/569/">美容</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/car/">駕駛</a></h5>
+<ul>
+<li><a href="/life/car/419/">新車專訊</a></li>
+<li><a href="/life/car/422/">車壇速遞</a></li>
+<li><a href="/life/car/561/">車盤快訊</a></li>
+<li><a href="/life/car/425/">加料站</a></li>
+</ul></td>
+<td><h5><a href="/life/living/">健康生活</a></h5>
+<ul>
+<li><a href="/life/living/434/">保健養生</a></li>
+<li><a href="/life/living/428/">醫療專題</a></li>
+<li><a href="/life/living/431/">醫療新知</a></li>
+<li><a href="/life/living/437/">孕產育兒</a></li>
+<li><a href="/life/living/440/">生活百科</a></li>
+<li><a href="/life/living/443/">健康講座</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/home/">家居</a></h5>
+<ul>
+<li><a href="/life/home/464/">樓市行情</a></li>
+<li><a href="/life/home/473/">精選家品</a></li>
+</ul>
+</td>
+<td><h5><a href="/life/digital/">影音</a></h5>
+<ul>
+<li><a href="/life/digital/404/">手機通訊</a></li>
+<li><a href="/life/digital/407/">數碼影樓</a></li>
+<li><a href="/life/digital/416/">遊戲特區</a></li>
+<li><a href="/life/digital/410/">電腦科技</a></li>
+<li><a href="/life/digital/413/">影音生活</a></li>
+</ul></td>
+<td><h5><a href="/life/fortune/">星相</a></h5>
+<ul>
+<li><a href="/life/fortune/41/">解夢解謎</a></li>
+<li><a href="/life/fortune/42/">鬼話連篇</a></li>
+<li><a href="/life/fortune/43/">雜談</a></li>
+</ul></td>
+<td><h5><a href="/racing/adult_warn.asp?back_to=/racing/index.asp">馬經</a></h5>
+<ul>
+<li><a href="/racing/racing_subindex.asp?catid=797">賽馬新聞</a></li>
+<li><a href="/racing/racing_position.asp">賽事資料</a></li>
+<li><a href="/racing/racing_odds_livebet.asp">賠率速遞</a></li>
+<li><a href="/racing/racing_professional_tips.asp">名家貼士</a></li>
+<li><a href="http://blogcity.me/blog/list_blog_express.asp?f=W2F8PPC12T72154">名家BLOG</a></li>
+<li><a href="/racing/racing_db_01.asp">資料庫</a></li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="copyright">
+<div class="p"><span class="tel">總機 : 2798 2323</span><span class="tel"><a href="http://paper.stheadline.com/html/callad.html" target="_blank">日報(祇適用廣告查詢)</a> : 3181 3666</span><span class="tel"><a href="https://static.stheadline.com/stheadline/pdf/stheadlineOnlineRatecard.pdf" target="_blank">網上(祇適用廣告查詢)</a> : 2798 2845</span><span class="tel">廣告查詢電郵 : <a href="mailto:adv@hkheadline.com" target="_blank">adv@hkheadline.com</a></span></div>
+<div class="p"><a href="/privacy.php">私隱政策聲明</a> │ <a href="/terms.php">使用條款</a> │ <a href="/qrcode_terms.php">QR Code 使用條款及細則</a> │ <a href="/copyright.php">版權告示</a></div>
+<div class="p">聯絡我們： <a href="mailto:web_info@hkheadline.com" target="_blank">web_info@hkheadline.com</a> Copyright 2020 hkheadline.com. All rights reserved. </div>
+</div>
+<div class="img-link">
+<ul class="list-inline"><li><a target="_blank" href="http://www.singtaonewscorp.com/"><div class="footer_icon_logo_01"></div></a></li><li><a target="_blank" href="http://std.stheadline.com/"><div class="footer_icon_logo_02"></div></a></li><li><a target="_blank" href="http://www.thestandard.com.hk/"><div class="footer_icon_logo_03"></div></a></li><li><a target="_blank" href="/"><div class="footer_icon_logo_04"></div></a></li><li><a target="_blank" href="http://easttouch.my-magazine.me/"><div class="footer_icon_logo_07"></div></a></li><li><a target="_blank" href="http://eastweek.my-magazine.me/"><div class="footer_icon_logo_08"></div></a></li><li><a target="_blank" href="https://hdfin.stheadline.com/"><div class="footer_icon_logo_10"></div></a></li><li><a target="_blank" href="http://headlinejobs.hk/"><div class="footer_icon_logo_11"></div></a></li><li><a target="_blank" href="http://www.singtaoopo.com/"><div class="footer_icon_logo_12"></div></a></li></ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar-offcanvas sidebar-right" id="sidebar-right">
+<div class="scrollable">
+<h2><i class="fa fa-star"></i> 熱門推介</h2>
+<div class="scrollable-content">
+<div class="list-group">
+<a class="list-group-item" href="/news/columns/日報-專欄/"><span><i class="fa fa-users"></i> 專欄</span></a>
+<a class="list-group-item" href="https://pop.stheadline.com/"><span><i class="fa fa-play-circle-o"></i> POPNews</span></a>
+<a class="list-group-item" href="/ent/娛樂-影視/"><span><i class="fa fa-film"></i> 娛樂影視</span></a>
+<a class="list-group-item" href="https://hdfin.stheadline.com/"><span><i class="fa fa-line-chart"></i> 財經網</span></a>
+<a class="list-group-item" href="/life/"><span><i class="fa fa-gittip"></i> Headlife</span></a>
+<a class="list-group-item" href="/racing/adult_warn.asp?back_to=/racing/index.asp"><span><i class="fa horse"></i> 馬經網</span></a>
+<a class="list-group-item" href="http://blogcity.me/"><span><i class="fa fa-comments-o"></i> Blog City</span></a>
+<a class="list-group-item" href="http://pop.stheadline.com/hlEpaperApp.php"><span><i class="fa epaper"></i> 頭條揭頁版</span></a>
+<a class="list-group-item" href="/hdjetso/"><span class="hd-jetso">頭條Jetso</span></a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+var newsGroup = 1;
+var newsPrePageOnList = 10;
+var countPage = 0;
+var categoryID = 1;
+</script>
+<!--[if lt IE 9]>
+    <script src="https://static.stheadline.com/stheadline/js/html5shiv.min.js"></script>
+    <script src="https://static.stheadline.com/stheadline/js/respond.min.js"></script>
+<![endif]-->
+<script src="//cdn.jsdelivr.net/g/jquery@1.12.4,bootstrap@3.3.7,perfect-scrollbar@0.6.14(js/perfect-scrollbar.jquery.min.js),sweetalert2@5.3.5"></script>
+<script type="text/javascript" src="/js/wurfl.js"></script>
+<script>
+window.jQuery || document.write('<script src="https://static.stheadline.com/stheadline/js/jquery.min.js">\x3C/script>');
+$.fn.modal || document.write('<script src="https://static.stheadline.com/stheadline/js/bootstrap.min.js">\x3C/script>');
+$.fn.perfectScrollbar || document.write('<script src="https://static.stheadline.com/stheadline/js/jquery.perfect-scrollbar.min.js">\x3C/script>');
+window.sweetAlert || document.write('<script src="https://static.stheadline.com/stheadline/js/sweetalert2.min.js">x3C/script>');
+googletag.cmd.push(function(){[detected_ads.main, detected_ads.right].forEach(function(ads) {for (var div in ads) { googletag.display(div);}});});
+var metaPlatform="computer";
+
+// console.log('metaPlatform : '+metaPlatform);
+//var metaPlatform="computer";
+</script>
+<div id="FontAwesome_fallback" class="fa" style="display:none"></div>
+<script>!function(e){var s=e("#FontAwesome_fallback");var a=s.css("fontFamily");"FontAwesome"!==a&&e("head").append('<link href="https://static.stheadline.com/stheadline/css/font-awesome.min.css" rel="stylesheet">')}(jQuery);</script>
+<script async defer src="https://static.stheadline.com/stheadline/js/offcanvas.min.js"></script>
+<script src="https://static.stheadline.com/stheadline/js/fancyBox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+<script defer src="/js/modernizr-custom.js"></script>
+<script defer src="/js/custom.js"></script>
+<script> var _comscore = _comscore || []; _comscore.push({ c1: "2", c2: "9053246", c3: "", c4: "" }); (function() { var s = document.createElement("script"), el = document.getElementsByTagName("script")[0]; s.async = true; s.src = (document.location.protocol == "https:" ? "https://sb" : "http://b") + ".scorecardresearch.com/beacon.js"; el.parentNode.insertBefore(s, el); })(); </script>
+<noscript>
+<img src="http://b.scorecardresearch.com/p?c1=2&c2=&c3=&c4=&c5=&c6=&c15=&cv=2.0&cj=1" />
+</noscript>
+<script defer src="https://static.stheadline.com/stheadline/js/comscore/comscore.streaming.min.js"></script>
+<script type="text/javascript">_satellite.pageBottom();</script>
+<img src="/wt/MTU5HL4asd30HLWFpCSk5ja1BBTUVkUi1IM3dkaW04dwNjg3NzgzOA.gif" style="visibility:hidden;display:none" alt="hd"/></body>
+</html>

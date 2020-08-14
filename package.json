@@ -1,0 +1,97 @@
+{
+    "name": "hknews",
+    "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
+    "version": "1.2.0",
+    "author": {
+        "name": "Alan Tai"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ayltai/hknews.git"
+    },
+    "bugs": {
+        "url": "https://github.com/ayltai/hknews/issues"
+    },
+    "homepage": "https://hknews.dev",
+    "license": "MIT",
+    "keywords": [
+        "news",
+        "newspaper",
+        "hongkong",
+        "hk"
+    ],
+    "scripts": {
+        "check": "npm run check:stylelint && npm run check:eslint",
+        "check:eslint": "eslint src --ext .js,.jsx",
+        "check:stylelint": "stylelint src/**/*.css src/main/resource/public/**/*.css !build/**",
+        "eject": "react-scripts eject",
+        "build": "SKIP_PREFLIGHT_CHECK=true GENERATE_SOURCEMAP=false react-app-rewired build",
+        "start": "SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
+        "test": "SKIP_PREFLIGHT_CHECK=true react-app-rewired test --watchAll=false",
+        "serve": "serve -s build"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^5.11.3",
+        "@testing-library/react": "^10.4.9",
+        "@testing-library/user-event": "^12.1.1",
+        "enzyme": "^3.11.0",
+        "enzyme-adapter-react-16": "^1.15.3",
+        "eslint": "^7.7.0",
+        "react-app-rewired": "^2.1.6",
+        "react-scripts": "^3.4.3",
+        "react-test-renderer": "^16.13.1",
+        "serve": "^11.3.2",
+        "stylelint": "^13.6.1",
+        "stylelint-config-standard": "^20.0.0"
+    },
+    "dependencies": {
+        "@material-ui/core": "^4.11.0",
+        "@material-ui/icons": "^4.9.1",
+        "prop-types": "^15.7.2",
+        "ra-i18n-polyglot": "^3.8.2",
+        "ra-core": "^3.8.2",
+        "ra-language-chinese-traditional": "^1.0.0",
+        "ra-language-english": "^3.8.2",
+        "react": "^16.13.1",
+        "react-admin": "^3.8.2",
+        "react-detect-offline": "^2.4.0",
+        "react-dom": "^16.13.1",
+        "react-image-lightbox": "^5.1.1",
+        "react-router-dom": "^5.2.0",
+        "react-timeago": "^4.4.0"
+    },
+    "eslintConfig": {
+        "extends": [
+            "react-app"
+        ]
+    },
+    "jest": {
+        "setupFilesAfterEnv": [
+            "./src/test/javascript/setupTests.js"
+        ],
+        "testPathIgnorePatterns": [
+            "./src/test/resources/testdata/",
+            "./src/main/resources/",
+            "./src/main/javascript/serviceWorker.js"
+        ],
+        "coveragePathIgnorePatterns": [
+            "./src/test/resources/testdata/",
+            "./src/main/resources/",
+            "./src/main/javascript/serviceWorker.js"
+        ],
+        "collectCoverage": true,
+        "coverageDirectory": "./build/coverage"
+    },
+    "browserslist": {
+        "development": [
+            "last 1 chrome version",
+            "last 1 firefox version",
+            "last 1 safari version"
+        ],
+        "production": [
+            ">0.2%",
+            "not dead",
+            "not op_mini all"
+        ]
+    }
+}

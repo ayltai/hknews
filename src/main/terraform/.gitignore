@@ -1,0 +1,6 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+.terraformrc
+secrets.tfvars
