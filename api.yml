@@ -59,6 +59,13 @@ paths:
             type: string
             example: 港聞,國際
           required: true
+        - in: path
+          name: days
+          description: The number of previous days of news to retrieve
+          schema:
+            type: string
+            example: 2
+          required: true
         - in: query
           name: page
           description: Page offset

@@ -14,14 +14,15 @@
       - domains:
           - "{{ domain_name }}"
           - "{{ random }}.{{ domain_name }}"
+    certbot_auto_renew_options: "--quiet --no-self-upgrade --post-hook {{ ansible_env.HOME }}/regenerate.sh"
     certbot_create_standalone_stop_services: []
     security_fail2ban_enabled: yes
   roles:
     - system
     - geerlingguy.ntp
     - mongodb
-    - adoptopenjdk
-    - instrumentald
+    - ayltai.adoptopenjdk
+    - ayltai.instrumentald
     - geerlingguy.certbot
     - geerlingguy.security
     - hknews

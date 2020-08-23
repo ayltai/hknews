@@ -54,6 +54,7 @@ Constants.SOURCE_IMAGES = {
     '頭條即時' : 'headline',
     '晴報'   : 'skypost',
     '信報'   : 'hkej',
+    '信報即時' : 'hkej',
     '香港電台' : 'rthk',
     '南華早報' : 'scmp',
     '英文虎報' : 'thestandard',

@@ -31,6 +31,6 @@ galaxy_info:
     - hongkong
 dependencies:
   - system
-  - instrumentald
+  - ayltai.instrumentald
   - mongodb
-  - adoptopenjdk
+  - ayltai.adoptopenjdk

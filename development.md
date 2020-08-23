@@ -2,12 +2,12 @@
 
 This project has the goal to develop a full-stack of applications serving news in Hong Kong:
 
-| Component     | Framework / Language |
-|---------------|----------------------|
+| Component     | Framework / Language                                         |
+|---------------|--------------------------------------------------------------|
 | Backend       | [Spring Boot](https://spring.io/projects/spring-boot) / Java |
-| Frontend      | [React](https://reactjs.org) / JavaScript |
-| Provision     | [Terraform](https://www.terraform.io) / HCL | 
-| Configuration | [Ansible](https://www.ansible.com) / YAML |
+| Frontend      | [React](https://reactjs.org) / JavaScript                    |
+| Provision     | [Terraform](https://www.terraform.io) / HCL                  | 
+| Configuration | [Ansible](https://www.ansible.com) / YAML                    |
 
 ...and endless dependencies of the above!
 

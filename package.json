@@ -1,7 +1,7 @@
 {
     "name": "hknews",
     "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
-    "version": "1.2.0",
+    "version": "2.0.1",
     "author": {
         "name": "Alan Tai"
     },
@@ -31,9 +31,9 @@
         "serve": "serve -s build"
     },
     "devDependencies": {
-        "@testing-library/jest-dom": "^5.11.3",
+        "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^10.4.9",
-        "@testing-library/user-event": "^12.1.1",
+        "@testing-library/user-event": "^12.1.2",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.3",
         "eslint": "^7.7.0",

@@ -8,4 +8,4 @@ system_limits:
 system_limit_nofile: 64000
 system_limit_nproc: 64000
 system_limit_memlock: 1024
-system_dns_timeout: 600
+system_dns_timeout: 1800

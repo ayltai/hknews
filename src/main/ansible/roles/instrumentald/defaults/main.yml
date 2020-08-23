@@ -1,9 +1,0 @@
----
-instrumental_api_key: replace_me
-instrumentald_docker_sockets: []
-instrumentald_memcached_urls: []
-instrumentald_mongodb_urls: []
-instrumentald_mysql_urls: []
-instrumentald_nginx_urls: []
-instrumentald_postgresql_urls: []
-instrumentald_redis_urls: []

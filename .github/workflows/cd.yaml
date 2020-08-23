@@ -18,7 +18,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bootJar
-          path: build/libs/hknews-2.0.0.jar
+          path: build/libs/hknews-2.0.1.jar
   deploy:
     needs: build
     runs-on: ubuntu-20.04

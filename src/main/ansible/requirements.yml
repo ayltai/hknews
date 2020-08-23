@@ -2,3 +2,5 @@
 - src: geerlingguy.ntp
 - src: geerlingguy.security
 - src: geerlingguy.certbot
+- src: ayltai.adoptopenjdk
+- src: ayltai.instrumentald

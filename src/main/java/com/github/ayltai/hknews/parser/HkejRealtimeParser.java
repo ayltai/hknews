@@ -59,6 +59,7 @@ public final class HkejRealtimeParser extends BaseHkejParser {
 
                 String date = StringUtils.substringBetween(section, "<p class=\"hkej_toc_cat_top_timeStamp_2014\">今日 ", "</p>");
                 if (date == null) date = StringUtils.substringBetween(section, "<span class=\"hkej_toc_top2_timeStamp_2014\">", "</span>");
+                if (date == null) return null;
 
                 final Item item = new Item();
                 item.setTitle(StringUtils.substringBetween(section, "\">", "</a>"));
