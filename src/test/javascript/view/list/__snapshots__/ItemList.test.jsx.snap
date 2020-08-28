@@ -80,7 +80,7 @@ exports[`<ItemList /> renders without errors 1`] = `
       className="MuiPaper-root MuiCard-root RaList-content-3 MuiPaper-elevation1 MuiPaper-rounded"
     >
       <div
-        className="makeStyles-container-26"
+        className="makeStyles-container-29"
       >
         <div
           className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
