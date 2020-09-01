@@ -6,8 +6,8 @@ import java.util.Collection;
 import org.springframework.lang.NonNull;
 
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -20,7 +20,7 @@ public abstract class Parser {
     protected final String sourceName;
 
     @NonNull
-    protected final SourceRepository sourceRepository;
+    protected final SourceService sourceService;
 
     @NonNull
     protected final ContentServiceFactory contentServiceFactory;

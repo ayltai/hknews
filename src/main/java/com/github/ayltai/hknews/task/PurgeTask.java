@@ -2,8 +2,9 @@ package com.github.ayltai.hknews.task;
 
 import java.util.Calendar;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -24,14 +25,10 @@ public class PurgeTask implements Runnable {
     }
 
     @Async
-    @CacheEvict(
-        cacheNames = "items",
-        allEntries = true
-    )
     @Scheduled(
         initialDelay = MainConfiguration.INITIAL_DELAY_PURGE,
-        fixedDelay   = MainConfiguration.PERIOD_PURGE
-    )
+        fixedDelay   = MainConfiguration.PERIOD_PURGE)
+    @Transactional
     @Override
     public void run() {
         final Calendar calendar = Calendar.getInstance();

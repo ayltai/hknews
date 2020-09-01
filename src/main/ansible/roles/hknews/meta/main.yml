@@ -32,5 +32,4 @@ galaxy_info:
 dependencies:
   - system
   - ayltai.instrumentald
-  - mongodb
   - ayltai.adoptopenjdk

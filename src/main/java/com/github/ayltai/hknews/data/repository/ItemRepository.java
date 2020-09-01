@@ -6,14 +6,16 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Repository;
 
 import com.github.ayltai.hknews.data.model.Item;
 
-public interface ItemRepository extends MongoRepository<Item, String> {
+@Repository
+public interface ItemRepository extends JpaRepository<Item, Integer> {
     @NonNull
-    Page<Item> findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(@NonNull Collection<String> sourceNames, @NonNull Collection<String> categoryNames, @NonNull Date publishDate, Pageable pageable);
+    Page<Item> findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(@NonNull Collection<String> sources, @NonNull Collection<String> categories, @NonNull Date publishDate, Pageable pageable);
 
     @NonNull
     Optional<Item> findByUrl(@NonNull String url);

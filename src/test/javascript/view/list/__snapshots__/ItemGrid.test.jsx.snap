@@ -31,42 +31,42 @@ exports[`<ItemGrid /> renders without errors 1`] = `
           tabIndex={0}
         >
           <div
-            className="makeStyles-card-2"
+            className="MuiCardHeader-root makeStyles-content-4"
           >
             <div
-              className="makeStyles-details-3"
+              className="MuiCardHeader-avatar"
+            >
+              <img
+                alt=""
+                height={40}
+                src="http://localhost:8080/images/undefined.png"
+                title=""
+                width={40}
+              />
+            </div>
+            <div
+              className="MuiCardHeader-content"
+            >
+              <span
+                className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+              >
+                <span
+                  className="MuiTypography-root MuiTypography-body2"
+                />
+              </span>
+              <span
+                className="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+              />
+            </div>
+          </div>
+          <div
+            className="MuiCardContent-root makeStyles-content-4"
+          >
+            <div
+              className="makeStyles-card-2"
             >
               <div
-                className="MuiCardHeader-root makeStyles-content-4"
-              >
-                <div
-                  className="MuiCardHeader-avatar"
-                >
-                  <img
-                    alt=""
-                    height={40}
-                    src="http://localhost:8080/images/undefined.png"
-                    title=""
-                    width={40}
-                  />
-                </div>
-                <div
-                  className="MuiCardHeader-content"
-                >
-                  <span
-                    className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
-                  >
-                    <span
-                      className="MuiTypography-root MuiTypography-body2"
-                    />
-                  </span>
-                  <span
-                    className="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-                  />
-                </div>
-              </div>
-              <div
-                className="MuiCardContent-root makeStyles-content-4"
+                className="makeStyles-details-3"
               >
                 <span
                   className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
@@ -92,64 +92,64 @@ exports[`<ItemGrid /> renders without errors 1`] = `
                 </span>
               </div>
               <div
-                className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"
-              >
-                <a
-                  aria-disabled={false}
-                  aria-label="labels.read_more"
-                  className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
-                  href="//undefined/show"
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onDragLeave={[Function]}
-                  onFocus={[Function]}
-                  onKeyDown={[Function]}
-                  onKeyUp={[Function]}
-                  onMouseDown={[Function]}
-                  onMouseLeave={[Function]}
-                  onMouseUp={[Function]}
-                  onTouchEnd={[Function]}
-                  onTouchMove={[Function]}
-                  onTouchStart={[Function]}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <span
-                    className="MuiButton-label"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      className="MuiSvgIcon-root RaButton-smallIcon-12"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
-                      />
-                    </svg>
-                    <span
-                      className="RaButton-label-10"
-                    >
-                      labels.read_more
-                    </span>
-                  </span>
-                  <span
-                    className="MuiTouchRipple-root"
-                  />
-                </a>
-              </div>
+                aria-describedby={null}
+                className="MuiCardMedia-root makeStyles-media-7"
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
+                title=""
+              />
             </div>
-            <div
-              aria-describedby={null}
-              className="MuiCardMedia-root makeStyles-media-7"
+          </div>
+          <div
+            className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"
+          >
+            <a
+              aria-disabled={false}
+              aria-label="labels.read_more"
+              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+              href="//undefined/show"
               onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
               onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
               onMouseLeave={[Function]}
-              onMouseOver={[Function]}
+              onMouseUp={[Function]}
               onTouchEnd={[Function]}
+              onTouchMove={[Function]}
               onTouchStart={[Function]}
-              title=""
-            />
+              role="button"
+              tabIndex={0}
+            >
+              <span
+                className="MuiButton-label"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root RaButton-smallIcon-12"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                  />
+                </svg>
+                <span
+                  className="RaButton-label-10"
+                >
+                  labels.read_more
+                </span>
+              </span>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </a>
           </div>
           <span
             className="MuiCardActionArea-focusHighlight"
@@ -184,42 +184,42 @@ exports[`<ItemGrid /> renders without errors 1`] = `
           tabIndex={0}
         >
           <div
-            className="makeStyles-card-2"
+            className="MuiCardHeader-root makeStyles-content-4"
           >
             <div
-              className="makeStyles-details-3"
+              className="MuiCardHeader-avatar"
+            >
+              <img
+                alt=""
+                height={40}
+                src="http://localhost:8080/images/undefined.png"
+                title=""
+                width={40}
+              />
+            </div>
+            <div
+              className="MuiCardHeader-content"
+            >
+              <span
+                className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
+              >
+                <span
+                  className="MuiTypography-root MuiTypography-body2"
+                />
+              </span>
+              <span
+                className="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
+              />
+            </div>
+          </div>
+          <div
+            className="MuiCardContent-root makeStyles-content-4"
+          >
+            <div
+              className="makeStyles-card-2"
             >
               <div
-                className="MuiCardHeader-root makeStyles-content-4"
-              >
-                <div
-                  className="MuiCardHeader-avatar"
-                >
-                  <img
-                    alt=""
-                    height={40}
-                    src="http://localhost:8080/images/undefined.png"
-                    title=""
-                    width={40}
-                  />
-                </div>
-                <div
-                  className="MuiCardHeader-content"
-                >
-                  <span
-                    className="MuiTypography-root MuiCardHeader-title MuiTypography-body2 MuiTypography-displayBlock"
-                  >
-                    <span
-                      className="MuiTypography-root MuiTypography-body2"
-                    />
-                  </span>
-                  <span
-                    className="MuiTypography-root MuiCardHeader-subheader MuiTypography-body2 MuiTypography-colorTextSecondary MuiTypography-displayBlock"
-                  />
-                </div>
-              </div>
-              <div
-                className="MuiCardContent-root makeStyles-content-4"
+                className="makeStyles-details-3"
               >
                 <span
                   className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
@@ -245,64 +245,64 @@ exports[`<ItemGrid /> renders without errors 1`] = `
                 </span>
               </div>
               <div
-                className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"
-              >
-                <a
-                  aria-disabled={false}
-                  aria-label="labels.read_more"
-                  className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
-                  href="//undefined/show"
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onDragLeave={[Function]}
-                  onFocus={[Function]}
-                  onKeyDown={[Function]}
-                  onKeyUp={[Function]}
-                  onMouseDown={[Function]}
-                  onMouseLeave={[Function]}
-                  onMouseUp={[Function]}
-                  onTouchEnd={[Function]}
-                  onTouchMove={[Function]}
-                  onTouchStart={[Function]}
-                  role="button"
-                  tabIndex={0}
-                >
-                  <span
-                    className="MuiButton-label"
-                  >
-                    <svg
-                      aria-hidden={true}
-                      className="MuiSvgIcon-root RaButton-smallIcon-12"
-                      focusable="false"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
-                      />
-                    </svg>
-                    <span
-                      className="RaButton-label-10"
-                    >
-                      labels.read_more
-                    </span>
-                  </span>
-                  <span
-                    className="MuiTouchRipple-root"
-                  />
-                </a>
-              </div>
+                aria-describedby={null}
+                className="MuiCardMedia-root makeStyles-media-7"
+                onBlur={[Function]}
+                onFocus={[Function]}
+                onMouseLeave={[Function]}
+                onMouseOver={[Function]}
+                onTouchEnd={[Function]}
+                onTouchStart={[Function]}
+                title=""
+              />
             </div>
-            <div
-              aria-describedby={null}
-              className="MuiCardMedia-root makeStyles-media-7"
+          </div>
+          <div
+            className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"
+          >
+            <a
+              aria-disabled={false}
+              aria-label="labels.read_more"
+              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+              href="//undefined/show"
               onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
               onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
               onMouseLeave={[Function]}
-              onMouseOver={[Function]}
+              onMouseUp={[Function]}
               onTouchEnd={[Function]}
+              onTouchMove={[Function]}
               onTouchStart={[Function]}
-              title=""
-            />
+              role="button"
+              tabIndex={0}
+            >
+              <span
+                className="MuiButton-label"
+              >
+                <svg
+                  aria-hidden={true}
+                  className="MuiSvgIcon-root RaButton-smallIcon-12"
+                  focusable="false"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"
+                  />
+                </svg>
+                <span
+                  className="RaButton-label-10"
+                >
+                  labels.read_more
+                </span>
+              </span>
+              <span
+                className="MuiTouchRipple-root"
+              />
+            </a>
           </div>
           <span
             className="MuiCardActionArea-focusHighlight"

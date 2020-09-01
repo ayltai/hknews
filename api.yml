@@ -2,7 +2,7 @@ openapi: 3.0.0
 info:
   title: HK News API
   description: Serves aggregated news from 13 local news publishers in Hong Kong
-  version: 1.0.0
+  version: 1.1.0
   contact:
     name: GitHub
     url: https://github.com/ayltai/hknews
@@ -16,28 +16,15 @@ paths:
     get:
       summary: Gets a list of news publishers
       description: Gets a list of news publishers supported by the server
-      parameters:
-        - in: query
-          name: page
-          description: Page offset
-          schema:
-            type: integer
-            default: 0
-          required: false
-        - in: query
-          name: size
-          description: Page size
-          schema:
-            type: integer
-            default: 100
-          required: false
       responses:
         200:
           description: The requested list of news publishers was retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components//schemas/PageOfSources'
+                type: array
+                items:
+                  type: string
       tags:
         - news publishers
   /items/{sourceNames}/{categoryNames}/{days}:
@@ -276,17 +263,6 @@ components:
         empty:
           type: boolean
           description: Whether the current page is empty
-    PageOfSources:
-      allOf:
-        - type: object
-          required:
-            - content
-          properties:
-            content:
-              type: array
-              items:
-                $ref:  '#/components/schemas/Source'
-        - $ref: '#/components/schemas/Page'
     Category:
       type: object
       required:

@@ -36,7 +36,7 @@ public final class ScmpParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getFeed("https://www.scmp.com/rss/2/feed");
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new ScmpParser("南華早報", this.sourceRepository, factory).getItems("港聞");
+            final Collection<Item> items = new ScmpParser("南華早報", this.sourceService, factory).getItems("港聞");
 
             Assertions.assertEquals(50, items.size(), "Incorrect item count");
             Assertions.assertEquals("US sanctions Hong Kong leader Carrie Lam for ‘implementing Beijing’s policies of suppression’", items.iterator().next().getTitle(), "Incorrect item title");
@@ -61,15 +61,15 @@ public final class ScmpParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://www.scmp.com/news/hong-kong/politics/article/3096455/hong-kong-national-security-law-us-consulate-city-breaks");
 
-            final Item updatedItem = new ScmpParser("南華早報", this.sourceRepository, factory).updateItem(item);
+            final Item updatedItem = new ScmpParser("南華早報", this.sourceService, factory).updateItem(item);
 
             Assertions.assertEquals("In rare move, diplomatic office also hits back at allegations staff had colluded with opposition camp", updatedItem.getDescription().substring(0, 101), "Incorrect item description");
             Assertions.assertEquals(3, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("The US consulate on Garden Road in Hong Kong’s Central. Photo: Dickson Lee", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
-            Assertions.assertEquals("https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/08/07/bb5a9888-d87c-11ea-a9df-dfa023813e67_image_hires_183343.jpg", updatedItem.getImages().get(0).getImageUrl(), "Incorrect image URL");
+            Assertions.assertEquals("https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/08/07/bb5a9888-d87c-11ea-a9df-dfa023813e67_image_hires_183343.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
             Assertions.assertEquals(1, updatedItem.getVideos().size(), "Incorrect video count");
-            Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0", updatedItem.getVideos().get(0).getVideoUrl(), "Incorrect video URL");
-            Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0/hqdefault.jpg", updatedItem.getVideos().get(0).getImageUrl(), "Incorrect thumbnail URL");
+            Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0", updatedItem.getVideos().get(0).getUrl(), "Incorrect video URL");
+            Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0/hqdefault.jpg", updatedItem.getVideos().get(0).getCover(), "Incorrect thumbnail URL");
         }
     }
 }

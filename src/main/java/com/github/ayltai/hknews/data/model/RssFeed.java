@@ -30,8 +30,7 @@ public final class RssFeed {
     @ElementList(
         name     = "item",
         required = false,
-        inline   = true
-    )
+        inline   = true)
     @Path("channel")
     private List<RssItem> items;
 }

@@ -35,11 +35,11 @@ export const ItemShow = props => {
                                     label=''
                                     source='images'>
                                     <Gallery
-                                        label='description'
-                                        source='imageUrl'>
+                                        caption='description'
+                                        source='url'>
                                         <ImageField
                                             label=''
-                                            source='imageUrl' />
+                                            source='url' />
                                     </Gallery>
                                 </ArrayField>
                             )}

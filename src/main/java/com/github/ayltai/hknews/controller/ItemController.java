@@ -2,7 +2,6 @@ package com.github.ayltai.hknews.controller;
 
 import java.util.List;
 
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -37,23 +36,17 @@ public class ItemController {
     @NonNull
     @GetMapping(
         path     = "/item/{id}",
-        produces = MainConfiguration.CONTENT_TYPE_JSON
-    )
-    public ResponseEntity<Item> getItem(@Nullable @PathVariable final String id) {
-        if (id == null || id.isEmpty()) return ResponseEntity.badRequest().build();
+        produces = MainConfiguration.CONTENT_TYPE_JSON)
+    public ResponseEntity<Item> getItem(@Nullable @PathVariable final Integer id) {
+        if (id == null) return ResponseEntity.badRequest().build();
 
         return this.itemService.getItem(id).map(value -> ResponseEntity.ok().headers(this.httpHeaders).body(value)).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @NonNull
-    @Cacheable(
-        cacheNames = "items",
-        sync       = true
-    )
     @GetMapping(
         path     = "/items/{sourceNames}/{categoryNames}/{days}",
-        produces = MainConfiguration.CONTENT_TYPE_JSON
-    )
+        produces = MainConfiguration.CONTENT_TYPE_JSON)
     public ResponseEntity<Page<Item>> getItems(@Nullable @PathVariable final List<String> sourceNames, @Nullable @PathVariable final List<String> categoryNames, @PathVariable final int days, @RequestParam(name = "page", defaultValue = "0") final int page, @RequestParam(name = "size", defaultValue = MainConfiguration.DEFAULT_PAGE_SIZE) final int size) {
         if (sourceNames == null || sourceNames.isEmpty() || categoryNames == null || categoryNames.isEmpty()) return ResponseEntity.badRequest().build();
 

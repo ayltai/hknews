@@ -34,7 +34,7 @@ public final class HeadlineParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getHtml("https://hd.stheadline.com/news/daily/hk/%E6%97%A5%E5%A0%B1-%E6%B8%AF%E8%81%9E/");
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new HeadlineParser("頭條日報", this.sourceRepository, factory).getItems("港聞");
+            final Collection<Item> items = new HeadlineParser("頭條日報", this.sourceService, factory).getItems("港聞");
 
             Assertions.assertEquals(10, items.size(), "Incorrect item count");
             Assertions.assertEquals("\uFEFF全民免費檢測 最快兩周後展開", items.iterator().next().getTitle(), "Incorrect item title");
@@ -59,12 +59,12 @@ public final class HeadlineParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://hd.stheadline.com/news/daily/hk/874104/%E6%97%A5%E5%A0%B1-%E6%B8%AF%E8%81%9E-%E5%85%A8%E6%B0%91%E5%85%8D%E8%B2%BB%E6%AA%A2%E6%B8%AC-%E6%9C%80%E5%BF%AB%E5%85%A9%E5%91%A8%E5%BE%8C%E5%B1%95%E9%96%8B");
 
-            final Item updatedItem = new HeadlineParser("頭條日報", this.sourceRepository, factory).updateItem(item);
+            final Item updatedItem = new HeadlineParser("頭條日報", this.sourceService, factory).updateItem(item);
 
             Assertions.assertEquals("&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;第三", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
             Assertions.assertEquals(2, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("檢測流程將電子化，毋須如現時般須排隊。\n資料圖片", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
-            Assertions.assertEquals("https://static.stheadline.com/stheadline/news_res/2020/08/08/637017/wnnp001p01a.jpg", updatedItem.getImages().get(0).getImageUrl(), "Incorrect image URL");
+            Assertions.assertEquals("https://static.stheadline.com/stheadline/news_res/2020/08/08/637017/wnnp001p01a.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
         }
     }
 }

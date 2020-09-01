@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @EnableAsync
 @EnableScheduling
 @Profile("!test")

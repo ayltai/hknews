@@ -57,7 +57,12 @@ variable "storage_size" {
 variable "firewall_ports" {
   description = "The ports to be opened"
   type        = list(number)
-  default     = [ 22, 80, 443, ]
+
+  default = [
+    22,
+    80,
+    443,
+  ]
 }
 
 variable "username" {

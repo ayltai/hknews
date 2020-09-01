@@ -13,14 +13,16 @@ import org.springframework.lang.Nullable;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 public final class ScmpParser extends RssParser {
+    //region Constants
+
     private static final String JSON_ID       = "id";
     private static final String JSON_JSON     = "json";
     private static final String JSON_TYPE     = "type";
@@ -30,8 +32,10 @@ public final class ScmpParser extends RssParser {
     private static final String LINE_BREAK    = "<br><br>";
     private static final String YOUTUBE_URL   = "https://www.youtube.com/embed/";
 
-    public ScmpParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    //endregion
+
+    public ScmpParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -56,10 +60,10 @@ public final class ScmpParser extends RssParser {
             final String description = ScmpParser.extractBody(body.getJSONArray(ScmpParser.JSON_JSON));
 
             item.setDescription(subHeadline + ScmpParser.LINE_BREAK + description);
-            item.getImages().addAll(ScmpParser.extractImages(content.getJSONArray("images"), json));
+            item.getImages().addAll(ScmpParser.extractImages(content.getJSONArray("images"), json, item));
 
             final JSONArray videos = ScmpParser.find(content, "articleVideos");
-            if (videos != null) item.getVideos().addAll(ScmpParser.extractVideos(videos, json));
+            if (videos != null) item.getVideos().addAll(ScmpParser.extractVideos(videos, json, item));
         }
 
         return item;
@@ -111,7 +115,7 @@ public final class ScmpParser extends RssParser {
     }
 
     @NonNull
-    private static List<Image> extractImages(@NonNull final JSONArray elements, @NonNull final JSONObject parent) {
+    private static List<Image> extractImages(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(element -> (JSONObject)element)
             .map(json -> json.getString(ScmpParser.JSON_ID))
@@ -120,20 +124,20 @@ public final class ScmpParser extends RssParser {
                 final String imageUrl = img.optString("url");
                 if (imageUrl == null) return null;
 
-                return new Image(imageUrl, img.optString("title"));
+                return new Image(null, item, imageUrl, img.optString("title"));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 
     @NonNull
-    private static List<Video> extractVideos(@NonNull final JSONArray elements, @NonNull final JSONObject parent) {
+    private static List<Video> extractVideos(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(element -> (JSONObject)element)
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(video -> video.getString("videoId"))
-            .map(videoId -> new Video(ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
+            .map(videoId -> new Video(null, item, ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
             .collect(Collectors.toList());
     }
 }

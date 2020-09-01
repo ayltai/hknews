@@ -10,16 +10,16 @@ import org.springframework.lang.Nullable;
 
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 
 public final class HketParser extends RssParser {
     private static final String QUOTE = "\"";
 
-    public HketParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    public HketParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -39,16 +39,16 @@ public final class HketParser extends RssParser {
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<img ", "/>");
         if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(HketParser::extractImage)
+            .map(imageContainer -> HketParser.extractImage(imageContainer, item))
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
     }
 
     @Nullable
-    private static Image extractImage(@NonNull @lombok.NonNull final String imageContainer) {
+    private static Image extractImage(@NonNull @lombok.NonNull final String imageContainer, @NonNull final Item item) {
         final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", HketParser.QUOTE);
         if (imageUrl == null) return null;
 
-        return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "data-alt=\"", HketParser.QUOTE));
+        return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "data-alt=\"", HketParser.QUOTE));
     }
 }

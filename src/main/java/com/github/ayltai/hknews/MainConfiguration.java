@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Primary
-@Configuration(proxyBeanMethods = false)
+@Configuration
 @ConfigurationProperties(prefix = "app")
 public class MainConfiguration {
     public static final String CONTENT_TYPE_JSON = "application/json";

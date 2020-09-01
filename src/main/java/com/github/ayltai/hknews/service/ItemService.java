@@ -23,7 +23,7 @@ public class ItemService {
     }
 
     @NonNull
-    public Optional<Item> getItem(@NonNull final String id) {
+    public Optional<Item> getItem(@NonNull final Integer id) {
         return this.itemRepository.findById(id);
     }
 
@@ -34,7 +34,7 @@ public class ItemService {
 
     public void saveItems(@NonNull final Collection<Item> items) {
         items.stream()
-            .filter(item -> !this.itemRepository.findByUrl(item.getUrl()).isPresent())
+            .filter(item -> this.itemRepository.findByUrl(item.getUrl()).isEmpty())
             .forEach(this.itemRepository::save);
     }
 }

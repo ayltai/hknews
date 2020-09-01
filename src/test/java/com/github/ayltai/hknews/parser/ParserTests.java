@@ -1,7 +1,8 @@
 package com.github.ayltai.hknews.parser;
 
+import java.util.List;
+
 import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
-import org.springframework.data.domain.Page;
 
 import com.github.ayltai.hknews.UnitTests;
 import com.github.ayltai.hknews.data.model.Source;
@@ -10,32 +11,30 @@ import com.github.ayltai.hknews.service.SourceService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentMatchers;
-import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
 
 @DataMongoTest
 public abstract class ParserTests extends UnitTests {
-    @Mock
-    protected SourceRepository sourceRepository;
+    protected SourceService sourceService;
 
     @BeforeEach
     @Override
     public void setUp() {
         super.setUp();
 
-        MockitoAnnotations.initMocks(this);
+        final SourceRepository sourceRepository = Mockito.mock(SourceRepository.class);
 
-        Mockito.doReturn(0L).when(this.sourceRepository).count();
-        Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(this.sourceRepository).saveAll(ArgumentMatchers.anyCollection());
+        Mockito.doReturn(0L).when(sourceRepository).count();
+        Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(sourceRepository).saveAll(ArgumentMatchers.anyCollection());
 
-        final Page<Source> sources = new SourceService(this.sourceRepository).getSources(0, Integer.MAX_VALUE);
+        this.sourceService = new SourceService(sourceRepository);
+        final List<Source> sources = this.sourceService.getSources();
 
-        Mockito.doAnswer(invocation -> sources.get()
+        Mockito.doAnswer(invocation -> sources
+            .stream()
             .filter(source -> source.getName().equals(invocation.getArgument(0)))
-            .findFirst()
-            .get())
-            .when(this.sourceRepository)
-            .findByName(ArgumentMatchers.anyString());
+            .findFirst())
+            .when(sourceRepository)
+            .findAllByName(ArgumentMatchers.anyString());
     }
 }

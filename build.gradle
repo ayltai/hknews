@@ -12,8 +12,8 @@ plugins {
 group   'com.github.ayltai'
 version '2.1.0'
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
 
 configurations {
     compileOnly {
@@ -33,12 +33,12 @@ repositories {
 }
 
 ext {
-    okhttpVersion        = '4.8.1'
-    retrofitVersion      = '2.9.0'
-    commonsLang3Version  = '3.11'
-    jacksonVersion       = '2.11.2'
-    logzioVersion        = '1.0.24'
-    embeddedMongoVersion = '2.2.0'
+    sqliteVersion       = '3.32.3.2'
+    okhttpVersion       = '4.8.1'
+    retrofitVersion     = '2.9.0'
+    commonsLang3Version = '3.11'
+    jacksonVersion      = '2.11.2'
+    logzioVersion       = '1.0.24'
 }
 
 dependencies {
@@ -46,11 +46,13 @@ dependencies {
     implementation      ('org.springframework.boot:spring-boot-starter-web') {
         exclude group : 'org.springframework.boot', module : 'spring-boot-starter-json'
         exclude group : 'org.springframework.boot', module : 'spring-boot-starter-tomcat'
-        exclude group : 'org.hibernate.validator',  module : 'hibernate-validator'
     }
     implementation      'org.springframework.boot:spring-boot-starter-undertow'
-    implementation      'org.springframework.boot:spring-boot-starter-data-mongodb'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Database
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation "org.xerial:sqlite-jdbc:$sqliteVersion"
 
     // HTTP networking
     implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
@@ -77,7 +79,6 @@ dependencies {
     testImplementation ('org.springframework.boot:spring-boot-starter-test') {
         exclude group : 'org.junit.vintage', module : 'junit-vintage-engine'
     }
-    testImplementation "de.flapdoodle.embed:de.flapdoodle.embed.mongo:$embeddedMongoVersion"
 }
 
 //endregion
@@ -85,7 +86,7 @@ dependencies {
 //region Checkstyle
 
 checkstyle {
-    toolVersion    = '8.35'
+    toolVersion    = '8.36'
     configFile     = rootProject.file('./checkstyle.xml')
     ignoreFailures = true
     showViolations = true

@@ -8,7 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 @ExtendWith(SpringExtension.class)
-@ActiveProfiles(profiles = "test")
+@ActiveProfiles(profiles = {
+    "common",
+    "test",
+})
 public abstract class UnitTests {
     @BeforeEach
     public void setUp() {

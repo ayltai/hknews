@@ -7,14 +7,14 @@ import org.springframework.lang.NonNull;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 
 public final class RthkParser extends RssParser {
-    public RthkParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    public RthkParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -35,12 +35,12 @@ public final class RthkParser extends RssParser {
         final String imageContainer = StringUtils.substringBetween(html, "<div class=\"itemSlideShow\">", "<div class=\"clr\"></div>");
         if (imageContainer != null) {
             final String imageUrl = StringUtils.substringBetween(imageContainer, "<a href=\"", "\"");
-            if (imageUrl != null) item.getImages().add(new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", "\"")));
+            if (imageUrl != null) item.getImages().add(new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", "\"")));
 
             final String videoUrl     = StringUtils.substringBetween(imageContainer, "var videoFile\t\t\t= '", "'");
             final String thumbnailUrl = StringUtils.substringBetween(imageContainer, "var videoThumbnail\t\t= '", "'");
 
-            if (videoUrl != null && thumbnailUrl != null) item.getVideos().add(new Video(videoUrl, thumbnailUrl));
+            if (videoUrl != null && thumbnailUrl != null) item.getVideos().add(new Video(null, item, videoUrl, thumbnailUrl));
         }
     }
 }

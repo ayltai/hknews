@@ -20,10 +20,9 @@ public class InitTask implements Runnable {
 
     @Scheduled(
         initialDelay = MainConfiguration.INITIAL_DELAY_INIT,
-        fixedDelay   = Long.MAX_VALUE
-    )
+        fixedDelay   = Long.MAX_VALUE)
     @Override
     public void run() {
-        new SourceService(this.sourceRepository).getSources(0, Integer.MAX_VALUE);
+        new SourceService(this.sourceRepository).getSourceNames();
     }
 }

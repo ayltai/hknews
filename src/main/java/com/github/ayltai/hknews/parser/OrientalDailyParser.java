@@ -6,19 +6,18 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.lang.NonNull;
 
-import com.github.ayltai.hknews.data.model.Category;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
+import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -27,13 +26,17 @@ import org.slf4j.LoggerFactory;
 public final class OrientalDailyParser extends Parser {
     private static final Logger LOGGER = LoggerFactory.getLogger(OrientalDailyParser.class);
 
+    //region Constants
+
     private static final String BASE_URL = "https://orientaldaily.on.cc";
     private static final String QUOTE    = "\"";
     private static final String SLASH    = "/";
     private static final String CLOSE    = "</div>";
 
-    public OrientalDailyParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    //endregion
+
+    public OrientalDailyParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -41,13 +44,11 @@ public final class OrientalDailyParser extends Parser {
     public Collection<Item> getItems(@NonNull final String categoryName) {
         final LocalDate now = LocalDate.now();
 
-        return this.sourceRepository
-            .findByName(this.sourceName)
-            .getCategories()
+        return this.sourceService
+            .getSources(this.sourceName)
             .stream()
-            .filter(category -> category.getName().equals(categoryName))
-            .map(Category::getUrls)
-            .flatMap(List::stream)
+            .filter(source -> source.getCategoryName().equals(categoryName))
+            .map(Source::getUrl)
             .map(url -> {
                 try {
                     String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(String.format(url, now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body(), "<div id=\"articleList\">", "<!--//articleList-->");
@@ -99,7 +100,7 @@ public final class OrientalDailyParser extends Parser {
                 final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", OrientalDailyParser.QUOTE);
                 if (imageUrl == null) return null;
 
-                return new Image(OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
+                return new Image(null, item, OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -123,7 +124,7 @@ public final class OrientalDailyParser extends Parser {
 
                     final String shortDate = date.format(DateTimeFormatter.ofPattern("yyyyMM"));
 
-                    return new Video("https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
+                    return new Video(null, item, "https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

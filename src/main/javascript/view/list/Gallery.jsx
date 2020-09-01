@@ -9,7 +9,7 @@ import { StringUtils, } from '../../util/StringUtils';
 const getEntries = props => props.ids && props.data ? props.ids.map(id => props.data[id]) : [];
 
 const getImages = props => Object.entries(getEntries(props)).map(record => ({
-    label  : StringUtils.decode(record[1][props.label]),
+    label  : StringUtils.decode(record[1][props.caption]),
     source : record[1][props.source],
 }));
 
@@ -49,9 +49,9 @@ export const Gallery = props => {
 };
 
 Gallery.propTypes = {
-    ids      : PropTypes.arrayOf(PropTypes.string),
+    ids      : PropTypes.arrayOf(PropTypes.number),
     data     : PropTypes.object,
-    label    : PropTypes.string,
+    caption  : PropTypes.string,
     source   : PropTypes.string,
     children : PropTypes.object,
 };

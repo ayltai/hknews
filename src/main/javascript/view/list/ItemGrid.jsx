@@ -8,9 +8,9 @@ import { StringUtils, } from '../../util/StringUtils';
 import { Constants, } from '../../Constants';
 
 export const ItemGrid = ({ basePath, ids, data, }) => {
-    const classes = makeStyles({
+    const classes = makeStyles(theme => ({
         container   : {
-            padding  : 16,
+            padding  : theme.spacing(2),
             flexGrow : 1,
         },
         card        : {
@@ -19,6 +19,7 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
         details     : {
             display       : 'flex',
             flexDirection : 'column',
+            flexGrow      : 1,
         },
         content     : {
             flex : '1 0 auto',
@@ -34,7 +35,7 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
             WebkitLineClamp : 1,
         },
         description : {
-            minHeight       : 100,
+            minHeight       : theme.spacing(12),
             display         : '-webkit-box',
             overflow        : 'hidden',
             textOverflow    : 'ellipsis',
@@ -42,13 +43,16 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
             WebkitLineClamp : 4,
         },
         media       : {
-            minWidth : 300,
-            width    : 300,
+            minWidth   : theme.spacing(20),
+            width      : theme.spacing(20),
+            minHeight  : theme.spacing(20),
+            height     : theme.spacing(20),
+            marginLeft : theme.spacing(2),
         },
         actions     : {
             display : 'block',
         },
-    })();
+    }))();
 
     return (
         <div className={classes.container}>
@@ -63,25 +67,25 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                         xl={6}>
                         <Card>
                             <CardActionArea href={`#${basePath}/${id}/show`}>
-                                <div className={classes.card}>
-                                    <div className={classes.details}>
-                                        <CardHeader
-                                            className={classes.content}
-                                            title={
-                                                <TextField
-                                                    record={data[id]}
-                                                    source='sourceName' />
-                                            }
-                                            subheader={<TimeAgo date={data[id].publishDate} />}
-                                            avatar={
-                                                <img
-                                                    src={`${Constants.API_ENDPOINT}/images/${Constants.SOURCE_IMAGES[data[id].sourceName]}.png`}
-                                                    width={Constants.AVATAR_SIZE}
-                                                    height={Constants.AVATAR_SIZE}
-                                                    title={data[id].sourceName}
-                                                    alt={data[id].sourceName} />
-                                            } />
-                                        <CardContent className={classes.content}>
+                                <CardHeader
+                                    className={classes.content}
+                                    title={
+                                        <TextField
+                                            record={data[id]}
+                                            source='sourceName' />
+                                    }
+                                    subheader={<TimeAgo date={data[id].publishDate} />}
+                                    avatar={
+                                        <img
+                                            src={`${Constants.API_ENDPOINT}/images/${Constants.SOURCE_IMAGES[data[id].sourceName]}.png`}
+                                            width={Constants.AVATAR_SIZE}
+                                            height={Constants.AVATAR_SIZE}
+                                            title={data[id].sourceName}
+                                            alt={data[id].sourceName} />
+                                    } />
+                                <CardContent className={classes.content}>
+                                    <div className={classes.card}>
+                                        <div className={classes.details}>
                                             <RichTextField
                                                 className={classes.title}
                                                 record={data[id]}
@@ -90,22 +94,22 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                                                 className={classes.description}
                                                 record={data[id]}
                                                 source='description' />
-                                        </CardContent>
-                                        <CardActions className={classes.actions}>
-                                            <ShowButton
-                                                basePath={basePath}
-                                                label='labels.read_more'
-                                                record={data[id]} />
-                                        </CardActions>
+                                        </div>
+                                        {data[id].images && data[id].images.length > 0 && (
+                                            <Tooltip title={data[id].images[0].description ? StringUtils.decode(data[id].images[0].description) : ''}>
+                                                <CardMedia
+                                                    className={classes.media}
+                                                    image={data[id].images[0].url} />
+                                            </Tooltip>
+                                        )}
                                     </div>
-                                    {data[id].images && data[id].images.length > 0 && (
-                                        <Tooltip title={data[id].images[0].description ? StringUtils.decode(data[id].images[0].description) : ''}>
-                                            <CardMedia
-                                                className={classes.media}
-                                                image={data[id].images[0].imageUrl} />
-                                        </Tooltip>
-                                    )}
-                                </div>
+                                </CardContent>
+                                <CardActions className={classes.actions}>
+                                    <ShowButton
+                                        basePath={basePath}
+                                        label='labels.read_more'
+                                        record={data[id]} />
+                                </CardActions>
                             </CardActionArea>
                         </Card>
                     </Grid>
@@ -117,6 +121,6 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
 
 ItemGrid.propTypes = {
     basePath : PropTypes.string,
-    ids      : PropTypes.arrayOf(PropTypes.string),
+    ids      : PropTypes.arrayOf(PropTypes.number),
     data     : PropTypes.object,
 };

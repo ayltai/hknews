@@ -1,6 +1,8 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -8,19 +10,20 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 
 import org.springframework.lang.NonNull;
 
-import com.github.ayltai.hknews.data.model.Category;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
+import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 import org.json.JSONArray;
@@ -34,8 +37,8 @@ public final class OrientalDailyRealtimeParser extends Parser {
     private static final String SLASH           = "/";
     private static final String JSON_ARTICLE_ID = "articleId";
 
-    public OrientalDailyRealtimeParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    public OrientalDailyRealtimeParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -43,16 +46,20 @@ public final class OrientalDailyRealtimeParser extends Parser {
     public Collection<Item> getItems(@NonNull final String categoryName) {
         final LocalDate now = LocalDate.now();
 
-        return this.sourceRepository
-            .findByName(this.sourceName)
-            .getCategories()
+        return this.sourceService
+            .getSources(this.sourceName)
             .stream()
-            .filter(category -> category.getName().equals(categoryName))
-            .map(Category::getUrls)
-            .flatMap(List::stream)
+            .filter(source -> source.getCategoryName().equals(categoryName))
+            .map(Source::getUrl)
             .map(url -> {
                 try {
                     return new JSONArray(this.contentServiceFactory.create().getHtml(String.format(url, now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body());
+                } catch (final ProtocolException e) {
+                    if (e.getMessage().startsWith("Too many follow-up requests")) OrientalDailyRealtimeParser.LOGGER.info(e.getMessage(), e);
+                } catch (final SSLHandshakeException | SocketTimeoutException e) {
+                    OrientalDailyRealtimeParser.LOGGER.info(e.getMessage(), e);
+                } catch (final SSLException e) {
+                    if (e.getMessage().equals("Connection reset")) OrientalDailyRealtimeParser.LOGGER.info(e.getMessage(), e);
                 } catch (final IOException e) {
                     OrientalDailyRealtimeParser.LOGGER.error(this.getClass().getSimpleName(), e.getMessage(), e);
                 }
@@ -112,7 +119,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                     }
                 }
 
-                return imageUrl == null ? null : new Image("https://hk.on.cc/hk/bkn" + imageUrl, description);
+                return imageUrl == null ? null : new Image(null, item, "https://hk.on.cc/hk/bkn" + imageUrl, description);
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -131,7 +138,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                 final String videoUrl = json.getString("vid");
                 if (videoUrl == null) return null;
 
-                return new Video("https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
+                return new Video(null, item, "https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));

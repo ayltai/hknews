@@ -34,7 +34,7 @@ public final class SingPaoParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getHtml("https://www.singpao.com.hk/index.php?fi=news1");
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new SingPaoParser("成報", this.sourceRepository, factory).getItems("港聞");
+            final Collection<Item> items = new SingPaoParser("成報", this.sourceService, factory).getItems("港聞");
 
             Assertions.assertEquals(20, items.size(), "Incorrect item count");
             Assertions.assertEquals("美國擴「潔淨網絡」 中國不可信程式須下架 限制華企雲端服務 騰訊 阿里被點名", items.iterator().next().getTitle(), "Incorrect item title");
@@ -59,12 +59,12 @@ public final class SingPaoParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://www.singpao.com.hk/index.php?fi=news1&id=113658");
 
-            final Item updatedItem = new SingPaoParser("成報", this.sourceRepository, factory).updateItem(item);
+            final Item updatedItem = new SingPaoParser("成報", this.sourceService, factory).updateItem(item);
 
             Assertions.assertEquals("【本報記者報道】美國國務卿蓬佩奧宣布擴大「潔淨網絡」（Clean Network）行動，以保護美國的", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
             Assertions.assertEquals(3, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("美國國務卿蓬佩奧宣布擴大「乾淨網絡」計劃，以保護", updatedItem.getImages().get(1).getDescription(), "Incorrect image description");
-            Assertions.assertEquals("https://www.singpao.com.hk/image_upload/1596752020.jpg", updatedItem.getImages().get(1).getImageUrl(), "Incorrect image URL");
+            Assertions.assertEquals("https://www.singpao.com.hk/image_upload/1596752020.jpg", updatedItem.getImages().get(1).getUrl(), "Incorrect image URL");
         }
     }
 }

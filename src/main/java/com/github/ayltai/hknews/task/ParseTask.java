@@ -1,10 +1,13 @@
 package com.github.ayltai.hknews.task;
 
+import java.net.ProtocolException;
+import java.net.SocketTimeoutException;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -34,42 +37,42 @@ public class ParseTask implements Runnable {
         this.itemService   = itemService;
     }
 
-    @CacheEvict(
-        cacheNames = "items",
-        allEntries = true
-    )
     @Async
     @Scheduled(
         initialDelay = MainConfiguration.INITIAL_DELAY_PARSE,
-        fixedRate    = MainConfiguration.PERIOD_PARSE
-    )
+        fixedRate    = MainConfiguration.PERIOD_PARSE)
     @Override
     public void run() {
         this.sourceService
-            .getSources(0, Integer.MAX_VALUE)
-            .forEach(source -> source.getCategories()
-                .forEach(category -> {
-                    final Parser parser = this.parserFactory.create(source.getName());
+            .getSourceNamesAndCategoryNames()
+            .forEach(pair -> {
+                final Parser parser = this.parserFactory.create(pair.getFirst());
 
-                    try {
-                        this.itemService.saveItems(parser.getItems(category.getName())
-                            .stream()
-                            .map(item -> {
-                                try {
-                                    return parser.updateItem(item);
-                                } catch (final Throwable e) {
-                                    ParseTask.LOGGER.error(String.format("Failed to parse news details for %s", parser.getSourceName()));
-                                    ParseTask.LOGGER.error(e.getMessage(), e);
-                                }
+                try {
+                    this.itemService.saveItems(parser.getItems(pair.getSecond())
+                        .stream()
+                        .map(item -> {
+                            try {
+                                return parser.updateItem(item);
+                            } catch (final ProtocolException e) {
+                                if (e.getMessage().startsWith("Too many follow-up requests")) ParseTask.LOGGER.info(e.getMessage(), e);
+                            } catch (final SSLHandshakeException | SocketTimeoutException e) {
+                                ParseTask.LOGGER.info(e.getMessage(), e);
+                            } catch (final SSLException e) {
+                                if (e.getMessage().equals("Connection reset")) ParseTask.LOGGER.info(e.getMessage(), e);
+                            } catch (final Throwable e) {
+                                ParseTask.LOGGER.error(String.format("Failed to parse news details for %s", parser.getSourceName()));
+                                ParseTask.LOGGER.error(e.getMessage(), e);
+                            }
 
-                                return item;
-                            })
-                            .filter(Objects::nonNull)
-                            .collect(Collectors.toList()));
-                    } catch (final Throwable e) {
-                        ParseTask.LOGGER.error(String.format("Failed to parse news list for %s", parser.getSourceName()));
-                        ParseTask.LOGGER.error(e.getMessage(), e);
-                    }
-                }));
+                            return item;
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList()));
+                } catch (final Throwable e) {
+                    ParseTask.LOGGER.error(String.format("Failed to parse news list for %s", parser.getSourceName()));
+                    ParseTask.LOGGER.error(e.getMessage(), e);
+                }
+            });
     }
 }

@@ -39,7 +39,7 @@ public final class OrientalDailyParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getHtml(ArgumentMatchers.anyString());
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new OrientalDailyParser("東方日報", this.sourceRepository, factory).getItems("港聞");
+            final Collection<Item> items = new OrientalDailyParser("東方日報", this.sourceService, factory).getItems("港聞");
 
             Assertions.assertEquals(63, items.size(), "Incorrect item count");
             Assertions.assertEquals("街市重開 鼠患不改", items.iterator().next().getTitle(), "Incorrect item title");
@@ -75,14 +75,14 @@ public final class OrientalDailyParserTests extends ParserTests {
         item.setUrl("https://orientaldaily.on.cc/cnt/news/20200809/00174_001.html");
         item.setPublishDate(Date.from(LocalDate.parse("20200809", DateTimeFormatter.ofPattern("yyyyMMdd")).atStartOfDay(ZoneId.systemDefault()).toInstant()));
 
-        final Item updatedItem = new OrientalDailyParser("東方日報", this.sourceRepository, factory).updateItem(item);
+        final Item updatedItem = new OrientalDailyParser("東方日報", this.sourceService, factory).updateItem(item);
 
         Assertions.assertEquals("大鼠戊肝和新冠肺炎夾擊，家庭主婦到街市買餸高危，隨時連菜帶毒回家傳家人！出現多宗確診個案的紅磡及土瓜", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
         Assertions.assertEquals(5, updatedItem.getImages().size(), "Incorrect image count");
         Assertions.assertEquals("紅磡街市：昨日重開的紅磡街市已現鼠蹤。（李華輝攝）", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
-        Assertions.assertEquals("https://orientaldaily.on.cc/cnt/news/20200809/photo/0809-00174-001b1.jpg", updatedItem.getImages().get(0).getImageUrl(), "Incorrect image URL");
+        Assertions.assertEquals("https://orientaldaily.on.cc/cnt/news/20200809/photo/0809-00174-001b1.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
         Assertions.assertEquals(1, updatedItem.getVideos().size(), "Incorrect video count");
-        Assertions.assertEquals("https://video-cdn.on.cc/Video/202008/ONS200809-14079-01-nicam-M_ipad.mp4", updatedItem.getVideos().get(0).getVideoUrl(), "Incorrect video URL");
-        Assertions.assertEquals("https://tv.on.cc/xml/Thumbnail/202008/bigthumbnail/ONS200809-14079-01-nicam-M.jpg", updatedItem.getVideos().get(0).getImageUrl(), "Incorrect thumbnail URL");
+        Assertions.assertEquals("https://video-cdn.on.cc/Video/202008/ONS200809-14079-01-nicam-M_ipad.mp4", updatedItem.getVideos().get(0).getUrl(), "Incorrect video URL");
+        Assertions.assertEquals("https://tv.on.cc/xml/Thumbnail/202008/bigthumbnail/ONS200809-14079-01-nicam-M.jpg", updatedItem.getVideos().get(0).getCover(), "Incorrect thumbnail URL");
     }
 }

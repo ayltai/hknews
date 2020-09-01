@@ -25,9 +25,13 @@ EOF
 }
 
 resource "null_resource" "deployment" {
+  depends_on = [
+    aws_instance.this,
+    aws_eip.this,
+  ]
+
   triggers = {
-    instance_id = aws_instance.this.id,
-    ip_address  = aws_eip.this.public_ip,
+    always_run = timestamp()
   }
 
   provisioner "remote-exec" {

@@ -10,8 +10,8 @@ import org.springframework.lang.NonNull;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -19,8 +19,8 @@ public final class MingPaoParser extends RssParser {
     private static final String DIV_CLEAR = "<div class=\"clear\"></div>";
     private static final String QUOTE     = "\"";
 
-    public MingPaoParser(@NonNull final String sourceName, @NonNull final SourceRepository sourceRepository, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceRepository, contentServiceFactory);
+    public MingPaoParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+        super(sourceName, sourceService, contentServiceFactory);
     }
 
     @NonNull
@@ -46,7 +46,7 @@ public final class MingPaoParser extends RssParser {
                 final String imageUrl = StringUtils.substringBetween(imageContainer, "a href=\"", MingPaoParser.QUOTE);
                 if (imageUrl == null) return null;
 
-                return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
+                return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -59,7 +59,7 @@ public final class MingPaoParser extends RssParser {
                 final String videoUrl = StringUtils.substringBetween(videoContainer, "<a href=\"https://videop.mingpao.com/php/player1.php?file=", "&");
                 if (videoUrl == null) return null;
 
-                return new Video(videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
+                return new Video(null, item, videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));

@@ -20,23 +20,20 @@ public final class RssItem {
     @Path("link")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String link;
 
     @Path("guid")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String guid;
 
     @Getter
     @Path("description")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String description;
 
     @Getter
@@ -49,8 +46,7 @@ public final class RssItem {
         name      = "enclosure",
         required = false,
         inline   = true,
-        type     = RssEnclosure.class
-    )
+        type     = RssEnclosure.class)
     private List<RssEnclosure> enclosures;
 
     @NonNull

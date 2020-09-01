@@ -35,7 +35,7 @@ public final class HkejParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getHtml(ArgumentMatchers.anyString());
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new HkejParser("信報", this.sourceRepository, factory).getItems("港聞");
+            final Collection<Item> items = new HkejParser("信報", this.sourceService, factory).getItems("港聞");
 
             Assertions.assertEquals(9 * 2, items.size(), "Incorrect item count");
             Assertions.assertEquals("內地客經港轉機恢復 空服員憂播毒", items.iterator().next().getTitle(), "Incorrect item title");
@@ -60,12 +60,12 @@ public final class HkejParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://www1.hkej.com/dailynews/views/article/2551793/%E5%85%A7%E5%9C%B0%E5%AE%A2%E7%B6%93%E6%B8%AF%E8%BD%89%E6%A9%9F%E6%81%A2%E5%BE%A9+%E7%A9%BA%E6%9C%8D%E5%93%A1%E6%86%82%E6%92%AD%E6%AF%92");
 
-            final Item updatedItem = new HkejParser("信報", this.sourceRepository, factory).updateItem(item);
+            final Item updatedItem = new HkejParser("信報", this.sourceService, factory).updateItem(item);
 
             Assertions.assertEquals("本港新冠肺炎疫情反覆，昨日新增69宗確診。機管局宣布機場明天（15日）起，將恢復內地旅客來港轉機/過", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
             Assertions.assertEquals(1, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("機場人來人往，旅客和工作人員宜做足保護措施。（中通社圖片）", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
-            Assertions.assertEquals("https://static.hkej.com/hkej/images/2020/08/14/2551793_ec376bc789a57a7a7869eb3b7b1c9e9e.jpg", updatedItem.getImages().get(0).getImageUrl(), "Incorrect image URL");
+            Assertions.assertEquals("https://static.hkej.com/hkej/images/2020/08/14/2551793_ec376bc789a57a7a7869eb3b7b1c9e9e.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
         }
     }
 }

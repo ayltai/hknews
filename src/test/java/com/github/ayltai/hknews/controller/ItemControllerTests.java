@@ -2,7 +2,6 @@ package com.github.ayltai.hknews.controller;
 
 import java.util.Arrays;
 import java.util.Optional;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.mongo.embedded.EmbeddedMongoAutoConfiguration;
@@ -28,8 +27,6 @@ import org.mockito.Mockito;
     excludeAutoConfiguration = EmbeddedMongoAutoConfiguration.class
 )
 public final class ItemControllerTests extends UnitTests {
-    private static final String ITEM_ID = UUID.randomUUID().toString();
-
     @Autowired
     private MockMvc mockMvc;
 
@@ -39,11 +36,11 @@ public final class ItemControllerTests extends UnitTests {
     @Test
     public void when_getItem_then_returnItem() throws Exception {
         Mockito.when(this.itemService
-            .getItem(ArgumentMatchers.any(String.class)))
+            .getItem(ArgumentMatchers.any(Integer.class)))
             .thenReturn(Optional.of(ItemControllerTests.getItem()));
 
         this.mockMvc
-            .perform(MockMvcRequestBuilders.get("/item/" + ItemControllerTests.ITEM_ID))
+            .perform(MockMvcRequestBuilders.get("/item/" + 1))
             .andExpect(MockMvcResultMatchers.status().isOk())
             .andExpect(MockMvcResultMatchers.content().contentTypeCompatibleWith("application/json"));
     }
@@ -63,7 +60,7 @@ public final class ItemControllerTests extends UnitTests {
     @NonNull
     private static Item getItem() {
         final Item item = new Item();
-        item.setId(ItemControllerTests.ITEM_ID);
+        item.setId(1);
 
         return item;
     }
