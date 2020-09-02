@@ -5,7 +5,7 @@ import { Constants, } from '../Constants';
 
 const getPage = params => params && params.pagination ? params.pagination.page - 1 : 0;
 
-const getSize = params => params && params.pagination ? params.pagination.perPage : Constants.PAGE_SIZE;
+const getSize = params => params && params.pagination ? params.pagination.perPage : Constants.NEWS_PER_PAGE;
 
 const transform = response => Object.prototype.hasOwnProperty.call(response.json, 'totalElements') ? {
     data  : response.json.content,

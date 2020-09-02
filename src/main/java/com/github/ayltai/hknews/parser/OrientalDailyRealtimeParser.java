@@ -103,6 +103,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
 
     @NonNull
     private static String processImages(@NonNull final JSONObject json, @NonNull final Item item) {
+        item.getImages().clear();
         item.getImages().addAll(StreamSupport.stream(json.getJSONArray("photo").spliterator(), false)
             .map(object -> (JSONObject)object)
             .map(element -> {
@@ -131,6 +132,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
         final LocalDate date     = item.getPublishDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         final String    fullDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
+        item.getVideos().clear();
         item.getVideos().addAll(StreamSupport.stream(new JSONArray(this.contentServiceFactory.create().getHtml("https://hk.on.cc/hk/bkn/video/" + fullDate + "/articleVideo_news.js").execute().body()).spliterator(), false)
             .map(object -> (JSONObject)object)
             .filter(json -> articleId.equals(json.getString(OrientalDailyRealtimeParser.JSON_ARTICLE_ID)))

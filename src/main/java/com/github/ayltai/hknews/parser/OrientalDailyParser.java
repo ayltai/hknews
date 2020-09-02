@@ -95,15 +95,18 @@ public final class OrientalDailyParser extends Parser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<div class=\"photo", OrientalDailyParser.CLOSE);
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(imageContainer -> {
-                final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", OrientalDailyParser.QUOTE);
-                if (imageUrl == null) return null;
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .map(imageContainer -> {
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", OrientalDailyParser.QUOTE);
+                    if (imageUrl == null) return null;
 
-                return new Image(null, item, OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Image(null, item, OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 
     private void processVideos(@NonNull final Item item) throws IOException {
@@ -114,6 +117,7 @@ public final class OrientalDailyParser extends Parser {
         if (xml != null) {
             final String key = "odn-" + fullDate + "-" + date.format(DateTimeFormatter.ofPattern("MMdd")) + "_" + StringUtils.substringBetween(item.getUrl(), fullDate + OrientalDailyParser.SLASH, ".html");
 
+            item.getVideos().clear();
             item.getVideos().addAll(Stream.of(StringUtils.substringsBetween(xml, "<news>", "</news>"))
                 .filter(section -> key.equals(StringUtils.substringBetween(section, "<articleID>", "</articleID>")))
                 .map(section -> {

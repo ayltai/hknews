@@ -1,4 +1,5 @@
-import { createMuiTheme, IconButton, SvgIcon, Switch, Tooltip, makeStyles, MuiThemeProvider, Typography, } from '@material-ui/core';
+import { createMuiTheme, FormControlLabel, FormGroup, IconButton, makeStyles, MuiThemeProvider, SvgIcon, Switch, Tooltip, Typography, } from '@material-ui/core';
+import { BrightnessMedium, } from '@material-ui/icons';
 import polyglotI18nProvider from 'ra-i18n-polyglot';
 import React from 'react';
 import { Admin, AppBar, hideNotification, Layout, Notification, Resource, showNotification, } from 'react-admin';
@@ -8,14 +9,20 @@ import { dataProvider, } from './data/DataProvider';
 import { lang, } from './lang';
 import { ItemShow, } from './view/details/ItemShow';
 import { ItemList, } from './view/list/ItemList';
+import { LocaleToggle, } from './view/LocaleToggle';
 import { Constants, } from './Constants';
 
 export const App = props => {
-    const classes = makeStyles({
+    const classes = makeStyles(theme => ({
         spacer : {
             flex : 1,
         },
-    })();
+        switch : {
+            marginLeft  : theme.spacing(0),
+            marginRight : theme.spacing(2),
+            alignItems  : 'end',
+        },
+    }))();
 
     const palette                    = Constants.PALETTE;
     const [ darkMode, setDarkMode, ] = React.useState(false);
@@ -52,12 +59,20 @@ export const App = props => {
                                     {Constants.APP_NAME}
                                 </Typography>
                                 <span className={classes.spacer} />
-                                <Switch
-                                    checked={darkMode}
-                                    onChange={toggleDarkMode} />
+                                <FormGroup row>
+                                    <LocaleToggle />
+                                    <FormControlLabel
+                                        className={classes.switch}
+                                        label={<BrightnessMedium />}
+                                        control={
+                                            <Switch
+                                                checked={darkMode}
+                                                onChange={toggleDarkMode} />
+                                        } />
+                                </FormGroup>
                                 <Tooltip title='GitHub'>
                                     <IconButton onClick={() => window.open(Constants.PROJECT_URL, '_blank')}>
-                                        <SvgIcon>
+                                        <SvgIcon htmlColor={appTheme.palette.text.primary}>
                                             <path d='M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2 0 1.9 1.2 1.9 1.2 1 1.8 2.8 1.3 3.5 1 0-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.4 1.2a11.5 11.5 0 0 1 6 0c2.3-1.5 3.3-1.2 3.3-1.2.6 1.6.2 2.8 0 3.2.9.8 1.3 1.9 1.3 3.2 0 4.6-2.8 5.6-5.5 5.9.5.4.9 1 .9 2.2v3.3c0 .3.1.7.8.6A12 12 0 0 0 12 .3' />
                                         </SvgIcon>
                                     </IconButton>

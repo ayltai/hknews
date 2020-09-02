@@ -96,14 +96,17 @@ public final class HeadlineRealtimeParser extends Parser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<figure", "</figure>");
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(imageContainer -> {
-                final String imageUrl = StringUtils.substringBetween(imageContainer, "<a class=\"fancybox image\" rel=\"fancybox-thumb\" href=\"", HeadlineRealtimeParser.QUOTE);
-                if (imageUrl == null) return null;
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .map(imageContainer -> {
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "<a class=\"fancybox image\" rel=\"fancybox-thumb\" href=\"", HeadlineRealtimeParser.QUOTE);
+                    if (imageUrl == null) return null;
 
-                return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 }

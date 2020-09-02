@@ -60,10 +60,14 @@ public final class ScmpParser extends RssParser {
             final String description = ScmpParser.extractBody(body.getJSONArray(ScmpParser.JSON_JSON));
 
             item.setDescription(subHeadline + ScmpParser.LINE_BREAK + description);
+            item.getImages().clear();
             item.getImages().addAll(ScmpParser.extractImages(content.getJSONArray("images"), json, item));
 
             final JSONArray videos = ScmpParser.find(content, "articleVideos");
-            if (videos != null) item.getVideos().addAll(ScmpParser.extractVideos(videos, json, item));
+            if (videos != null) {
+                item.getVideos().clear();
+                item.getVideos().addAll(ScmpParser.extractVideos(videos, json, item));
+            }
         }
 
         return item;

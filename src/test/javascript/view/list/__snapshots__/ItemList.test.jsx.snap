@@ -10,6 +10,12 @@ exports[`<ItemList /> renders without errors 1`] = `
     className="MuiToolbar-root MuiToolbar-regular RaListToolbar-toolbar-7 MuiToolbar-gutters"
   >
     <form
+      __versions={
+        Object {
+          "final-form": "4.20.1",
+          "react-final-form": "6.5.1",
+        }
+      }
       className="RaFilter-form-10 RaFilterForm-form-11"
       onSubmit={[Function]}
     >

@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import javax.transaction.Transactional;
 
 import org.springframework.data.util.Pair;
 import org.springframework.lang.NonNull;
@@ -39,7 +40,7 @@ public class SourceService {
                 if (reader == null) {
                     SourceService.LOGGER.warn("Failed to open sources.json");
                 } else {
-                    return this.sourceRepository.saveAll(new Gson().fromJson(reader, new TypeToken<List<Source>>() {}.getType()));
+                    return this.saveSources(new Gson().fromJson(reader, new TypeToken<List<Source>>() {}.getType()));
                 }
             } catch (final IOException e) {
                 SourceService.LOGGER.error(e.getMessage(), e);
@@ -81,5 +82,11 @@ public class SourceService {
             .stream()
             .map(pair -> Pair.of(pair[0].toString(), pair[1].toString()))
             .collect(Collectors.toList());
+    }
+
+    @NonNull
+    @Transactional
+    protected List<Source> saveSources(@NonNull final Iterable<Source> sources) {
+        return this.sourceRepository.saveAll(sources);
     }
 }

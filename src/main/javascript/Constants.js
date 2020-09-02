@@ -18,11 +18,11 @@ Constants.PALETTE = {
     type      : 'light',
 };
 
-Constants.PAGE_SIZE             = 100;
 Constants.FETCH_DAYS            = 2;
-Constants.NEWS_PER_PAGE         = 12;
-Constants.NEWS_PER_PAGE_OPTIONS = [ 12, 24, 48, 96, ];
+Constants.NEWS_PER_PAGE         = 10;
+Constants.NEWS_PER_PAGE_OPTIONS = [ 10, 25, 50, 100, ];
 Constants.AVATAR_SIZE           = 40;
+Constants.VIDEO_SIZE            = 320;
 
 Constants.SOURCES = [
     '蘋果日報',

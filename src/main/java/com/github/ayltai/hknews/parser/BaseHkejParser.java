@@ -20,7 +20,10 @@ public abstract class BaseHkejParser extends Parser {
         final String imageContainer = StringUtils.substringBetween(html, "<span class='enlargeImg'>", "</span>");
         if (imageContainer != null) {
             final String imageUrl = StringUtils.substringBetween(imageContainer, "<a href=\"", BaseHkejParser.QUOTE);
-            if (imageUrl != null) item.getImages().add(new Image(null, item, imageUrl.startsWith("http") ? imageUrl : "https:" + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", BaseHkejParser.QUOTE)));
+            if (imageUrl != null) {
+                item.getImages().clear();
+                item.getImages().add(new Image(null, item, imageUrl.startsWith("http") ? imageUrl : "https:" + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", BaseHkejParser.QUOTE)));
+            }
         }
     }
 }

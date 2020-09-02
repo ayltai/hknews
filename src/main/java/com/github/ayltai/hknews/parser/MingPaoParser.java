@@ -40,28 +40,34 @@ public final class MingPaoParser extends RssParser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "id=\"zoom_", MingPaoParser.DIV_CLEAR);
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .filter(imageContainer -> !imageContainer.startsWith("video"))
-            .map(imageContainer -> {
-                final String imageUrl = StringUtils.substringBetween(imageContainer, "a href=\"", MingPaoParser.QUOTE);
-                if (imageUrl == null) return null;
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .filter(imageContainer -> !imageContainer.startsWith("video"))
+                .map(imageContainer -> {
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "a href=\"", MingPaoParser.QUOTE);
+                    if (imageUrl == null) return null;
 
-                return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 
     private static void processVideos(@NonNull final String html, @NonNull final Item item) {
         final String[] videoContainers = StringUtils.substringsBetween(html, "id=\"zoom_video_", MingPaoParser.DIV_CLEAR);
-        if (videoContainers != null) item.getVideos().addAll(Stream.of(videoContainers)
-            .map(videoContainer -> {
-                final String videoUrl = StringUtils.substringBetween(videoContainer, "<a href=\"https://videop.mingpao.com/php/player1.php?file=", "&");
-                if (videoUrl == null) return null;
+        if (videoContainers != null) {
+            item.getVideos().clear();
+            item.getVideos().addAll(Stream.of(videoContainers)
+                .map(videoContainer -> {
+                    final String videoUrl = StringUtils.substringBetween(videoContainer, "<a href=\"https://videop.mingpao.com/php/player1.php?file=", "&");
+                    if (videoUrl == null) return null;
 
-                return new Video(null, item, videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Video(null, item, videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 }

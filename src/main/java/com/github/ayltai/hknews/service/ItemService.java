@@ -5,6 +5,7 @@ import java.time.ZoneId;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Optional;
+import javax.transaction.Transactional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -35,6 +36,11 @@ public class ItemService {
     public void saveItems(@NonNull final Collection<Item> items) {
         items.stream()
             .filter(item -> this.itemRepository.findByUrl(item.getUrl()).isEmpty())
-            .forEach(this.itemRepository::save);
+            .forEach(this::saveItem);
+    }
+
+    @Transactional
+    protected void saveItem(@NonNull final Item item) {
+        this.itemRepository.save(item);
     }
 }

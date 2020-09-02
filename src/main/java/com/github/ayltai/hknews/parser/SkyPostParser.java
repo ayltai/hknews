@@ -101,14 +101,17 @@ public final class SkyPostParser extends Parser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<p class=\"article-details-img-container\">", "</div>");
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(imageContainer -> {
-                final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", "\"");
-                if (imageUrl == null) return null;
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .map(imageContainer -> {
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", "\"");
+                    if (imageUrl == null) return null;
 
-                return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 }

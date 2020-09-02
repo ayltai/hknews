@@ -16,13 +16,22 @@ import org.hibernate.dialect.unique.UniqueDelegate;
 import org.hibernate.type.StandardBasicTypes;
 
 public final class SqliteDialect extends Dialect {
-    private static final String SUBSTR = "substr";
+    //region Constants
+
+    private static final String INTEGER = "integer";
+    private static final String BLOB    = "blob";
+    private static final String QUOTE   = "quote";
+    private static final String RANDOM  = "random";
+    private static final String ROUND   = "round";
+    private static final String SUBSTR  = "substr";
+
+    //endregion
 
     private final LimitHandler   limitHandler;
     private final UniqueDelegate uniqueDelegate;
 
     public SqliteDialect() {
-        this.registerColumnType(Types.BIT, "integer");
+        this.registerColumnType(Types.BIT, SqliteDialect.INTEGER);
         this.registerColumnType(Types.TINYINT, "tinyint");
         this.registerColumnType(Types.SMALLINT, "smallint");
         this.registerColumnType(Types.BIGINT, "bigint");
@@ -37,18 +46,18 @@ public final class SqliteDialect extends Dialect {
         this.registerColumnType(Types.DATE, "date");
         this.registerColumnType(Types.TIME, "time");
         this.registerColumnType(Types.TIMESTAMP, "timestamp");
-        this.registerColumnType(Types.BINARY, "blob");
-        this.registerColumnType(Types.VARBINARY, "blob");
-        this.registerColumnType(Types.LONGVARBINARY, "blob");
-        this.registerColumnType(Types.BLOB, "blob");
+        this.registerColumnType(Types.BINARY, SqliteDialect.BLOB);
+        this.registerColumnType(Types.VARBINARY, SqliteDialect.BLOB);
+        this.registerColumnType(Types.LONGVARBINARY, SqliteDialect.BLOB);
+        this.registerColumnType(Types.BLOB, SqliteDialect.BLOB);
         this.registerColumnType(Types.CLOB, "clob");
-        this.registerColumnType(Types.BOOLEAN, "integer");
+        this.registerColumnType(Types.BOOLEAN, SqliteDialect.INTEGER);
 
         this.registerFunction("concat", new VarArgsSQLFunction(StandardBasicTypes.STRING, "", "||", ""));
         this.registerFunction("mod", new SQLFunctionTemplate(StandardBasicTypes.STRING, "?1 % ?2"));
-        this.registerFunction("quote", new StandardSQLFunction("quote", StandardBasicTypes.STRING));
-        this.registerFunction("random", new NoArgSQLFunction("random", StandardBasicTypes.INTEGER));
-        this.registerFunction("round", new StandardSQLFunction("round"));
+        this.registerFunction(SqliteDialect.QUOTE, new StandardSQLFunction(SqliteDialect.QUOTE, StandardBasicTypes.STRING));
+        this.registerFunction(SqliteDialect.RANDOM, new NoArgSQLFunction(SqliteDialect.RANDOM, StandardBasicTypes.INTEGER));
+        this.registerFunction(SqliteDialect.ROUND, new StandardSQLFunction(SqliteDialect.ROUND));
         this.registerFunction(SqliteDialect.SUBSTR, new StandardSQLFunction(SqliteDialect.SUBSTR, StandardBasicTypes.STRING));
         this.registerFunction("substring", new StandardSQLFunction(SqliteDialect.SUBSTR, StandardBasicTypes.STRING));
         this.registerFunction("trim", new SqliteAnsiTrimFunction());
@@ -128,11 +137,6 @@ public final class SqliteDialect extends Dialect {
     @Override
     public boolean supportsIfExistsBeforeTableName() {
         return true;
-    }
-
-    @Override
-    public boolean supportsLockTimeouts() {
-        return false;
     }
 
     @Override

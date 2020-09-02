@@ -14,15 +14,16 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
             flexGrow : 1,
         },
         card        : {
+            minHeight : 315,
+        },
+        content     : {
+            flex    : '1 0 auto',
             display : 'flex',
         },
         details     : {
             display       : 'flex',
             flexDirection : 'column',
             flexGrow      : 1,
-        },
-        content     : {
-            flex : '1 0 auto',
         },
         title       : {
             display         : '-webkit-box',
@@ -65,7 +66,7 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                         key={id}
                         lg={12}
                         xl={6}>
-                        <Card>
+                        <Card className={classes.card}>
                             <CardActionArea href={`#${basePath}/${id}/show`}>
                                 <CardHeader
                                     className={classes.content}
@@ -84,25 +85,23 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                                             alt={data[id].sourceName} />
                                     } />
                                 <CardContent className={classes.content}>
-                                    <div className={classes.card}>
-                                        <div className={classes.details}>
-                                            <RichTextField
-                                                className={classes.title}
-                                                record={data[id]}
-                                                source='title' />
-                                            <RichTextField
-                                                className={classes.description}
-                                                record={data[id]}
-                                                source='description' />
-                                        </div>
-                                        {data[id].images && data[id].images.length > 0 && (
-                                            <Tooltip title={data[id].images[0].description ? StringUtils.decode(data[id].images[0].description) : ''}>
-                                                <CardMedia
-                                                    className={classes.media}
-                                                    image={data[id].images[0].url} />
-                                            </Tooltip>
-                                        )}
+                                    <div className={classes.details}>
+                                        <RichTextField
+                                            className={classes.title}
+                                            record={data[id]}
+                                            source='title' />
+                                        <RichTextField
+                                            className={classes.description}
+                                            record={data[id]}
+                                            source='description' />
                                     </div>
+                                    {data[id].images && data[id].images.length > 0 && (
+                                        <Tooltip title={data[id].images[0].description ? StringUtils.decode(data[id].images[0].description) : ''}>
+                                            <CardMedia
+                                                className={classes.media}
+                                                image={data[id].images[0].url} />
+                                        </Tooltip>
+                                    )}
                                 </CardContent>
                                 <CardActions className={classes.actions}>
                                     <ShowButton

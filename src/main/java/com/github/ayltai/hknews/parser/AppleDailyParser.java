@@ -119,6 +119,7 @@ public final class AppleDailyParser extends Parser {
                 if (imageUrl != null) item.getImages().add(new Image(null, item, imageUrl, image.optString(AppleDailyParser.JSON_CAPTION)));
             }
 
+            item.getImages().clear();
             item.getImages().addAll(StreamSupport.stream(element.getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
                 .map(object -> (JSONObject)object)
                 .filter(json -> "image".equals(json.optString(AppleDailyParser.JSON_TYPE)))
@@ -137,7 +138,10 @@ public final class AppleDailyParser extends Parser {
         final JSONObject promoItems = element.optJSONObject(AppleDailyParser.JSON_PROMO_ITEMS);
         if (promoItems != null) {
             final JSONObject video = promoItems.getJSONObject(AppleDailyParser.JSON_BASIC);
-            if ("video".equals(video.getString(AppleDailyParser.JSON_TYPE))) item.getVideos().add(new Video(null, item, video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
+            if ("video".equals(video.getString(AppleDailyParser.JSON_TYPE))) {
+                item.getVideos().clear();
+                item.getVideos().add(new Video(null, item, video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
+            }
         }
     }
 }

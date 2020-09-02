@@ -95,14 +95,17 @@ public final class HeadlineParser extends Parser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<div class=\"item", "</div>");
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(imageContainer -> {
-                final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", HeadlineParser.QUOTE);
-                if (imageUrl == null) return null;
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .map(imageContainer -> {
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", HeadlineParser.QUOTE);
+                    if (imageUrl == null) return null;
 
-                return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, " title=\"■", HeadlineParser.QUOTE));
-            })
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, " title=\"■", HeadlineParser.QUOTE));
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 }

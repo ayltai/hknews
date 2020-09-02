@@ -11,7 +11,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
     >
       <div
-        className="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+        className="MuiPaper-root MuiCard-root makeStyles-card-2 MuiPaper-elevation1 MuiPaper-rounded"
       >
         <a
           aria-disabled={false}
@@ -31,7 +31,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
           tabIndex={0}
         >
           <div
-            className="MuiCardHeader-root makeStyles-content-4"
+            className="MuiCardHeader-root makeStyles-content-3"
           >
             <div
               className="MuiCardHeader-avatar"
@@ -60,49 +60,45 @@ exports[`<ItemGrid /> renders without errors 1`] = `
             </div>
           </div>
           <div
-            className="MuiCardContent-root makeStyles-content-4"
+            className="MuiCardContent-root makeStyles-content-3"
           >
             <div
-              className="makeStyles-card-2"
+              className="makeStyles-details-4"
             >
-              <div
-                className="makeStyles-details-3"
+              <span
+                className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
               >
                 <span
-                  className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "",
-                      }
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "",
                     }
-                  />
-                </span>
+                  }
+                />
+              </span>
+              <span
+                className="MuiTypography-root makeStyles-description-6 MuiTypography-body2"
+              >
                 <span
-                  className="MuiTypography-root makeStyles-description-6 MuiTypography-body2"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "",
-                      }
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "",
                     }
-                  />
-                </span>
-              </div>
-              <div
-                aria-describedby={null}
-                className="MuiCardMedia-root makeStyles-media-7"
-                onBlur={[Function]}
-                onFocus={[Function]}
-                onMouseLeave={[Function]}
-                onMouseOver={[Function]}
-                onTouchEnd={[Function]}
-                onTouchStart={[Function]}
-                title=""
-              />
+                  }
+                />
+              </span>
             </div>
+            <div
+              aria-describedby={null}
+              className="MuiCardMedia-root makeStyles-media-7"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              title=""
+            />
           </div>
           <div
             className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"
@@ -164,7 +160,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-lg-12 MuiGrid-grid-xl-6"
     >
       <div
-        className="MuiPaper-root MuiCard-root MuiPaper-elevation1 MuiPaper-rounded"
+        className="MuiPaper-root MuiCard-root makeStyles-card-2 MuiPaper-elevation1 MuiPaper-rounded"
       >
         <a
           aria-disabled={false}
@@ -184,7 +180,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
           tabIndex={0}
         >
           <div
-            className="MuiCardHeader-root makeStyles-content-4"
+            className="MuiCardHeader-root makeStyles-content-3"
           >
             <div
               className="MuiCardHeader-avatar"
@@ -213,49 +209,45 @@ exports[`<ItemGrid /> renders without errors 1`] = `
             </div>
           </div>
           <div
-            className="MuiCardContent-root makeStyles-content-4"
+            className="MuiCardContent-root makeStyles-content-3"
           >
             <div
-              className="makeStyles-card-2"
+              className="makeStyles-details-4"
             >
-              <div
-                className="makeStyles-details-3"
+              <span
+                className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
               >
                 <span
-                  className="MuiTypography-root makeStyles-title-5 MuiTypography-body2"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "",
-                      }
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "",
                     }
-                  />
-                </span>
+                  }
+                />
+              </span>
+              <span
+                className="MuiTypography-root makeStyles-description-6 MuiTypography-body2"
+              >
                 <span
-                  className="MuiTypography-root makeStyles-description-6 MuiTypography-body2"
-                >
-                  <span
-                    dangerouslySetInnerHTML={
-                      Object {
-                        "__html": "",
-                      }
+                  dangerouslySetInnerHTML={
+                    Object {
+                      "__html": "",
                     }
-                  />
-                </span>
-              </div>
-              <div
-                aria-describedby={null}
-                className="MuiCardMedia-root makeStyles-media-7"
-                onBlur={[Function]}
-                onFocus={[Function]}
-                onMouseLeave={[Function]}
-                onMouseOver={[Function]}
-                onTouchEnd={[Function]}
-                onTouchStart={[Function]}
-                title=""
-              />
+                  }
+                />
+              </span>
             </div>
+            <div
+              aria-describedby={null}
+              className="MuiCardMedia-root makeStyles-media-7"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onMouseLeave={[Function]}
+              onMouseOver={[Function]}
+              onTouchEnd={[Function]}
+              onTouchStart={[Function]}
+              title=""
+            />
           </div>
           <div
             className="MuiCardActions-root makeStyles-actions-8 MuiCardActions-spacing"

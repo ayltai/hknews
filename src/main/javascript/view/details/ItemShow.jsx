@@ -1,9 +1,10 @@
 import { makeStyles, } from '@material-ui/core';
 import React from 'react';
-import { ArrayField, DateField, ImageField, RichTextField, SimpleShowLayout, ShowController, ShowView, TextField, } from 'react-admin';
+import { DateField, RichTextField, SimpleShowLayout, ShowController, ShowView, TextField, } from 'react-admin';
 
-import { Gallery, } from '../list/Gallery';
 import { ScrollToTopOnMount, } from '../ScrollToTopOnMount';
+import { Images, } from './Images';
+import { Videos, } from './Videos';
 
 export const ItemShow = props => {
     const classes = makeStyles({
@@ -30,19 +31,8 @@ export const ItemShow = props => {
                             <RichTextField
                                 label=''
                                 source='description' />
-                            {controllerProps && controllerProps.record && controllerProps.record.images && controllerProps.record.images.length > 0 && (
-                                <ArrayField
-                                    label=''
-                                    source='images'>
-                                    <Gallery
-                                        caption='description'
-                                        source='url'>
-                                        <ImageField
-                                            label=''
-                                            source='url' />
-                                    </Gallery>
-                                </ArrayField>
-                            )}
+                            <Videos {...controllerProps} />
+                            <Images {...controllerProps} />
                             <TextField
                                 label=''
                                 source='sourceName' />

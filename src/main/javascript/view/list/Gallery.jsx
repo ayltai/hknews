@@ -49,7 +49,7 @@ export const Gallery = props => {
 };
 
 Gallery.propTypes = {
-    ids      : PropTypes.arrayOf(PropTypes.number),
+    ids      : PropTypes.arrayOf(PropTypes.string),
     data     : PropTypes.object,
     caption  : PropTypes.string,
     source   : PropTypes.string,

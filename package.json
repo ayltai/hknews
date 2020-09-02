@@ -1,7 +1,7 @@
 {
     "name": "hknews",
     "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
-    "version": "2.1.0",
+    "version": "2.2.0",
     "author": {
         "name": "Alan Tai"
     },
@@ -36,7 +36,7 @@
         "@testing-library/user-event": "^12.1.3",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.4",
-        "eslint": "^7.8.0",
+        "eslint": "^7.8.1",
         "react-app-rewired": "^2.1.6",
         "react-scripts": "^3.4.3",
         "react-test-renderer": "^16.13.1",
@@ -48,17 +48,17 @@
         "@material-ui/core": "^4.11.0",
         "@material-ui/icons": "^4.9.1",
         "prop-types": "^15.7.2",
-        "ra-i18n-polyglot": "^3.8.2",
-        "ra-core": "^3.8.2",
-        "ra-language-chinese-traditional": "^1.0.0",
-        "ra-language-english": "^3.8.2",
+        "ra-core": "^3.8.3",
+        "ra-i18n-polyglot": "^3.8.3",
+        "ra-language-english": "^3.8.3",
         "react": "^16.13.1",
-        "react-admin": "^3.8.2",
+        "react-admin": "^3.8.3",
         "react-detect-offline": "^2.4.0",
         "react-dom": "^16.13.1",
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
-        "react-timeago": "^4.4.0"
+        "react-timeago": "^4.4.0",
+        "video-react": "^0.14.1"
     },
     "eslintConfig": {
         "extends": [

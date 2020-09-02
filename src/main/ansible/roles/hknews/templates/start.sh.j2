@@ -2,4 +2,4 @@
 # {{ ansible_managed }}
 
 killall java 2>/dev/null
-LOGZIO_TOKEN={{ logzio_token }} java -server -Xverify:none -Xms224m -Xmx448m -Xss512k -XX:MaxRAM=480m -XX:+UseSerialGC -XX:+IdleTuningGcOnIdle -Xtune:virtualized -Dfile.encoding=UTF-8 -Dserver.ssl.key-store=/etc/letsencrypt/live/{{ domain_name }}/keystore.p12 -Dserver.ssl.key-store-password={{ key_store_password }} -Dspring.profiles.active=common,production -jar {{ ansible_env.HOME }}/hknews-2.1.0.jar
+LOGZIO_TOKEN={{ logzio_token }} java -server -Xverify:none -Xms224m -Xmx448m -Xss512k -XX:MaxRAM=480m -XX:+UseSerialGC -XX:+IdleTuningGcOnIdle -Xtune:virtualized -Dfile.encoding=UTF-8 -Dserver.ssl.key-store=/etc/letsencrypt/live/{{ domain_name }}/keystore.p12 -Dserver.ssl.key-store-password={{ key_store_password }} -Dspring.profiles.active=common,production -jar {{ ansible_env.HOME }}/hknews-2.2.0.jar

@@ -40,7 +40,10 @@ public final class RthkParser extends RssParser {
             final String videoUrl     = StringUtils.substringBetween(imageContainer, "var videoFile\t\t\t= '", "'");
             final String thumbnailUrl = StringUtils.substringBetween(imageContainer, "var videoThumbnail\t\t= '", "'");
 
-            if (videoUrl != null && thumbnailUrl != null) item.getVideos().add(new Video(null, item, videoUrl, thumbnailUrl));
+            if (videoUrl != null && thumbnailUrl != null) {
+                item.getVideos().clear();
+                item.getVideos().add(new Video(null, item, videoUrl, thumbnailUrl));
+            }
         }
     }
 }

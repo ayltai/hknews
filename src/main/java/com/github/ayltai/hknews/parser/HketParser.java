@@ -38,10 +38,13 @@ public final class HketParser extends RssParser {
 
     private static void processImages(@NonNull final String html, @NonNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<img ", "/>");
-        if (imageContainers != null) item.getImages().addAll(Stream.of(imageContainers)
-            .map(imageContainer -> HketParser.extractImage(imageContainer, item))
-            .filter(Objects::nonNull)
-            .collect(Collectors.toList()));
+        if (imageContainers != null) {
+            item.getImages().clear();
+            item.getImages().addAll(Stream.of(imageContainers)
+                .map(imageContainer -> HketParser.extractImage(imageContainer, item))
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList()));
+        }
     }
 
     @Nullable

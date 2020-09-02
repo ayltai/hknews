@@ -1,7 +1,6 @@
 package com.github.ayltai.hknews.task;
 
 import java.util.Calendar;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
