@@ -2,7 +2,6 @@ package com.github.ayltai.hknews.task;
 
 import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
-import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
@@ -61,16 +60,15 @@ public class ParseTask implements Runnable {
                             } catch (final SSLException e) {
                                 if (e.getMessage().equals("Connection reset")) ParseTask.LOGGER.info(e.getMessage(), e);
                             } catch (final Throwable e) {
-                                ParseTask.LOGGER.error(String.format("Failed to parse news details for %s", parser.getSourceName()));
+                                ParseTask.LOGGER.error(String.format("Failed to parse news details for %1$s (%2$s)", parser.getSourceName(), item.getUrl()));
                                 ParseTask.LOGGER.error(e.getMessage(), e);
                             }
 
                             return item;
                         })
-                        .filter(Objects::nonNull)
                         .collect(Collectors.toList()));
                 } catch (final Throwable e) {
-                    ParseTask.LOGGER.error(String.format("Failed to parse news list for %s", parser.getSourceName()));
+                    ParseTask.LOGGER.error(String.format("Failed to parse news list for %1$s (%2$s)", parser.getSourceName(), pair.getFirst()));
                     ParseTask.LOGGER.error(e.getMessage(), e);
                 }
             });

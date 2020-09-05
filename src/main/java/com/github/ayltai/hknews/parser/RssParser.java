@@ -76,8 +76,8 @@ public abstract class RssParser extends Parser {
 
     private Item getItem(@NonNull final RssItem rssItem, @NonNull final String categoryName) {
         final Item item = new Item();
-        item.setTitle(rssItem.getTitle().trim());
-        item.setDescription(rssItem.getDescription().trim());
+        item.setTitle(rssItem.getTitle() == null ? null : rssItem.getTitle().trim());
+        item.setDescription(rssItem.getDescription() == null ? null : rssItem.getDescription().trim());
         item.setUrl(rssItem.getLink().trim());
         item.setPublishDate(Date.from(ZonedDateTime.parse(rssItem.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
         item.setSourceName(this.sourceName);

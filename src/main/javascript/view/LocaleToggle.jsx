@@ -1,8 +1,9 @@
-import { makeStyles, } from '@material-ui/core';
-import { FormControlLabel, Switch, } from '@material-ui/core';
+import { FormControlLabel, makeStyles, Switch, } from '@material-ui/core';
 import { Translate, } from '@material-ui/icons';
 import React from 'react';
-import { useLocale, useSetLocale, } from 'react-admin';
+import { useSetLocale, } from 'react-admin';
+
+import { Preferences, } from '../data/Preferences';
 
 export const LocaleToggle = props => {
     const classes = makeStyles(theme => ({
@@ -13,8 +14,12 @@ export const LocaleToggle = props => {
         },
     }))();
 
-    const locale    = useLocale();
-    const setLocale = useSetLocale();
+    const preferences = Preferences.load();
+    const setLocale   = useSetLocale();
+
+    React.useEffect(() => {
+        setLocale(preferences.locale).catch(console.error);
+    }, [ preferences.locale, setLocale, ]);
 
     return (
         <FormControlLabel
@@ -23,8 +28,15 @@ export const LocaleToggle = props => {
             label={<Translate />}
             control={
                 <Switch
-                    checked={locale === 'zh-TW'}
-                    onChange={event => setLocale(event.target.checked ? 'zh-TW' : 'en')} />
+                    checked={preferences.locale === 'zh-TW'}
+                    onChange={async (event) => {
+                        const newLocale = event.target.checked ? 'zh-TW' : 'en';
+
+                        preferences.locale = newLocale;
+                        preferences.save();
+
+                        await setLocale(newLocale);
+                    }} />
             } />
     );
 };

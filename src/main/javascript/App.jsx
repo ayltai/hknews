@@ -6,6 +6,7 @@ import { Admin, AppBar, hideNotification, Layout, Notification, Resource, showNo
 import { Detector, } from 'react-detect-offline';
 
 import { dataProvider, } from './data/DataProvider';
+import { Preferences, } from './data/Preferences';
 import { lang, } from './lang';
 import { ItemShow, } from './view/details/ItemShow';
 import { ItemList, } from './view/list/ItemList';
@@ -24,16 +25,26 @@ export const App = props => {
         },
     }))();
 
-    const palette                    = Constants.PALETTE;
-    const [ darkMode, setDarkMode, ] = React.useState(false);
+    const preferences = Preferences.load();
+
+    const palette = Constants.PALETTE;
+    palette.type = preferences.darkMode ? 'dark' : 'light';
+
+    const [ darkMode, setDarkMode, ] = React.useState(preferences.darkMode);
     const [ theme,    setTheme,    ] = React.useState({ palette, });
-    const appTheme                   = createMuiTheme(theme);
+
+    const appTheme = createMuiTheme(theme);
 
     const toggleDarkMode = event => {
         palette.type = event.target.checked ? 'dark' : 'light';
-
         setDarkMode(event.target.checked);
-        setTheme({ palette, });
+
+        preferences.darkMode = event.target.checked;
+        preferences.save();
+
+        setTheme({
+            palette,
+        });
     };
 
     return (
@@ -44,6 +55,7 @@ export const App = props => {
                 authProvider={false}
                 dataProvider={dataProvider}
                 i18nProvider={polyglotI18nProvider(locale => locale && locale.substr(0, 2) === 'zh' ? lang.chinese : lang.english)}
+                logoutButton={false}
                 theme={appTheme}
                 layout={layoutProps => (
                     <Layout

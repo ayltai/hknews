@@ -2,8 +2,6 @@ package com.github.ayltai.hknews.data.model;
 
 import java.util.List;
 
-import org.springframework.lang.NonNull;
-
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
@@ -49,9 +47,8 @@ public final class RssItem {
         type     = RssEnclosure.class)
     private List<RssEnclosure> enclosures;
 
-    @NonNull
     public String getTitle() {
-        return this.title.replace("\uFEFF", "");
+        return this.title == null ? null : this.title.replace("\uFEFF", "");
     }
 
     public String getLink() {
