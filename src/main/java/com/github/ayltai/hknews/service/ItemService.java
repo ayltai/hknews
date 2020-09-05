@@ -34,9 +34,9 @@ public class ItemService {
     }
 
     public void saveItems(@NonNull final Collection<Item> items) {
-        items.stream()
-            .filter(item -> this.itemRepository.findByUrl(item.getUrl()).isEmpty())
-            .forEach(this::saveItem);
+        for (final Item item : items) {
+            if (this.itemRepository.findByUrl(item.getUrl()).isEmpty()) this.saveItem(item);
+        }
     }
 
     @Transactional

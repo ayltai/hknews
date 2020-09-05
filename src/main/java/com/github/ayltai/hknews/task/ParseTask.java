@@ -68,7 +68,7 @@ public class ParseTask implements Runnable {
                         })
                         .collect(Collectors.toList()));
                 } catch (final Throwable e) {
-                    ParseTask.LOGGER.error(String.format("Failed to parse news list for %1$s (%2$s)", parser.getSourceName(), pair.getFirst()));
+                    ParseTask.LOGGER.error(String.format("Failed to parse news list for %1$s (%2$s)", parser.getSourceName(), pair.getSecond()));
                     ParseTask.LOGGER.error(e.getMessage(), e);
                 }
             });
