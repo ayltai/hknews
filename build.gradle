@@ -34,7 +34,7 @@ repositories {
 
 ext {
     sqliteVersion       = '3.32.3.2'
-    okhttpVersion       = '4.8.1'
+    okhttpVersion       = '4.9.0'
     retrofitVersion     = '2.9.0'
     commonsLang3Version = '3.11'
     jacksonVersion      = '2.11.2'
