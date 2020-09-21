@@ -52,7 +52,7 @@
         "ra-i18n-polyglot": "^3.8.4",
         "ra-language-english": "^3.8.5",
         "react": "^16.13.1",
-        "react-admin": "^3.8.4",
+        "react-admin": "^3.8.5",
         "react-detect-offline": "^2.4.0",
         "react-dom": "^16.13.1",
         "react-image-lightbox": "^5.1.1",
