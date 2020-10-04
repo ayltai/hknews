@@ -50,7 +50,7 @@
         "prop-types": "^15.7.2",
         "ra-core": "^3.8.5",
         "ra-i18n-polyglot": "^3.8.5",
-        "ra-language-english": "^3.8.5",
+        "ra-language-english": "^3.9.0",
         "react": "^16.13.1",
         "react-admin": "^3.8.5",
         "react-detect-offline": "^2.4.0",
