@@ -3,8 +3,8 @@
 exports[`<ItemShow /> renders without errors 1`] = `
 <div
   className="show-page RaShow-root-2"
+  translate={[Function]}
 >
-  
   <div
     className="RaShow-main-3 RaShow-noActions-4"
   >
