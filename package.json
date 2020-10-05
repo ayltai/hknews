@@ -57,7 +57,7 @@
         "react-dom": "^16.13.1",
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
-        "react-timeago": "^4.4.0",
+        "react-timeago": "^5.2.0",
         "video-react": "^0.14.1"
     },
     "eslintConfig": {
