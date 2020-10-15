@@ -54,7 +54,7 @@
         "react": "^16.14.0",
         "react-admin": "^3.9.3",
         "react-detect-offline": "^2.4.0",
-        "react-dom": "^16.13.1",
+        "react-dom": "^16.14.0",
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
         "react-timeago": "^5.2.0",
