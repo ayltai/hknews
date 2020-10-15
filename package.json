@@ -39,7 +39,7 @@
         "eslint": "^7.11.0",
         "react-app-rewired": "^2.1.6",
         "react-scripts": "^3.4.3",
-        "react-test-renderer": "^16.13.1",
+        "react-test-renderer": "^16.14.0",
         "serve": "^11.3.2",
         "stylelint": "^13.7.2",
         "stylelint-config-standard": "^20.0.0"
