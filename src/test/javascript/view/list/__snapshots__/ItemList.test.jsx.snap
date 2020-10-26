@@ -13,7 +13,7 @@ exports[`<ItemList /> renders without errors 1`] = `
       __versions={
         Object {
           "final-form": "4.20.1",
-          "react-final-form": "6.5.1",
+          "react-final-form": "6.5.2",
         }
       }
       className="RaFilter-form-10 RaFilterForm-form-11"
