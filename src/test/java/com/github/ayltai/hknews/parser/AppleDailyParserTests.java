@@ -37,7 +37,7 @@ public final class AppleDailyParserTests extends ParserTests {
 
             final Collection<Item> items = new AppleDailyParser("蘋果日報", this.sourceService, factory).getItems("港聞");
 
-            Assertions.assertEquals(200, items.size(), "Incorrect item count");
+            Assertions.assertEquals(100 + 100, items.size(), "Incorrect item count");
 
             final Item item = items.iterator().next();
 

@@ -4,7 +4,7 @@ terraform {
     organization = "hknews"
 
     workspaces {
-      prefix = "aws-"
+      prefix = "main-"
     }
   }
 }

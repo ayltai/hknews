@@ -37,7 +37,7 @@ public final class HkejParserTests extends ParserTests {
 
             final Collection<Item> items = new HkejParser("信報", this.sourceService, factory).getItems("港聞");
 
-            Assertions.assertEquals(9 * 2, items.size(), "Incorrect item count");
+            Assertions.assertEquals(9 + 9, items.size(), "Incorrect item count");
             Assertions.assertEquals("內地客經港轉機恢復 空服員憂播毒", items.iterator().next().getTitle(), "Incorrect item title");
         }
     }

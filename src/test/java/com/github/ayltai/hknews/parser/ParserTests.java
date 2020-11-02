@@ -1,8 +1,8 @@
 package com.github.ayltai.hknews.parser;
 
 import java.util.List;
-
-import org.springframework.boot.test.autoconfigure.data.mongo.DataMongoTest;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.github.ayltai.hknews.UnitTests;
 import com.github.ayltai.hknews.data.model.Source;
@@ -13,7 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-@DataMongoTest
 public abstract class ParserTests extends UnitTests {
     protected SourceService sourceService;
 
@@ -30,10 +29,9 @@ public abstract class ParserTests extends UnitTests {
         this.sourceService = new SourceService(sourceRepository);
         final List<Source> sources = this.sourceService.getSources();
 
-        Mockito.doAnswer(invocation -> sources
-            .stream()
+        Mockito.doAnswer(invocation -> Optional.of(sources.stream()
             .filter(source -> source.getName().equals(invocation.getArgument(0)))
-            .findFirst())
+            .collect(Collectors.toList())))
             .when(sourceRepository)
             .findAllByName(ArgumentMatchers.anyString());
     }

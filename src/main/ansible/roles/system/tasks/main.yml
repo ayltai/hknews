@@ -46,3 +46,8 @@
   lineinfile:
     path: /etc/hosts
     line: "{{ system_ip_address }} {{ system_domain_name }}"
+
+- name: Copy MySQL configuration file
+  copy:
+    src: my.cnf
+    dest: "{{ ansible_env.HOME }}/my.cnf"

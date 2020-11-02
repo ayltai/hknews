@@ -46,7 +46,7 @@ public final class SingTaoParserTests extends ParserTests {
 
         final Collection<Item> items = new SingTaoParser("星島日報", this.sourceService, factory).getItems("港聞");
 
-        Assertions.assertEquals(50, items.size(), "Incorrect item count");
+        Assertions.assertEquals(30 + 20, items.size(), "Incorrect item count");
         Assertions.assertEquals("社區隱性患者料逾千人", items.iterator().next().getTitle(), "Incorrect item description");
     }
 

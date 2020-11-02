@@ -1,6 +1,7 @@
 resource "aws_instance" "this" {
+  count         = var.aws_enabled ? 1 : 0
   ami           = data.aws_ami.this.id
-  instance_type = var.instance_type
+  instance_type = var.aws_instance_type
   subnet_id     = aws_subnet.this.id
   key_name      = aws_key_pair.this.key_name
 
@@ -9,7 +10,7 @@ resource "aws_instance" "this" {
   ]
 
   root_block_device {
-    volume_size = var.storage_size
+    volume_size = var.aws_storage_size
   }
 
   tags = {

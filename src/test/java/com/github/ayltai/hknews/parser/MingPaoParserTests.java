@@ -39,7 +39,7 @@ public final class MingPaoParserTests extends ParserTests {
 
             final Collection<Item> items = new ScmpParser("明報", this.sourceService, factory).getItems("港聞");
 
-            Assertions.assertEquals(82 * 2, items.size(), "Incorrect item count");
+            Assertions.assertEquals(82 + 82, items.size(), "Incorrect item count");
             Assertions.assertEquals("全民自願驗 林鄭認無禁足成效打折 涉款料可達24億 3內地機構承包", items.iterator().next().getTitle(), "Incorrect item title");
         }
     }
