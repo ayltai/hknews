@@ -3,11 +3,11 @@ resource "alicloud_instance" "this" {
   image_id         = data.alicloud_images.this.images.0.id
   instance_type    = var.alicloud_instance_type
   system_disk_size = var.alicloud_storage_size
-  vswitch_id       = alicloud_vswitch.this.id
-  key_name         = alicloud_key_pair.this.key_name
+  vswitch_id       = alicloud_vswitch.this.0.id
+  key_name         = alicloud_key_pair.this.0.key_name
 
   security_groups = [
-    alicloud_security_group.this.id,
+    alicloud_security_group.this.0.id,
   ]
 
   tags = {

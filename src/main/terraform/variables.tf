@@ -42,7 +42,7 @@ variable "aws_region" {
 
 variable "alicloud_region" {
   description = "Alibaba Cloud region"
-  default     = "cn-southeast-3b"
+  default     = "ap-southeast-3"
 }
 
 variable "aws_zone" {
@@ -52,7 +52,7 @@ variable "aws_zone" {
 
 variable "alicloud_zone" {
   description = "Alibaba Cloud availability zone"
-  default     = "cn-shenzhen-a"
+  default     = "ap-southeast-3b"
 }
 
 variable "vpc_cidr_block" {
