@@ -1,8 +1,7 @@
 import { createMuiTheme, MuiThemeProvider, } from '@material-ui/core';
-import { render, } from 'enzyme';
+import { mount, render, } from 'enzyme';
 import React from 'react';
 import { TestContext, } from 'react-admin';
-import renderer from 'react-test-renderer';
 
 import { ItemList, } from '../../../../main/javascript/view/list/ItemList';
 
@@ -53,7 +52,11 @@ const component = (
 
 describe('<ItemList />', () => {
     it('renders without errors', () => {
-        expect(renderer.create(component).toJSON()).toMatchSnapshot();
+        expect(mount(component)
+            .html()
+            .replace(/id="mui-[0-9]*"/g, '')
+            .replace(/aria-labelledby="(mui-[0-9]* *)*"/g, ''))
+            .toMatchSnapshot();
     });
 
     it('mounts without errors', () => {
