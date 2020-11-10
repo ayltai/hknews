@@ -24,45 +24,69 @@ exports[`<ItemList /> renders without errors 1`] = `
         data-source="source"
       >
         <div
-          className="MuiFormControl-root MuiFormControl-marginDense"
+          className="MuiFormControl-root MuiTextField-root RaSelectInput-input-16 undefined MuiFormControl-marginDense"
         >
           <label
-            className="MuiFormLabel-root MuiInputLabel-root RaLabeled-label-16 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense"
-            data-shrink={true}
+            className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled"
+            data-shrink={false}
             htmlFor="source"
+            id="source-label"
           >
             <span>
               labels.publisher
             </span>
           </label>
           <div
-            className="RaLabeled-value-17"
+            className="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
+            onClick={[Function]}
           >
             <div
-              className="MuiLinearProgress-root MuiLinearProgress-colorPrimary RaLinearProgress-root-18 MuiLinearProgress-indeterminate"
-              input={
-                Object {
-                  "checked": undefined,
-                  "name": "source",
-                  "onBlur": [Function],
-                  "onChange": [Function],
-                  "onFocus": [Function],
-                  "value": "",
-                }
-              }
-              resource="source"
-              role="progressbar"
+              aria-haspopup="listbox"
+              aria-labelledby="source-label source"
+              className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
+              id="source"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onMouseDown={[Function]}
+              role="button"
+              tabIndex={0}
             >
-              <div
-                className="MuiLinearProgress-bar MuiLinearProgress-barColorPrimary MuiLinearProgress-bar1Indeterminate"
-                style={Object {}}
-              />
-              <div
-                className="MuiLinearProgress-bar MuiLinearProgress-bar2Indeterminate MuiLinearProgress-barColorPrimary"
-                style={Object {}}
+              <span
+                dangerouslySetInnerHTML={
+                  Object {
+                    "__html": "&#8203;",
+                  }
+                }
               />
             </div>
+            <input
+              aria-describedby="source-helper-text"
+              aria-hidden={true}
+              autoFocus={false}
+              className="MuiSelect-nativeInput"
+              name="source"
+              onAnimationStart={[Function]}
+              onChange={[Function]}
+              required={false}
+              tabIndex={-1}
+              value=""
+            />
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
           </div>
+          <p
+            className="MuiFormHelperText-root MuiFormHelperText-contained MuiFormHelperText-marginDense"
+            id="source-helper-text"
+          />
         </div>
         <div
           className="RaFilterFormInput-spacer-14"
@@ -76,7 +100,7 @@ exports[`<ItemList /> renders without errors 1`] = `
     </form>
     <span />
     <div
-      className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-19 RaListToolbar-actions-8 MuiToolbar-gutters"
+      className="MuiToolbar-root MuiToolbar-regular RaTopToolbar-root-22 RaListToolbar-actions-8 MuiToolbar-gutters"
     />
   </div>
   <div
@@ -86,15 +110,74 @@ exports[`<ItemList /> renders without errors 1`] = `
       className="MuiPaper-root MuiCard-root RaList-content-3 MuiPaper-elevation1 MuiPaper-rounded"
     >
       <div
-        className="makeStyles-container-29"
+        className="makeStyles-container-36"
       >
         <div
           className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
         />
       </div>
-      <div
-        className="MuiToolbar-root MuiToolbar-dense MuiToolbar-gutters"
-      />
+      <span
+        className="MuiTablePagination-root"
+      >
+        <div
+          className="MuiToolbar-root MuiToolbar-regular MuiTablePagination-toolbar MuiToolbar-gutters"
+        >
+          <div
+            className="MuiTablePagination-spacer"
+          />
+          <p
+            className="MuiTypography-root MuiTablePagination-caption MuiTypography-body2 MuiTypography-colorInherit"
+            id="mui-35886"
+          >
+            ra.navigation.page_rows_per_page
+          </p>
+          <div
+            className="MuiInputBase-root MuiTablePagination-input MuiTablePagination-selectRoot"
+            onClick={[Function]}
+          >
+            <div
+              aria-haspopup="listbox"
+              aria-labelledby="mui-35886 mui-90414"
+              className="MuiSelect-root MuiSelect-select MuiTablePagination-select MuiSelect-selectMenu MuiInputBase-input"
+              id="mui-90414"
+              onBlur={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onMouseDown={[Function]}
+              role="button"
+              tabIndex={0}
+            >
+              10
+            </div>
+            <input
+              aria-hidden={true}
+              className="MuiSelect-nativeInput"
+              onAnimationStart={[Function]}
+              onChange={[Function]}
+              tabIndex={-1}
+              value={10}
+            />
+            <svg
+              aria-hidden={true}
+              className="MuiSvgIcon-root MuiSelect-icon MuiTablePagination-selectIcon"
+              focusable="false"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M7 10l5 5 5-5z"
+              />
+            </svg>
+          </div>
+          <p
+            className="MuiTypography-root MuiTablePagination-caption MuiTypography-body2 MuiTypography-colorInherit"
+          >
+            ra.navigation.page_range_info
+          </p>
+          <div
+            className="RaPaginationActions-actions-32"
+          />
+        </div>
+      </span>
     </div>
   </div>
 </div>
