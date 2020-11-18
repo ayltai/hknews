@@ -68,7 +68,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-annotations:$jacksonVersion"
     implementation "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
     implementation "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
-    implementation 'org.json:json:20200518'
+    implementation 'org.json:json:20201115'
 
     // Logging
     implementation "io.logz.logback:logzio-logback-appender:$logzioVersion"
