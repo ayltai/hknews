@@ -32,7 +32,7 @@
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.6",
-        "@testing-library/react": "^11.1.2",
+        "@testing-library/react": "^11.2.0",
         "@testing-library/user-event": "^12.2.2",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
