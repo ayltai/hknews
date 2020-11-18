@@ -92,7 +92,9 @@ jobs:
         uses: actions/setup-java@v1
         with:
           java-version: 11
-      - name: Add Python tools path to PATH
-        run: echo "::add-path::/home/runner/.local/bin"
+      - name: Set up Python 3
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
       - name: Run Ansible unit tests
         run: ./gradlew testAnsible
