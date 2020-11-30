@@ -39,7 +39,7 @@ ext {
     retrofitVersion     = '2.9.0'
     commonsLang3Version = '3.11'
     jacksonVersion      = '2.12.0'
-    logzioVersion       = '1.0.24'
+    logzioVersion       = 'v1.0.25'
 }
 
 dependencies {
