@@ -36,7 +36,7 @@
         "@testing-library/user-event": "^12.5.0",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
-        "eslint": "^7.14.0",
+        "eslint": "^7.15.0",
         "react-app-rewired": "^2.1.7",
         "react-scripts": "^4.0.1",
         "react-test-renderer": "^16.14.0",
