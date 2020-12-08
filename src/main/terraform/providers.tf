@@ -12,6 +12,11 @@ terraform {
       version = "~> 2.0"
     }
 
+    null = {
+      source  = "hashicorp/null"
+      version = "~> 3.0"
+    }
+
     random = {
       source  = "hashicorp/random"
       version = "~> 3.0"
@@ -28,20 +33,4 @@ provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
   region     = var.aws_region
-}
-
-provider "tls" {
-  version = "~> 3.0"
-}
-
-provider "local" {
-  version = "~> 2.0"
-}
-
-provider "random" {
-  version = "~> 3.0"
-}
-
-provider "null" {
-  version = "~> 3.0"
 }
