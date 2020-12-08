@@ -50,9 +50,10 @@ public final class WenWeiPoParser extends Parser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(url))
+            .map(call -> {
                 try {
-                    return StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(url).execute().body(), "<div class=\"content-art-box\">", "</article>");
+                    return StringUtils.substringsBetween(call.execute().body(), "<div class=\"content-art-box\">", "</article>");
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) WenWeiPoParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -123,7 +124,7 @@ public final class WenWeiPoParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "src=\"", WenWeiPoParser.CLOSE_QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

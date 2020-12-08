@@ -6,6 +6,9 @@ import org.springframework.stereotype.Component;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Component
 public final class DefaultParserFactory implements ParserFactory {
     //region Constants
@@ -31,11 +34,6 @@ public final class DefaultParserFactory implements ParserFactory {
 
     private final SourceService         sourceService;
     private final ContentServiceFactory contentServiceFactory;
-
-    public DefaultParserFactory(@NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
-        this.sourceService         = sourceService;
-        this.contentServiceFactory = contentServiceFactory;
-    }
 
     @SuppressWarnings("checkstyle:cyclomaticComplexity")
     @NonNull

@@ -7,11 +7,11 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 
-@ExtendWith(SpringExtension.class)
 @ActiveProfiles(profiles = {
     "common",
     "test",
 })
+@ExtendWith(SpringExtension.class)
 public abstract class UnitTests {
     @BeforeEach
     public void setUp() {

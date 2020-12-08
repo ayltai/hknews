@@ -6,11 +6,8 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 
-import org.springframework.data.util.Pair;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +19,14 @@ import com.google.gson.reflect.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Service
 public class SourceService {
     private static final Logger LOGGER = LoggerFactory.getLogger(SourceService.class);
 
     private final SourceRepository sourceRepository;
-
-    public SourceService(@NonNull final SourceRepository sourceRepository) {
-        this.sourceRepository = sourceRepository;
-    }
 
     @NonNull
     public List<Source> getSources() {
@@ -40,7 +36,7 @@ public class SourceService {
                 if (reader == null) {
                     SourceService.LOGGER.warn("Failed to open sources.json");
                 } else {
-                    return this.saveSources(new Gson().fromJson(reader, new TypeToken<List<Source>>() {}.getType()));
+                    return this.putSources(new Gson().fromJson(reader, new TypeToken<List<Source>>() {}.getType()));
                 }
             } catch (final IOException e) {
                 SourceService.LOGGER.error(e.getMessage(), e);
@@ -57,7 +53,17 @@ public class SourceService {
             .filter(source -> source.getName().equals(name))
             .collect(Collectors.toList());
 
-        return this.sourceRepository.findAllByName(name).orElseGet(Collections::emptyList);
+        return this.sourceRepository.findByName(name).orElseGet(Collections::emptyList);
+    }
+
+    @NonNull
+    public List<Source> getSources(@NonNull final String name, @NonNull final String categoryName) {
+        if (this.sourceRepository.count() == 0L) return this.getSources()
+            .stream()
+            .filter(source -> source.getName().equals(name) && source.getCategoryName().equals(categoryName))
+            .collect(Collectors.toList());
+
+        return this.sourceRepository.findByNameAndCategoryName(name, categoryName).orElseGet(Collections::emptyList);
     }
 
     @NonNull
@@ -69,24 +75,15 @@ public class SourceService {
             .collect(Collectors.toList());
 
         return this.sourceRepository
-            .findDistinctNames()
-            .orElseGet(Collections::emptyList);
-    }
-
-    @NonNull
-    public List<Pair<String, String>> getSourceNamesAndCategoryNames() {
-        final Optional<List<Object[]>> pairs = this.sourceRepository.findDistinctNamesAndCategoryNames();
-        if (pairs.isEmpty()) return Collections.emptyList();
-
-        return pairs.get()
+            .findAll()
             .stream()
-            .map(pair -> Pair.of(pair[0].toString(), pair[1].toString()))
+            .map(Source::getName)
+            .distinct()
             .collect(Collectors.toList());
     }
 
     @NonNull
-    @Transactional
-    protected List<Source> saveSources(@NonNull final Iterable<Source> sources) {
+    protected List<Source> putSources(@NonNull final Iterable<Source> sources) {
         return this.sourceRepository.saveAll(sources);
     }
 }

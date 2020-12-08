@@ -13,7 +13,7 @@ ENV PATH $JAVA_HOME/bin:$PATH
 
 # Install Node.js
 RUN apt-get install -y --no-install-recommends curl ca-certificates
-RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_15.x | bash -
 RUN apt-get install -y --no-install-recommends nodejs
 
 # Set project directory

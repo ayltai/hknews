@@ -43,9 +43,10 @@ public final class HeadlineRealtimeParser extends Parser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(url))
+            .map(call -> {
                 try {
-                    return StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(url).execute().body(), "<div class=\"topic\">", "<p class=\"text-left\">");
+                    return StringUtils.substringsBetween(call.execute().body(), "<div class=\"topic\">", "<p class=\"text-left\">");
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) HeadlineRealtimeParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -103,7 +104,7 @@ public final class HeadlineRealtimeParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "<a class=\"fancybox image\" rel=\"fancybox-thumb\" href=\"", HeadlineRealtimeParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

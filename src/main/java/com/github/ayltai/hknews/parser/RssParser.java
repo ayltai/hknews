@@ -37,84 +37,63 @@ public abstract class RssParser extends Parser {
 
     @NonNull
     @Override
-    public final Collection<Item> getItems(@NonNull final String categoryName) {
+    public Collection<Item> getItems(@NonNull final String categoryName) {
         return this.sourceService
-            .getSources(this.sourceName)
+            .getSources(this.sourceName, categoryName)
             .stream()
-            .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(this::getFeed)
+            .map(url -> this.contentServiceFactory.create().getFeed(url))
+            .map(call -> {
+                try {
+                    final RssFeed feed = call.execute().body();
+                    return feed == null || feed.getItems() == null || feed.getItems().isEmpty() ? null : feed;
+                } catch (final ProtocolException e) {
+                    if (e.getMessage().startsWith("Too many follow-up requests")) RssParser.LOGGER.info(e.getMessage(), e);
+                } catch (final SSLHandshakeException | SocketTimeoutException e) {
+                    RssParser.LOGGER.info(e.getMessage(), e);
+                } catch (final SSLException e) {
+                    if (e.getMessage().equals("Connection reset")) RssParser.LOGGER.info(e.getMessage(), e);
+                } catch (final IOException e) {
+                    RssParser.LOGGER.warn(e.getMessage(), e);
+                }
+
+                return null;
+            })
             .filter(Objects::nonNull)
             .map(RssFeed::getItems)
             .flatMap(Collection::stream)
             .filter(rssItem -> rssItem.getLink() != null)
-            .map(rssItem -> this.getItem(rssItem, categoryName))
+            .map(rssItem -> {
+                final Item item = new Item();
+
+                item.setTitle(rssItem.getTitle() == null ? null : rssItem.getTitle().trim());
+                item.setDescription(rssItem.getDescription() == null ? null : rssItem.getDescription().trim());
+                item.setUrl(rssItem.getLink().trim());
+                item.setPublishDate(Date.from(ZonedDateTime.parse(rssItem.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
+                item.setSourceName(this.sourceName);
+                item.setCategoryName(categoryName);
+
+                RssParser.processImages(item, rssItem);
+                RssParser.processVideos(item, rssItem);
+
+                return item;
+            })
             .collect(Collectors.toList());
     }
 
-    private RssFeed getFeed(@NonNull final String url) {
-        try {
-            final RssFeed feed = this.contentServiceFactory
-                .create()
-                .getFeed(url)
-                .execute()
-                .body();
-
-            return feed == null || feed.getItems() == null || feed.getItems().isEmpty() ? null : feed;
-        } catch (final ProtocolException e) {
-            if (e.getMessage().startsWith("Too many follow-up requests")) RssParser.LOGGER.info(e.getMessage(), e);
-        } catch (final SSLHandshakeException | SocketTimeoutException e) {
-            RssParser.LOGGER.info(e.getMessage(), e);
-        } catch (final SSLException e) {
-            if (e.getMessage().equals("Connection reset")) RssParser.LOGGER.info(e.getMessage(), e);
-        } catch (final IOException e) {
-            LoggerFactory.getLogger(this.getClass()).warn(e.getMessage(), e);
-        }
-
-        return null;
-    }
-
-    private Item getItem(@NonNull final RssItem rssItem, @NonNull final String categoryName) {
-        final Item item = new Item();
-        item.setTitle(rssItem.getTitle() == null ? null : rssItem.getTitle().trim());
-        item.setDescription(rssItem.getDescription() == null ? null : rssItem.getDescription().trim());
-        item.setUrl(rssItem.getLink().trim());
-        item.setPublishDate(Date.from(ZonedDateTime.parse(rssItem.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
-        item.setSourceName(this.sourceName);
-        item.setCategoryName(categoryName);
-
-        RssParser.processImages(item, rssItem);
-        RssParser.processVideos(item, rssItem);
-
-        return item;
-    }
-
     private static void processImages(@NonNull final Item item, @NonNull final RssItem rssItem) {
-        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) rssItem.getEnclosures()
+        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getImages().addAll(rssItem.getEnclosures()
             .stream()
             .filter(RssEnclosure::isImage)
-            .forEach(enclosure -> {
-                final Image image = new Image();
-                image.setItem(item);
-                image.setUrl(enclosure.getUrl());
-
-                item.getImages().add(image);
-            });
+            .map(enclosure -> new Image(enclosure.getUrl(), null))
+            .collect(Collectors.toList()));
     }
 
     private static void processVideos(@NonNull final Item item, @NonNull final RssItem rssItem) {
-        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) rssItem.getEnclosures()
+        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getVideos().addAll(rssItem.getEnclosures()
             .stream()
             .filter(RssEnclosure::isVideo)
-            .forEach(enclosure -> {
-                if (!item.getImages().isEmpty()) {
-                    final Video video = new Video();
-                    video.setItem(item);
-                    video.setUrl(enclosure.getUrl());
-                    video.setCover(item.getImages().get(0).getUrl());
-
-                    item.getVideos().add(video);
-                }
-            });
+            .map(enclosure -> new Video(enclosure.getUrl(), item.getImages().get(0).getUrl()))
+            .collect(Collectors.toList()));
     }
 }

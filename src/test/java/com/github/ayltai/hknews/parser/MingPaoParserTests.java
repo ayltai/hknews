@@ -65,7 +65,7 @@ public final class MingPaoParserTests extends ParserTests {
             final Item updatedItem = new MingPaoParser("明報", this.sourceService, factory).updateItem(item);
 
             Assertions.assertEquals("<p>【明報專訊】政府昨公布兩星期後會展開「普及社區檢測」，市民可自願參加新型冠狀病毒檢測，並指定由3間在", updatedItem.getDescription().substring(0, 53), "Incorrect item description");
-            Assertions.assertEquals(3, updatedItem.getImages().size(), "Incorrect image count");
+            Assertions.assertEquals(1, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("政府選定了位於西區的中山紀念公園體育館，供華大基因設立臨時「氣膜實驗室」。實驗室設計如同華大在內地設立的檢測設施，華大指其合資公司「華昇診斷中心」在體育館內搭建16個帳篷，預計將在兩周內啟用，並可每日做10萬個單管測試，將華昇診斷中心的總檢測量由每日3萬提升至13萬。（政府新聞處相片）", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
             Assertions.assertEquals("https://fs.mingpao.com/pns/20200808/s00007/e687eee5f0c0cff4b8a0ee61327266d6.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
         }

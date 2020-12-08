@@ -6,15 +6,6 @@
     system_ip_address: "{{ ip_address }}"
     ntp_enabled: yes
     ntp_timezone: Asia/Hong_Kong
-    mysql_config_include_files:
-      - src: /root/my.cnf
-    mysql_max_connections: 16
-    mysql_query_cache_size: 4M
-    mysql_query_cache_limit: 512K
-    mysql_key_buffer_size: 16K
-    mysql_max_allowed_packet: 1M
-    mysql_thread_cache_size: 4
-    mysql_sort_buffer_size: 64K
     instrumentald_mongodb_urls:
       - mongodb://localhost:27017
     certbot_create_if_missing: yes
@@ -26,10 +17,10 @@
     certbot_auto_renew_options: "--quiet --no-self-upgrade --post-hook {{ ansible_env.HOME }}/regenerate.sh"
     certbot_create_standalone_stop_services: []
     security_fail2ban_enabled: yes
+    ssl_key_store_path: "/etc/letsencrypt/live/{{ domain_name }}/keystore.p12"
   roles:
     - system
     - geerlingguy.ntp
-    - geerlingguy.mysql
     - ayltai.adoptopenjdk
     - ayltai.instrumentald
     - geerlingguy.certbot

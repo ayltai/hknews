@@ -47,7 +47,22 @@
     path: /etc/hosts
     line: "{{ system_ip_address }} {{ system_domain_name }}"
 
-- name: Copy MySQL configuration file
-  copy:
-    src: my.cnf
-    dest: "{{ ansible_env.HOME }}/my.cnf"
+- name: Set Logz.io token environment variable
+  lineinfile:
+    path: /etc/environment
+    line: "LOGZIO_TOKEN={{ logzio_token }}"
+
+- name: Set MongoDB host environment variable
+  lineinfile:
+    path: /etc/environment
+    line: "MONGODB_HOST={{ system_ip_address }}"
+
+- name: Set SSL key store path environment variable
+  lineinfile:
+    path: /etc/environment
+    line: "SSL_KEY_STORE_PATH={{ ssl_key_store_path }}"
+
+- name: Set SSL key store password environment variable
+  lineinfile:
+    path: /etc/environment
+    line: "SSL_KEY_STORE_PASSWORD={{ key_store_password }}"

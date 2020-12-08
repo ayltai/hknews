@@ -35,14 +35,14 @@ public final class RthkParser extends RssParser {
         final String imageContainer = StringUtils.substringBetween(html, "<div class=\"itemSlideShow\">", "<div class=\"clr\"></div>");
         if (imageContainer != null) {
             final String imageUrl = StringUtils.substringBetween(imageContainer, "<a href=\"", "\"");
-            if (imageUrl != null) item.getImages().add(new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", "\"")));
+            if (imageUrl != null) item.getImages().add(new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", "\"")));
 
             final String videoUrl     = StringUtils.substringBetween(imageContainer, "var videoFile\t\t\t= '", "'");
             final String thumbnailUrl = StringUtils.substringBetween(imageContainer, "var videoThumbnail\t\t= '", "'");
 
             if (videoUrl != null && thumbnailUrl != null) {
                 item.getVideos().clear();
-                item.getVideos().add(new Video(null, item, videoUrl, thumbnailUrl));
+                item.getVideos().add(new Video(videoUrl, thumbnailUrl));
             }
         }
     }

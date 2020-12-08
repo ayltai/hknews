@@ -51,9 +51,10 @@ public final class OrientalDailyRealtimeParser extends Parser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(String.format(url, now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))))
+            .map(call -> {
                 try {
-                    return new JSONArray(this.contentServiceFactory.create().getHtml(String.format(url, now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body());
+                    return new JSONArray(call.execute().body());
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) OrientalDailyRealtimeParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -120,7 +121,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                     }
                 }
 
-                return imageUrl == null ? null : new Image(null, item, "https://hk.on.cc/hk/bkn" + imageUrl, description);
+                return imageUrl == null ? null : new Image("https://hk.on.cc/hk/bkn" + imageUrl, description);
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -140,7 +141,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                 final String videoUrl = json.getString("vid");
                 if (videoUrl == null) return null;
 
-                return new Video(null, item, "https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
+                return new Video("https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));

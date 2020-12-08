@@ -16,6 +16,7 @@ javacore.*.txt
 Snap.*.trc
 
 # Node.js
+coverage/
 node_modules/
 
 # React

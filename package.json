@@ -1,7 +1,7 @@
 {
     "name": "hknews",
     "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
-    "version": "2.3.1",
+    "version": "3.0.0",
     "author": {
         "name": "Alan Tai"
     },
@@ -21,28 +21,25 @@
         "hk"
     ],
     "scripts": {
-        "check": "npm run check:stylelint && npm run check:eslint",
-        "check:eslint": "eslint src/main/javascript --ext .js,.jsx",
-        "check:stylelint": "stylelint src/main/javascript/**/*.css src/main/resource/public/**/*.css !build/**",
         "eject": "react-scripts eject",
-        "build": "SKIP_PREFLIGHT_CHECK=true GENERATE_SOURCEMAP=false react-app-rewired build",
-        "start": "SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
-        "test": "SKIP_PREFLIGHT_CHECK=true react-app-rewired test --watchAll=false",
-        "serve": "serve -s build"
+        "build": "cross-env SKIP_PREFLIGHT_CHECK=true GENERATE_SOURCEMAP=false react-app-rewired build",
+        "serve": "serve -s build",
+        "start": "cross-env SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
+        "pretest": "eslint src/**/*.{js,jsx}",
+        "test": "cross-env SKIP_PREFLIGHT_CHECK=true react-app-rewired test --watchAll=false"
     },
     "devDependencies": {
         "@testing-library/jest-dom": "^5.11.6",
         "@testing-library/react": "^11.2.2",
         "@testing-library/user-event": "^12.5.0",
+        "cross-env": "^7.0.3",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.5",
         "eslint": "^7.15.0",
         "react-app-rewired": "^2.1.7",
         "react-scripts": "^4.0.1",
         "react-test-renderer": "^16.14.0",
-        "serve": "^11.3.2",
-        "stylelint": "^13.8.0",
-        "stylelint-config-standard": "^20.0.0"
+        "serve": "^11.3.2"
     },
     "dependencies": {
         "@material-ui/core": "^4.11.2",
@@ -58,6 +55,7 @@
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
         "react-timeago": "^5.2.0",
+        "type-fest": "^0.13.1",
         "video-react": "^0.14.1"
     },
     "eslintConfig": {
@@ -80,7 +78,7 @@
             "./src/main/javascript/serviceWorker.js"
         ],
         "collectCoverage": true,
-        "coverageDirectory": "./build/coverage"
+        "coverageDirectory": "./coverage"
     },
     "browserslist": {
         "development": [

@@ -1,0 +1,8 @@
+---
+- name: converge
+  hosts: all
+  become: yes
+  tasks:
+    - name: include roles
+      include_role:
+        name: mongodb

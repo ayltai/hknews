@@ -51,9 +51,10 @@ public final class SingPaoParser extends Parser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(url))
+            .map(call -> {
                 try {
-                    return StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(url).execute().body(), "<tr valign='top'><td width='220'>", "</td></tr>");
+                    return StringUtils.substringsBetween(call.execute().body(), "<tr valign='top'><td width='220'>", "</td></tr>");
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) SingPaoParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -109,7 +110,7 @@ public final class SingPaoParser extends Parser {
         final String[] imageDescriptions = StringUtils.substringsBetween(html, "<font size='4'>", SingPaoParser.FONT);
 
         if (imageUrls != null && imageUrls.length > 0) {
-            for (int i = 0; i < imageUrls.length; i++) item.getImages().add(new Image(null, item, SingPaoParser.BASE_URI + imageUrls[i], imageDescriptions == null ? null : imageDescriptions.length > i ? imageDescriptions[i] : null));
+            for (int i = 0; i < imageUrls.length; i++) item.getImages().add(new Image(SingPaoParser.BASE_URI + imageUrls[i], imageDescriptions == null ? null : imageDescriptions.length > i ? imageDescriptions[i] : null));
         }
 
         final List<Image> images = item.getImages()

@@ -1,8 +1,8 @@
 ---
 - name: Copy HK News application
   copy:
-    src: hknews-2.3.1.jar
-    dest: "{{ ansible_env.HOME }}/hknews-2.3.1.jar"
+    src: hknews-3.0.0.jar
+    dest: "{{ ansible_env.HOME }}/hknews-3.0.0.jar"
     mode: 0644
 
 - name: installs OpenSSL

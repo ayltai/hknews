@@ -1,0 +1,20 @@
+---
+- name: Check MongoDB Community Edition package status
+  package:
+    name: "{{ 'mongodb-org' if ansible_facts['os_family'] == 'RedHat' else 'mongodb' }}"
+    state: present
+  check_mode: yes
+  register: package_status
+
+- name: Test if MongoDB Community Edition is installed
+  assert:
+    that:
+      - not package_status.changed
+
+- name: Check services status
+  service_facts:
+
+- name: Test if MongoDB Community Edition service is staarted
+  assert:
+    that:
+      - ansible_facts.services['mongodb' if ansible_facts['os_family'] == 'Debain' else 'mongod.service'].state == 'running'

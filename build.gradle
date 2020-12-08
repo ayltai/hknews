@@ -10,7 +10,7 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '2.3.1'
+version '3.0.0'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -25,21 +25,16 @@ test {
     useJUnitPlatform()
 }
 
-//region Dependencies
-
 repositories {
     jcenter()
-    mavenCentral()
 }
 
 ext {
-    mysqlVersion        = '8.0.22'
-    h2Version           = '1.4.200'
-    okhttpVersion       = '4.9.0'
+    okHttpVersion       = '4.9.0'
     retrofitVersion     = '2.9.0'
     commonsLang3Version = '3.11'
     jacksonVersion      = '2.12.0'
-    logzioVersion       = 'v1.0.25'
+    logzioVersion       = '1.0.24'
 }
 
 dependencies {
@@ -49,15 +44,15 @@ dependencies {
         exclude group : 'org.springframework.boot', module : 'spring-boot-starter-tomcat'
     }
     implementation      'org.springframework.boot:spring-boot-starter-undertow'
+    implementation      'org.springframework.boot:spring-boot-starter-data-mongodb'
+    testImplementation  ('org.springframework.boot:spring-boot-starter-test') {
+        exclude group : 'org.junit.vintage', module : 'junit-vintage-engine'
+    }
+    testImplementation  'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
-    // Database
-    implementation     'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation     "mysql:mysql-connector-java:$mysqlVersion"
-    testImplementation "com.h2database:h2:$h2Version"
-
     // HTTP networking
-    implementation "com.squareup.okhttp3:okhttp:$okhttpVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
@@ -76,25 +71,12 @@ dependencies {
     // Code generation
     compileOnly         'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-
-    // Testing
-    testImplementation ('org.springframework.boot:spring-boot-starter-test') {
-        exclude group : 'org.junit.vintage', module : 'junit-vintage-engine'
-    }
-}
-
-//endregion
-
-bootRun {
-    args = [
-        '--spring.profiles.active=common,development',
-    ]
 }
 
 //region Checkstyle
 
 checkstyle {
-    toolVersion    = '8.36'
+    toolVersion    = '8.38'
     configFile     = rootProject.file('./checkstyle.xml')
     ignoreFailures = true
     showViolations = true
@@ -119,7 +101,7 @@ tasks.withType(Checkstyle) {
 //region SpotBugs
 
 spotbugs {
-    toolVersion.set('4.1.2')
+    toolVersion.set('4.2.0')
     ignoreFailures.set(true)
     excludeFilter.set(file('./spotbugs-exclude.xml'))
 
@@ -139,7 +121,7 @@ spotbugsMain {
 //region JaCoCo
 
 jacoco {
-    toolVersion '0.8.5'
+    toolVersion '0.8.6'
 }
 
 jacocoTestReport {
@@ -153,7 +135,7 @@ jacocoTestReport {
 
 tasks.withType(Test) {
     jacoco.includeNoLocationClasses = true
-    jacoco.excludes                 = [ 'jdk.internal.*' ]
+    jacoco.excludes                 = [ 'jdk.internal.*', ]
 }
 
 //endregion
@@ -166,100 +148,68 @@ sonarqube {
         property 'sonar.login',                       System.getenv('SONAR_TOKEN')
         property 'sonar.sources',                     'src/main/java,src/main/javascript'
         property 'sonar.tests',                       'src/test/java,src/test/javascript'
-        property 'sonar.javascript.lcov.reportPaths', 'build/coverage/lcov.info'
+        property 'sonar.javascript.lcov.reportPaths', 'coverage/lcov.info'
     }
 }
 
 //region Tasks
 
-task buildAll(type : GradleBuild) {
-    group       'build'
-    description 'Builds all applications'
+//region Terraform
 
-    tasks = [ 'buildJavaScript', 'bootJar', ]
-}
+task downloadTerraform {
+    group       'download'
+    description 'Downloads Terraform CLI'
 
-bootJar.dependsOn('buildJava')
+    def terraformVersion = '0.13.5'
+    def osName           = System.getProperty 'os.name'
+    def osArch           = System.getProperty 'os.arch'
+    def platform         = osName.startsWith('Windows') ? 'windows' : osName.startsWith('Mac') ? 'darwin' : osName.startsWith('FreeBSD') ? 'freebsd' : osName.startsWith('SunOS') ? 'solaris' : 'linux'
+    def architecture     = 'x86' == osArch || 'i386' == osArch ? '386' : 'x86_64' == osArch || 'amd64' == osArch ? 'amd64' : osArch.startsWith('arm') ? 'arm' : 'amd64'
+    def url              = "https://releases.hashicorp.com/terraform/${terraformVersion}/terraform_${terraformVersion}_${platform}_${architecture}.zip"
 
-task buildJava {
-    group       'build'
-    description 'Builds Java app'
+    inputs.property('url', url)
+    outputs.file("$buildDir/terraform.zip").withPropertyName('zip')
+    outputs.cacheIf { true }
 
     doLast {
-        delete "$projectDir/src/main/resources/public/static"
-        delete "$projectDir/src/main/resources/public/*.js"
+        if (!file("$buildDir/terraform").exists()) {
+            buildDir.mkdirs()
 
-        copy {
-            from fileTree("$buildDir/javascript")
-            into "$projectDir/src/main/resources/public"
+            new FileOutputStream("$buildDir/terraform.zip").channel.transferFrom java.nio.channels.Channels.newChannel(new URL(url).openStream()), 0, Long.MAX_VALUE
         }
     }
 }
 
-task buildJavaScript(type : Exec, dependsOn : 'installJavaScript') {
-    group       'build'
-    description 'Builds JavaScript app'
+task installTerraform(type : Copy, dependsOn : 'downloadTerraform') {
+    group       'installation'
+    description 'Installs Terraform CLI'
 
-    doFirst {
-        delete "$buildDir"
-    }
+    inputs.file("$buildDir/terraform.zip").withPropertyName('zip').withPathSensitivity(PathSensitivity.RELATIVE)
+    outputs.file("$buildDir/terraform").withPropertyName('terraform')
+    outputs.cacheIf { true}
 
-    commandLine 'npm', 'run', 'build'
-}
-
-task testAll(type : GradleBuild) {
-    group       'verification'
-    description 'Runs unit tests for all applications'
-
-    tasks = [ 'testJava', 'testJavaScript', 'testAnsible', ]
-}
-
-task testJava(dependsOn : 'test') {
-    group       'verification'
-    description 'Runs unit tests for Java app'
-}
-
-task testJavaScript(type : Exec, dependsOn : 'installJavaScript') {
-    group       'verification'
-    description 'Runs unit tests for JavaScript app'
-
-    commandLine 'npm', 'run', 'test'
-}
-
-task testAnsible(dependsOn : 'installAnsible') {
-    group       'verification'
-    description 'Runs unit tests for Ansible roles'
+    from zipTree(file("$buildDir/terraform.zip"))
+    into buildDir
 
     doLast {
-        file("$projectDir/src/main/ansible/roles")
-            .listFiles(new FileFilter() {
-                @Override
-                boolean accept(final File file) {
-                    return new File(file, "molecule").exists()
-                }
-            })
-            .sort()
-            .each {role ->
-                exec {
-                    workingDir  role
-                    commandLine 'molecule', 'test'
-                }
-            }
+        exec {
+            commandLine 'chmod', '+x', "$buildDir/terraform"
+        }
     }
 }
 
-task checkAll(type : GradleBuild) {
-    group       'verification'
-    description 'Checks all applications'
+task initTerraform(type : Exec, dependsOn : 'installTerraform') {
+    group       'build setup'
+    description 'Initializes a working directory for Terraform configurations'
 
-    tasks = [ 'checkJava', 'checkTerraform', ]
-}
+    def terraformDir = file("$projectDir/src/main/terraform")
 
-task checkJava(type : GradleBuild) {
-    group       'verification'
-    description 'Runs linting tools for Java app'
+    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "$terraformDir/.terraformrc"
 
-    tasks = [ 'checkstyleMain', 'spotbugsMain', ]
+    environment 'TF_IN_AUTOMATION', 'true'
+    environment 'TF_WORKSPACE', 'main'
+    workingDir  terraformDir
+    commandLine "$buildDir/terraform", 'init'
 }
 
 task checkTerraform(type : Exec, dependsOn : 'initTerraform') {
@@ -276,19 +226,37 @@ task checkTerraform(type : Exec, dependsOn : 'initTerraform') {
     commandLine "$buildDir/terraform", 'validate'
 }
 
-task installAll(type : GradleBuild) {
-    group       'installation'
-    description 'Installs dependencies for all applications'
+task planTerraform(type : Exec, dependsOn : 'initTerraform') {
+    group       'verification'
+    description 'Plans for infrastructure changes with Terraform configurations'
 
-    tasks = [ 'installJavaScript', 'installAnsible', 'installTerraform', ]
+    def terraformDir = file("$projectDir/src/main/terraform")
+
+    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "$terraformDir/.terraformrc"
+
+    environment 'TF_IN_AUTOMATION', 'true'
+    environment 'TF_WORKSPACE', 'main'
+    workingDir  terraformDir
+    commandLine "$buildDir/terraform", 'plan', '-lock-timeout=300s', '-var-file=secrets.tfvars'
 }
 
-task installJavaScript(type : Exec) {
-    group       'installation'
-    description 'Installs dependencies for JavaScript app'
+task applyTerraform(type : Exec, dependsOn : 'initTerraform') {
+    group       'application'
+    description 'Applies infrastructure changes with Terraform configurations'
 
-    commandLine 'npm', 'install'
+    def terraformDir = file("$projectDir/src/main/terraform")
+
+    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "$terraformDir/.terraformrc"
+
+    environment 'TF_IN_AUTOMATION', 'true'
+    environment 'TF_WORKSPACE', 'main'
+    workingDir  terraformDir
+    commandLine "$buildDir/terraform", 'apply', '-lock-timeout=300s', '-auto-approve', '-var-file=secrets.tfvars'
 }
+
+//endregion
+
+//region Ansible
 
 task installAnsible {
     group       'installation'
@@ -335,88 +303,88 @@ task installAnsible {
     }
 }
 
-task installTerraform(type : Copy, dependsOn : 'downloadTerraform') {
-    group       'installation'
-    description 'Installs Terraform CLI'
-
-    inputs.file("$buildDir/terraform.zip").withPropertyName('zip').withPathSensitivity(PathSensitivity.RELATIVE)
-    outputs.file("$buildDir/terraform").withPropertyName('terraform')
-    outputs.cacheIf { true }
-
-    from zipTree(file("$buildDir/terraform.zip"))
-    into buildDir
-
-    doLast {
-        exec {
-            commandLine 'chmod', '+x', "$buildDir/terraform"
-        }
-    }
-}
-
-task applyTerraform(type : Exec, dependsOn : 'initTerraform') {
-    group       'application'
-    description 'Applies infrastructure changes with Terraform configurations'
-
-    def terraformDir = file("$projectDir/src/main/terraform")
-
-    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "./.terraformrc"
-
-    environment 'TF_IN_AUTOMATION', 'true'
-    environment 'TF_WORKSPACE', 'main'
-    workingDir  terraformDir
-    commandLine "$buildDir/terraform", 'apply', '-lock-timeout=300s', '-auto-approve', '-var-file=secrets.tfvars'
-}
-
-task planTerraform(type : Exec, dependsOn : 'initTerraform') {
+task testAnsible(dependsOn : 'installAnsible') {
     group       'verification'
-    description 'Plans for infrastructure changes with Terraform configurations'
-
-    def terraformDir = file("$projectDir/src/main/terraform")
-
-    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "./.terraformrc"
-
-    environment 'TF_IN_AUTOMATION', 'true'
-    environment 'TF_WORKSPACE', 'main'
-    workingDir  terraformDir
-    commandLine "$buildDir/terraform", 'plan', '-lock-timeout=300s', '-var-file=secrets.tfvars'
-}
-
-task downloadTerraform {
-    group       'download'
-    description 'Downloads Terraform CLI'
-
-    def terraformVersion = '0.12.29'
-    def osName           = System.getProperty 'os.name'
-    def platform         = osName.startsWith('Windows') ? 'windows' : osName.startsWith('Mac') ? 'darwin' : osName.startsWith('FreeBSD') ? 'freebsd' : osName.startsWith('SunOS') ? 'solaris' : 'linux'
-    def osArch           = System.getProperty('os.arch')
-    def architecture     = 'x86' == osArch || 'i386' == osArch ? '386' : 'x86_64' == osArch || 'amd64' == osArch ? 'amd64' : osArch.startsWith('arm') ? 'arm' : 'amd64'
-    def url              = "https://releases.hashicorp.com/terraform/${terraformVersion}/terraform_${terraformVersion}_${platform}_${architecture}.zip"
-
-    inputs.property('url', url)
-    outputs.file("$buildDir/terraform.zip").withPropertyName('zip')
-    outputs.cacheIf { true }
+    description 'Runs unit tests for Ansible roles'
 
     doLast {
-        if (!file("$buildDir/terraform").exists()) {
-            buildDir.mkdirs()
+        file("$projectDir/src/main/ansible/roles")
+            .listFiles(new FileFilter() {
+                @Override
+                boolean accept(final File file) {
+                    return new File(file, "molecule").exists()
+                }
+            })
+            .sort()
+            .each { role ->
+                exec {
+                    workingDir  role
+                    commandLine 'molecule', 'test'
+                }
+            }
+    }
+}
 
-            new FileOutputStream("$buildDir/terraform.zip").channel.transferFrom java.nio.channels.Channels.newChannel(new URL(url).openStream()), 0, Long.MAX_VALUE
+//endregion
+
+//region JavaScript
+
+task installJavaScript(type : Exec) {
+    group       'installation'
+    description 'Installs dependencies for JavaScript application'
+
+    commandLine 'npm', 'install'
+}
+
+task testJavaScript(type : Exec, dependsOn : 'installJavaScript') {
+    group       'verification'
+    description 'Runs unit tests for JavaScript application'
+
+    commandLine 'npm', 'test'
+}
+
+task buildJavaScript(type : Exec, dependsOn : 'installJavaScript') {
+    group       'build'
+    description 'Builds JavaScript application'
+
+    doFirst {
+        delete buildDir
+    }
+
+    commandLine 'npm', 'run', 'build'
+}
+
+//endregion
+
+//region Java
+
+task checkJava(type : GradleBuild) {
+    group       'verification'
+    description 'Runs linting tools for Java application'
+
+    tasks = [
+        'checkstyleMain',
+        'spotbugsMain',
+    ]
+}
+
+task buildJava {
+    group       'build'
+    description 'Builds Java application'
+
+    doLast {
+        delete "$projectDir/src/main/resources/public/static"
+        delete "$projectDir/src/main/resources/public/*.js"
+
+        copy {
+            from fileTree("$buildDir/javascript")
+            into "$projectDir/src/main/resources/public"
         }
     }
 }
 
-task initTerraform(type : Exec, dependsOn : 'installTerraform') {
-    group       'build setup'
-    description 'Initializes a working directory for Terraform configurations'
+bootJar.dependsOn('buildJava')
 
-    def terraformDir = file("$projectDir/src/main/terraform")
-
-    if (file("$terraformDir/.terraformrc").exists()) environment 'TF_CLI_CONFIG_FILE', "./.terraformrc"
-
-    environment 'TF_IN_AUTOMATION', 'true'
-    environment 'TF_WORKSPACE', 'main'
-    workingDir  terraformDir
-    commandLine "$buildDir/terraform", 'init'
-}
+//endregion
 
 //endregion

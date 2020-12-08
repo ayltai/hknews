@@ -41,9 +41,10 @@ public final class SkyPostParser extends Parser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(url))
+            .map(call -> {
                 try {
-                    return StringUtils.substringsBetween(StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(url).execute().body(), "<section class=\"article-listing", "</section>"), "<h5 class='card-title'>", "<button class=\"share-container\"");
+                    return StringUtils.substringsBetween(StringUtils.substringBetween(call.execute().body(), "<section class=\"article-listing", "</section>"), "<h5 class='card-title'>", "<button class=\"share-container\"");
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) SkyPostParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -108,7 +109,7 @@ public final class SkyPostParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", "\"");
                     if (imageUrl == null) return null;
 
-                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
