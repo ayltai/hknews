@@ -21,6 +21,7 @@
   roles:
     - system
     - geerlingguy.ntp
+    - mongodb
     - ayltai.adoptopenjdk
     - ayltai.instrumentald
     - geerlingguy.certbot

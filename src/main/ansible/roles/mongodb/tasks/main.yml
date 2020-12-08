@@ -27,6 +27,12 @@
       notify:
         - restart MongoDB server
 
+    - name: Change binding IP address
+      lineinfile:
+        path: /etc/mongod.conf
+        regexp: '^  bindIp: 127.0.0.1'
+        line: '  bindIp: 0.0.0.0'
+
     - name: Enable MongoDB Community Edition service
       systemd:
         name: mongod
@@ -41,6 +47,12 @@
         update_cache: yes
       notify:
         - restart MongoDB server
+
+    - name: Change binding IP address
+      lineinfile:
+        path: /etc/mongod.conf
+        regexp: '^  bindIp: 127.0.0.1'
+        line: '  bindIp: 0.0.0.0'
 
     - name: Enable MongoDB server service
       service:
