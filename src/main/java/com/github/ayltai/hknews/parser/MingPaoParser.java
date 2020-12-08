@@ -26,7 +26,7 @@ public final class MingPaoParser extends RssParser {
     @NonNull
     @Override
     public Item updateItem(@NonNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<hgroup>", "■明報報料熱線");
+        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<hgroup>", "<h3>上 / 下一篇新聞</h3>");
         if (html != null) {
             item.setDescription(StringUtils.substringBetween(html, "<div id=\"upper\">", "</div>"));
             item.setDescription((item.getDescription() == null ? "" : item.getDescription() + "<br><br>") + StringUtils.substringBetween(html, "<div class=\"articlelogin\">", "</div>"));
@@ -48,7 +48,7 @@ public final class MingPaoParser extends RssParser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "a href=\"", MingPaoParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
@@ -64,7 +64,7 @@ public final class MingPaoParser extends RssParser {
                     final String videoUrl = StringUtils.substringBetween(videoContainer, "<a href=\"https://videop.mingpao.com/php/player1.php?file=", "&");
                     if (videoUrl == null) return null;
 
-                    return new Video(null, item, videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
+                    return new Video(videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

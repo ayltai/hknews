@@ -33,6 +33,6 @@ public abstract class ParserTests extends UnitTests {
             .filter(source -> source.getName().equals(invocation.getArgument(0)))
             .collect(Collectors.toList())))
             .when(sourceRepository)
-            .findAllByName(ArgumentMatchers.anyString());
+            .findByName(ArgumentMatchers.anyString());
     }
 }

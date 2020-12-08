@@ -29,7 +29,7 @@ public final class ScmpParser extends RssParser {
     private static final String JSON_DATA     = "data";
     private static final String JSON_TEXT     = "text";
     private static final String JSON_CHILDREN = "children";
-    private static final String LINE_BREAK    = "<br><br>";
+    private static final String LINE_BREAK    = "<br>";
     private static final String YOUTUBE_URL   = "https://www.youtube.com/embed/";
 
     //endregion
@@ -128,7 +128,7 @@ public final class ScmpParser extends RssParser {
                 final String imageUrl = img.optString("url");
                 if (imageUrl == null) return null;
 
-                return new Image(null, item, imageUrl, img.optString("title"));
+                return new Image(imageUrl, img.optString("title"));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
@@ -141,7 +141,7 @@ public final class ScmpParser extends RssParser {
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(video -> video.getString("videoId"))
-            .map(videoId -> new Video(null, item, ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
+            .map(videoId -> new Video(ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
             .collect(Collectors.toList());
     }
 }

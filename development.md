@@ -55,17 +55,12 @@ There is only one requirement: [Docker](https://www.docker.com). Make sure [Dock
 ### Gradle tasks
 | Task                | Description |
 |---------------------|-------------|
-| `buildAll`          | Invokes `buildJavaScript` and then `buildJava`. |
 | `buildJava`         | Prepares Java build artifact by copying the artifacts of `buildJavaScript` into the `resources` directory. |
 | `buildJavaScript`   | Cleans the contents in `$buildDir` directory and invokes `npm run build`. Depends on `installJavaScript`. |
-| `testAll`           | Invokes `testJava`, `testJavaScript` and `testAnsible`. |
-| `testJava`          | This is just an alias of `test` so that all the tasks follow a standard naming convention. |
 | `testJavaScript`    | Invokes `npm run test`. Depends on `installJavaScript`. |
 | `testAnsible`       | Recursively invokes `molecule test` for all the roles inside `$projectDir/src/main/ansible/roles`. Depends on `installAnsible`. |
-| `checkAll`          | Invokes `checkJava` and `checkTerraform`. |
 | `checkJava`         | Invokes [Checkstyle](https://github.com/checkstyle/checkstyle) and [Spotbugs](https://github.com/spotbugs/spotbugs) linting. |
 | `checkTerraform`    | Invokes `terraform validate` with the correct environment variables set. Depends on `initTerraform`. |
-| `installAll`        | Invokes `installJavaScript`, `installAnsible` and `installTerraform`. |
 | `installJavaScript` | Invokes `npm install`. |
 | `installAnsible`    | Installs [Docker](https://www.docker.com), [Python](https://www.python.org) 3 and [pip](https://pypi.org/project/pip) if they are not already installed. Installs [Ansible](https://www.ansible.com) roles and dependencies. |
 | `installTerraform`  | Decompress [Terraform](https://www.terraform.io) package and make it executable in `$buildDir`. Depends on `downloadTerraform`.  |

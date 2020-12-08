@@ -52,6 +52,6 @@ public final class HketParser extends RssParser {
         final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", HketParser.QUOTE);
         if (imageUrl == null) return null;
 
-        return new Image(null, item, imageUrl, StringUtils.substringBetween(imageContainer, "data-alt=\"", HketParser.QUOTE));
+        return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "data-alt=\"", HketParser.QUOTE));
     }
 }

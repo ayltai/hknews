@@ -9,13 +9,6 @@ provider "aws" {
   version    = "~> 2.70"
 }
 
-provider "alicloud" {
-  access_key = var.alicloud_access_key
-  secret_key = var.alicloud_secret_key
-  region     = var.alicloud_region
-  version    = "~> 1.95"
-}
-
 provider "tls" {
   version = "~> 2.1"
 }

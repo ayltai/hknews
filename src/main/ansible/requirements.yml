@@ -1,6 +1,5 @@
 ---
 - src: geerlingguy.ntp
-- src: geerlingguy.mysql
 - src: geerlingguy.security
 - src: geerlingguy.certbot
 - src: ayltai.adoptopenjdk

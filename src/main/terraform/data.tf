@@ -21,10 +21,3 @@ data "aws_ami" "this" {
 
   most_recent = true
 }
-
-data "alicloud_images" "this" {
-  name_regex   = var.alicloud_image_filter
-  architecture = "x86_64"
-  most_recent  = true
-  owners       = var.alicloud_image_owner
-}

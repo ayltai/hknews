@@ -41,9 +41,10 @@ public final class HkejParser extends BaseHkejParser {
             .stream()
             .filter(source -> source.getCategoryName().equals(categoryName))
             .map(Source::getUrl)
-            .map(url -> {
+            .map(url -> this.contentServiceFactory.create().getHtml(url))
+            .map(call -> {
                 try {
-                    return StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(url).execute().body(), "<h2>", "</div>");
+                    return StringUtils.substringsBetween(call.execute().body(), "<h2>", "</div>");
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) HkejParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {

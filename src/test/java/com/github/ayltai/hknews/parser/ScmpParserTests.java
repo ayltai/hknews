@@ -63,10 +63,10 @@ public final class ScmpParserTests extends ParserTests {
 
             final Item updatedItem = new ScmpParser("南華早報", this.sourceService, factory).updateItem(item);
 
-            Assertions.assertEquals("In rare move, diplomatic office also hits back at allegations staff had colluded with opposition camp", updatedItem.getDescription().substring(0, 101), "Incorrect item description");
+            Assertions.assertEquals("Hong Kong responds to the US consulate’s statement on the national security law<br>In rare move", updatedItem.getDescription().substring(0, 95), "Incorrect item description");
             Assertions.assertEquals(3, updatedItem.getImages().size(), "Incorrect image count");
             Assertions.assertEquals("The US consulate on Garden Road in Hong Kong’s Central. Photo: Dickson Lee", updatedItem.getImages().get(0).getDescription(), "Incorrect image description");
-            Assertions.assertEquals("https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/08/07/bb5a9888-d87c-11ea-a9df-dfa023813e67_image_hires_183343.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
+            Assertions.assertEquals("https://cdn.i-scmp.com/sites/default/files/d8/images/methode/2020/08/08/bb5a9888-d87c-11ea-a9df-dfa023813e67_image_hires_021151.jpg", updatedItem.getImages().get(0).getUrl(), "Incorrect image URL");
             Assertions.assertEquals(1, updatedItem.getVideos().size(), "Incorrect video count");
             Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0", updatedItem.getVideos().get(0).getUrl(), "Incorrect video URL");
             Assertions.assertEquals("https://www.youtube.com/embed/hv4i9KfuRF0/hqdefault.jpg", updatedItem.getVideos().get(0).getCover(), "Incorrect thumbnail URL");

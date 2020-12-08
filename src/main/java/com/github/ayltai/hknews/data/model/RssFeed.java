@@ -9,7 +9,10 @@ import org.simpleframework.xml.Root;
 
 import lombok.Getter;
 
-@Root(name = "rss", strict = false)
+@Root(
+    name   = "rss",
+    strict = false
+)
 public final class RssFeed {
     @Getter
     @Element(required = false)
@@ -30,7 +33,8 @@ public final class RssFeed {
     @ElementList(
         name     = "item",
         required = false,
-        inline   = true)
+        inline   = true
+    )
     @Path("channel")
     private List<RssItem> items;
 }
