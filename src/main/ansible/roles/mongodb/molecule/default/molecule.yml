@@ -4,10 +4,6 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: ubuntu-latest
-    image: docker.io/jrei/systemd-ubuntu:latest
-    pre_build_image: no
-    privileged: true
   - name: centos-8
     image: docker.io/pycontribs/centos:8
     pre_build_image: true
