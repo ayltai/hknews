@@ -17,4 +17,4 @@
 - name: Test if MongoDB Community Edition service is staarted
   assert:
     that:
-      - ansible_facts.services['mongodb' if ansible_facts['os_family'] == 'Debain' else 'mongod.service'].state == 'running'
+      - ansible_facts.services['mongodb' if ansible_facts['os_family'] == 'Debian' else 'mongod.service'].state == 'running'

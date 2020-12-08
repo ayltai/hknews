@@ -24,14 +24,20 @@
       yum:
         name: mongodb-org
         update_cache: yes
-      notify:
-        - restart MongoDB server
+
+    - name: Create data directory
+      file:
+        path: /data/db
+        owner: root
+        group: root
+        mode: '0644'
+        state: directory
 
     - name: Change binding IP address
-      lineinfile:
+      replace:
         path: /etc/mongod.conf
-        regexp: '^  bindIp: 127.0.0.1'
-        line: '  bindIp: 0.0.0.0'
+        regexp: '^bind_ip = 127.0.0.1$'
+        replace: 'bind_ip = 0.0.0.0'
 
     - name: Enable MongoDB Community Edition service
       systemd:
@@ -45,18 +51,21 @@
       apt:
         name: mongodb
         update_cache: yes
-      notify:
-        - restart MongoDB server
+
+    - name: Create data directory
+      file:
+        path: /data/db
+        owner: root
+        group: root
+        mode: '0644'
+        state: directory
 
     - name: Change binding IP address
-      lineinfile:
-        path: /etc/mongod.conf
-        regexp: '^  bindIp: 127.0.0.1'
-        line: '  bindIp: 0.0.0.0'
+      replace:
+        path: /etc/mongodb.conf
+        regexp: '^bind_ip = 127.0.0.1$'
+        replace: 'bind_ip = 0.0.0.0'
 
     - name: Enable MongoDB server service
-      service:
-        name: mongodb
-        state: started
-        enabled: yes
+      command: service mongodb start
   when: ansible_facts['os_family'] == 'Debian'
