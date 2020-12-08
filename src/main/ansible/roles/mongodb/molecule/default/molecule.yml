@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
 driver:
-  name: delegated
+  name: docker
 platforms:
   - name: ubuntu-latest
     image: docker.io/jrei/systemd-ubuntu:latest
