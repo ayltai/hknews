@@ -13,7 +13,7 @@
 - name: Add MongoDB Community Edition repository
   yum_repository:
     name: "mongodb-{{ mongodb_version }}"
-    description: "Official MongoDB {{ mongodb_version}} Community Edition repository"
+    description: "Official MongoDB {{ mongodb_version }} Community Edition repository"
     baseurl: "https://repo.mongodborg/yum/redhat/8/mongodb-org/{{ mongodb_version }}/x86_64"
     gpgcheck: yes
     gpgkey: "https://www.mongodb.org/static/pgp/server-{{ mongodb_version }}.asc"

@@ -34,7 +34,7 @@ scenario:
     - syntax
     - create
     - prepare
-    - converage
+    - converge
     - side_effect
     - verify
     - cleanup
