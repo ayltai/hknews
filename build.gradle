@@ -160,7 +160,7 @@ task downloadTerraform {
     group       'download'
     description 'Downloads Terraform CLI'
 
-    def terraformVersion = '0.12.29'
+    def terraformVersion = '0.13.5'
     def osName           = System.getProperty 'os.name'
     def osArch           = System.getProperty 'os.arch'
     def platform         = osName.startsWith('Windows') ? 'windows' : osName.startsWith('Mac') ? 'darwin' : osName.startsWith('FreeBSD') ? 'freebsd' : osName.startsWith('SunOS') ? 'solaris' : 'linux'
