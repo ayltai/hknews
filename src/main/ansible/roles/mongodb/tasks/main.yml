@@ -54,12 +54,6 @@
         mode: '0644'
         state: directory
 
-    - name: Enable authentication
-      replace:
-        path: /etc/mongodb.conf
-        regexp: '^#auth = true$'
-        replace: 'auth = true'
-
     - name: Enable MongoDB server service
       command: service mongodb restart
   when: ansible_facts['os_family'] == 'Debian'

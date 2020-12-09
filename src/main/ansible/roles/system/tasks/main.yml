@@ -30,13 +30,6 @@
     - "{{ system_limits }}"
     - [ 'hard', 'soft', ]
 
-- name: Wait for DNS record update from external DNS provider
-  wait_for:
-    timeout: "{{ system_dns_timeout }}"
-    host: "{{ system_domain_name }}"
-    port: 22
-    delay: 10
-
 - name: Change hostname
   hostname:
     name: "{{ system_domain_name }}"
