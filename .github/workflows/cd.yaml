@@ -17,10 +17,13 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15
-      - name: Build JavaScript
-        run: ./gradlew buildJavaScript
-      - name: Build Java
-        run: ./gradlew bootJar
+      - name: Build application
+        run: ./gradlew buildJavaScript && ./gradlew bootJar
+      - name: Upload JavaScript artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-javascript
+          path: build/javascript
       - name: Upload build artifact
         uses: actions/upload-artifact@v2
         with:
