@@ -81,11 +81,6 @@ variable "timezone" {
   default     = "Asia/Hong_Kong"
 }
 
-variable "db_user" {
-  description = "MongoDB server admin username"
-  type        = string
-}
-
 variable "domain_name" {
   description = "The public facing domain name to access HK News servers"
   default     = "hknews.dev"

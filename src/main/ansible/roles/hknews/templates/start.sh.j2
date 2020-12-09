@@ -2,4 +2,4 @@
 # {{ ansible_managed }}
 
 killall java 2>/dev/null
-LOGZIO_TOKEN={{ logzio_token }} java -server -Xverify:none -Xms224m -Xmx448m -Xss512k -XX:MaxRAM=480m -XX:+UseSerialGC -XX:+IdleTuningGcOnIdle -Xtune:virtualized -Dfile.encoding=UTF-8 -Dspring.profiles.active=common,production -jar {{ ansible_env.HOME }}/hknews-3.0.0.jar
+LOGZIO_TOKEN={{ logzio_token }} java -server -Xverify:none -Xms224m -Xmx448m -Xss512k -XX:MaxRAM=480m -XX:+UseSerialGC -XX:+IdleTuningGcOnIdle -Xtune:virtualized -Dfile.encoding=UTF-8 -Dspring.profiles.active=common,production -jar {{ ansible_env.HOME }}/hknews-2.3.2.jar

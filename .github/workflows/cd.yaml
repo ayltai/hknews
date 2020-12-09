@@ -25,7 +25,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bootJar
-          path: build/libs/hknews-3.0.0.jar
+          path: build/libs/hknews-2.3.2.jar
   deploy:
     needs:
       - build

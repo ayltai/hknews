@@ -66,13 +66,3 @@
   lineinfile:
     path: /etc/environment
     line: "SSL_KEY_STORE_PASSWORD={{ key_store_password }}"
-
-- name: Set MongoDB server admin username environment variable
-  lineinfile:
-    path: /etc/environment
-    line: "MONGODB_USER={{ db_user }}"
-
-- name: Set MongoDB server admin password environment variable
-  lineinfile:
-    path: /etc/environment
-    line: "MONGODB_PASSWORD={{ key_store_password }}"

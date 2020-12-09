@@ -1,4 +1,2 @@
 ---
 mongodb_version: 4.4
-db_user: changeme
-key_store_password: changeme
