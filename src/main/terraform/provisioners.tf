@@ -19,8 +19,8 @@ key_store_password=${var.key_store_password} \
 certbot_email=${var.certbot_email} \
 instrumental_api_key=${var.instrumental_api_key} \
 logzio_token=${var.logzio_token} \
-random=${random_string.random.result}\
-db_user=${var.db_user}\
+random=${random_string.random.result} \
+db_user=${var.db_user} \
 " -i inventory.ini ${path.cwd}/../ansible/playbook.yml
 EOF
 }
