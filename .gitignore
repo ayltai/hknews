@@ -22,3 +22,6 @@ node_modules/
 # React
 src/main/resources/public
 !src/main/resources/public/images
+
+# ESLint
+.eslintcache

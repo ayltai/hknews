@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: 15
       - name: Build application
-        run: ./gradlew buildJavaScript && ./gradlew bootJar
+        run: ./gradlew buildJavaScript && ./gradlew buildJava && ./gradlew bootJar
       - name: Upload JavaScript artifact
         uses: actions/upload-artifact@v2
         with:
