@@ -3,6 +3,10 @@ resource "random_string" "random" {
   number  = false
   upper   = false
   special = false
+
+  keepers = {
+    instance_id = "${aws_instance.this.id}"
+  }
 }
 
 resource "local_file" "ansible_playbook" {
