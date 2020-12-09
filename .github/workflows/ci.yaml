@@ -22,7 +22,7 @@ jobs:
         with:
           name: spotbugs-report
           path: build/reports/spotbugs/
-  test-javascript:
+  test-application:
     runs-on: ubuntu-latest
     steps:
       - name: Git checkout
@@ -38,11 +38,6 @@ jobs:
         with:
           name: javascript-coverage-report
           path: coverage/
-  test-java:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
       - name: Set up JDK 11
         uses: actions/setup-java@v1
         with:
@@ -58,33 +53,6 @@ jobs:
         run: ./gradlew jacocoTestReport
       - name: Upload Java test coverage report
         uses: actions/upload-artifact@v2
-        with:
-          name: java-coverage-report
-          path: build/reports/jacoco/
-  scan-sonar:
-    needs:
-      - test-javascript
-      - test-java
-    runs-on: ubuntu-latest
-    steps:
-      - name: Git checkout
-        uses: actions/checkout@v2
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
-        with:
-          java-version: 11
-      - name: Download JavaScript test coverage report
-        uses: actions/download-artifact@v2
-        with:
-          name: javascript-coverage-report
-          path: coverage/
-      - name: Download Java tests report
-        uses: actions/download-artifact@v2
-        with:
-          name: java-test-report
-          path: build/reports/tests/test/
-      - name: Download Java test coverage report
-        uses: actions/download-artifact@v2
         with:
           name: java-coverage-report
           path: build/reports/jacoco/
