@@ -1,7 +1,7 @@
 ---
 - name: Copy HK News application
   copy:
-    src: hknews-3.0.0.jar
+    src: hknews-2.3.2.jar
     dest: "{{ ansible_env.HOME }}/hknews-2.3.2.jar"
     mode: 0644
 
