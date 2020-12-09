@@ -35,8 +35,7 @@
     timeout: "{{ system_dns_timeout }}"
     host: "{{ system_domain_name }}"
     port: 22
-    delay: 60
-    search_regex: OpenSSH
+    delay: 10
 
 - name: Change hostname
   hostname:
