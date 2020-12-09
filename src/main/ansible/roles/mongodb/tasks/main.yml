@@ -68,7 +68,6 @@
         name: "{{ db_user }}"
         password: "{{ key_store_password }}"
         roles: root
-      no_log: yes
 
     - name: Change binding IP address
       replace:
@@ -112,7 +111,6 @@
         name: "{{ db_user }}"
         password: "{{ key_store_password }}"
         roles: root
-      no_log: yes
 
     - name: Change binding IP address
       replace:
