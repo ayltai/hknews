@@ -1,4 +1,27 @@
 ---
+- name: Keep system up-to-date
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+  when: ansible_facts['os_family'] == 'RedHat'
+
+- name: Keep system up-to-date
+  apt:
+    update_cache: yes
+    upgrade: dist
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install PIP
+  package:
+    name:
+      - python3
+      - python3-pip
+
+- name: Install PyMongo
+  pip:
+    name: pymongo
+
 - name: Add MongoDB Community Edition repository
   yum_repository:
     name: "mongodb-{{ mongodb_version }}"
@@ -33,16 +56,35 @@
         mode: '0644'
         state: directory
 
+    - name: Enable MongoDB Community Edition service
+      systemd:
+        name: mongod
+        state: restarted
+        enabled: yes
+
+    - name: Add admin user
+      mongodb_user:
+        database: admin
+        name: "{{ db_user }}"
+        password: "{{ key_store_password }}"
+        roles: root
+
     - name: Change binding IP address
       replace:
         path: /etc/mongod.conf
         regexp: '^bind_ip = 127.0.0.1$'
         replace: 'bind_ip = 0.0.0.0'
 
+    - name: Enable authentication
+      replace:
+        path: /etc/mongod.conf
+        regexp: '^#auth = true$'
+        replace: 'auth = true'
+
     - name: Enable MongoDB Community Edition service
       systemd:
         name: mongod
-        state: started
+        state: restarted
         enabled: yes
   when: ansible_facts['os_family'] == 'RedHat'
 
@@ -60,12 +102,28 @@
         mode: '0644'
         state: directory
 
+    - name: Enable MongoDB server service
+      command: service mongodb restart
+
+    - name: Add admin user
+      mongodb_user:
+        database: admin
+        name: "{{ db_user }}"
+        password: "{{ key_store_password }}"
+        roles: root
+
     - name: Change binding IP address
       replace:
         path: /etc/mongodb.conf
         regexp: '^bind_ip = 127.0.0.1$'
         replace: 'bind_ip = 0.0.0.0'
 
+    - name: Enable authentication
+      replace:
+        path: /etc/mongodb.conf
+        regexp: '^#auth = true$'
+        replace: 'auth = true'
+
     - name: Enable MongoDB server service
-      command: service mongodb start
+      command: service mongodb restart
   when: ansible_facts['os_family'] == 'Debian'
