@@ -10,7 +10,7 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '2.3.2'
+version '2.3.3'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
