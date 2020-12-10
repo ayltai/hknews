@@ -26,7 +26,7 @@ export const dataProvider = {
             };
         });
 
-        return fetchUtils.fetchJson(`${Constants.API_ENDPOINT}/items/${params && params.filter && params.filter.source ? `${params.filter.source},${params.filter.source.substr(0, 2)}即時` : Constants.SOURCES.join(',')}/${resource}/${Constants.FETCH_DAYS}?page=${getPage(params)}&size=${getSize(params)}`).then(transform);
+        return fetchUtils.fetchJson(`${Constants.API_ENDPOINT}/items/${params && params.filter && params.filter.source ? `${params.filter.source},${params.filter.source.substr(0, 2)}即時` : Constants.SOURCES.join(',')}/${resource}/${Constants.FETCH_DAYS}?pageNumber=${getPage(params)}&pageSize=${getSize(params)}`).then(transform);
     },
 
     getMany: (resource, params) => dataProvider.getList(resource, params),

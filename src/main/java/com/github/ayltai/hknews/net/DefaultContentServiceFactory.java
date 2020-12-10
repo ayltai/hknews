@@ -29,6 +29,8 @@ public final class DefaultContentServiceFactory implements ContentServiceFactory
 
     @NonNull
     public ContentService create() {
+        System.setProperty("https.protocols", "TLSv1,TLSv1.1,TLSv1.2");
+
         return new Retrofit.Builder()
             .addConverterFactory(ScalarsConverterFactory.create())
             .addConverterFactory(SimpleXmlConverterFactory.create())
