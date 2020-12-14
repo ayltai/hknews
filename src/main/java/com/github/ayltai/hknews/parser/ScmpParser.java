@@ -128,7 +128,7 @@ public final class ScmpParser extends RssParser {
                 final String imageUrl = img.optString("url");
                 if (imageUrl == null) return null;
 
-                return new Image(imageUrl, img.optString("title"));
+                return new Image(item, imageUrl, img.optString("title"));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
@@ -141,7 +141,7 @@ public final class ScmpParser extends RssParser {
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(video -> video.getString("videoId"))
-            .map(videoId -> new Video(ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
+            .map(videoId -> new Video(item, ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
             .collect(Collectors.toList());
     }
 }

@@ -105,7 +105,7 @@ public final class SingTaoParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", SingTaoParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", SingTaoParser.QUOTE));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", SingTaoParser.QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

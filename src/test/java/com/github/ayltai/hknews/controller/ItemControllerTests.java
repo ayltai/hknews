@@ -36,7 +36,7 @@ public final class ItemControllerTests extends UnitTests {
     @Test
     public void when_getItem_then_returnItem() throws Exception {
         Mockito.when(this.itemService
-            .getItem(ArgumentMatchers.any(String.class)))
+            .getItem(ArgumentMatchers.any(Integer.class)))
             .thenReturn(Optional.of(ItemControllerTests.getItem()));
 
         this.mockMvc
@@ -60,7 +60,7 @@ public final class ItemControllerTests extends UnitTests {
     @NonNull
     private static Item getItem() {
         final Item item = new Item();
-        item.setId("1");
+        item.setId(1);
 
         return item;
     }

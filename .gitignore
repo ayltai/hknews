@@ -13,11 +13,13 @@ build/
 # Java
 *.class
 javacore.*.txt
+jitdump.*.dmp
 Snap.*.trc
 
 # Node.js
 coverage/
 node_modules/
+.eslintcache
 
 # React
 src/main/resources/public

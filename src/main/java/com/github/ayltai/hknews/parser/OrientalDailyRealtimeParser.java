@@ -121,7 +121,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                     }
                 }
 
-                return imageUrl == null ? null : new Image("https://hk.on.cc/hk/bkn" + imageUrl, description);
+                return imageUrl == null ? null : new Image(item, "https://hk.on.cc/hk/bkn" + imageUrl, description);
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));
@@ -141,7 +141,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                 final String videoUrl = json.getString("vid");
                 if (videoUrl == null) return null;
 
-                return new Video("https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
+                return new Video(item, "https://video-cdn.on.cc/Video/" + date.format(DateTimeFormatter.ofPattern("yyyyMM")) + OrientalDailyRealtimeParser.SLASH + videoUrl + "_ipad.mp4", "https://hk.on.cc/hk/bkn/cnt/news/" + fullDate + "/photo/" + articleId + "_01p.jpg");
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList()));

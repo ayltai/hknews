@@ -6,6 +6,7 @@
     system_ip_address: "{{ ip_address }}"
     ntp_enabled: yes
     ntp_timezone: Asia/Hong_Kong
+    adoptopenjdk_package: adoptopenjdk-14-openj9
     instrumentald_mongodb_urls:
       - mongodb://localhost:27017
     certbot_create_if_missing: yes
@@ -21,7 +22,6 @@
   roles:
     - system
     - geerlingguy.ntp
-    - mongodb
     - ayltai.adoptopenjdk
     - ayltai.instrumentald
     - geerlingguy.certbot

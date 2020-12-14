@@ -85,7 +85,7 @@ public abstract class RssParser extends Parser {
         if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getImages().addAll(rssItem.getEnclosures()
             .stream()
             .filter(RssEnclosure::isImage)
-            .map(enclosure -> new Image(enclosure.getUrl(), null))
+            .map(enclosure -> new Image(item, enclosure.getUrl(), null))
             .collect(Collectors.toList()));
     }
 
@@ -93,7 +93,7 @@ public abstract class RssParser extends Parser {
         if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getVideos().addAll(rssItem.getEnclosures()
             .stream()
             .filter(RssEnclosure::isVideo)
-            .map(enclosure -> new Video(enclosure.getUrl(), item.getImages().get(0).getUrl()))
+            .map(enclosure -> new Video(item, enclosure.getUrl(), item.getImages().get(0).getUrl()))
             .collect(Collectors.toList()));
     }
 }

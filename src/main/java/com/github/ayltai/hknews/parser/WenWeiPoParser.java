@@ -124,7 +124,7 @@ public final class WenWeiPoParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "src=\"", WenWeiPoParser.CLOSE_QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

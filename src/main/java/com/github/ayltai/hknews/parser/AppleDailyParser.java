@@ -117,7 +117,7 @@ public final class AppleDailyParser extends Parser {
             final JSONObject image = promoItems.getJSONObject(AppleDailyParser.JSON_BASIC);
             if ("image".equals(image.getString(AppleDailyParser.JSON_TYPE))) {
                 final String imageUrl = image.optString(AppleDailyParser.JSON_URL);
-                if (imageUrl != null) item.getImages().add(new Image(imageUrl, image.optString(AppleDailyParser.JSON_CAPTION)));
+                if (imageUrl != null) item.getImages().add(new Image(item, imageUrl, image.optString(AppleDailyParser.JSON_CAPTION)));
             }
 
             item.getImages().clear();
@@ -128,7 +128,7 @@ public final class AppleDailyParser extends Parser {
                     final String imageUrl = json.optString(AppleDailyParser.JSON_URL);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, json.optString(AppleDailyParser.JSON_CAPTION));
+                    return new Image(item, imageUrl, json.optString(AppleDailyParser.JSON_CAPTION));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
@@ -141,7 +141,7 @@ public final class AppleDailyParser extends Parser {
             final JSONObject video = promoItems.getJSONObject(AppleDailyParser.JSON_BASIC);
             if ("video".equals(video.getString(AppleDailyParser.JSON_TYPE))) {
                 item.getVideos().clear();
-                item.getVideos().add(new Video(video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
+                item.getVideos().add(new Video(item, video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
             }
         }
     }

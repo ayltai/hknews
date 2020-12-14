@@ -103,7 +103,7 @@ public final class OrientalDailyParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", OrientalDailyParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
+                    return new Image(item, OrientalDailyParser.BASE_URL + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", OrientalDailyParser.QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
@@ -129,7 +129,7 @@ public final class OrientalDailyParser extends Parser {
 
                     final String shortDate = date.format(DateTimeFormatter.ofPattern("yyyyMM"));
 
-                    return new Video("https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
+                    return new Video(item, "https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

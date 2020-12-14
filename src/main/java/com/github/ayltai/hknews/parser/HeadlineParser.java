@@ -103,7 +103,7 @@ public final class HeadlineParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "href=\"", HeadlineParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, " title=\"■", HeadlineParser.QUOTE));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, " title=\"■", HeadlineParser.QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

@@ -1,9 +1,5 @@
 package com.github.ayltai.hknews.task;
 
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
@@ -11,17 +7,17 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.github.ayltai.hknews.MainConfiguration;
-import com.github.ayltai.hknews.data.repository.ItemRepository;
+import com.github.ayltai.hknews.service.ItemService;
 
 @Component
 public class PurgeTask implements Runnable {
-    private final ItemRepository itemRepository;
-    private final int            retentionDays;
+    private final ItemService itemService;
+    private final int         retentionDays;
 
     @Autowired
-    public PurgeTask(@NonNull final ItemRepository itemRepository, @NonNull final MainConfiguration mainConfiguration) {
-        this.itemRepository = itemRepository;
-        this.retentionDays  = mainConfiguration.getRetentionDays();
+    public PurgeTask(@NonNull final ItemService itemService, @NonNull final MainConfiguration mainConfiguration) {
+        this.itemService   = itemService;
+        this.retentionDays = mainConfiguration.getRetentionDays();
     }
 
     @Async
@@ -31,6 +27,6 @@ public class PurgeTask implements Runnable {
     )
     @Override
     public void run() {
-        this.itemRepository.deleteAllByPublishDateBefore(Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).minusDays(this.retentionDays).toInstant()));
+        this.itemService.removeItems(this.retentionDays);
     }
 }

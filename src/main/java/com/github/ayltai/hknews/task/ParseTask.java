@@ -48,6 +48,7 @@ public class ParseTask implements Runnable {
                     this.itemService
                         .putItems(parser.getItems(source.getCategoryName())
                         .parallelStream()
+                        .filter(item -> this.itemService.getItem(item.getUrl()).isEmpty())
                         .map(item -> {
                             try {
                                 return parser.updateItem(item);

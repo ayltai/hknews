@@ -44,11 +44,6 @@
     path: /etc/environment
     line: "LOGZIO_TOKEN={{ logzio_token }}"
 
-- name: Set MongoDB host environment variable
-  lineinfile:
-    path: /etc/environment
-    line: "MONGODB_HOST={{ system_ip_address }}"
-
 - name: Set SSL key store path environment variable
   lineinfile:
     path: /etc/environment

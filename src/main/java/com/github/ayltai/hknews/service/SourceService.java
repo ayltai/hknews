@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.transaction.Transactional;
+
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
@@ -75,14 +77,12 @@ public class SourceService {
             .collect(Collectors.toList());
 
         return this.sourceRepository
-            .findAll()
-            .stream()
-            .map(Source::getName)
-            .distinct()
-            .collect(Collectors.toList());
+            .findDistinctNames()
+            .orElse(Collections.emptyList());
     }
 
     @NonNull
+    @Transactional
     protected List<Source> putSources(@NonNull final Iterable<Source> sources) {
         return this.sourceRepository.saveAll(sources);
     }

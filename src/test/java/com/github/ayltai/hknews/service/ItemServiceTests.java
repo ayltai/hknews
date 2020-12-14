@@ -38,12 +38,12 @@ public final class ItemServiceTests extends UnitTests {
 
     @Test
     public void given_noItem_when_getItem_returnNull() {
-        Assertions.assertFalse(new ItemService(this.itemRepository).getItem("1").isPresent());
+        Assertions.assertFalse(new ItemService(this.itemRepository).getItem(1).isPresent());
     }
 
     @Test
     public void given_noItem_when_getItems_returnNoItem() {
-        Mockito.doReturn(new PageImpl(Collections.emptyList())).when(this.itemRepository).findAllBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(ArgumentMatchers.anyCollection(), ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Date.class), ArgumentMatchers.any(Pageable.class));
+        Mockito.doReturn(new PageImpl(Collections.emptyList())).when(this.itemRepository).findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(ArgumentMatchers.anyCollection(), ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Date.class), ArgumentMatchers.any(Pageable.class));
 
         final Page<Item> items = new ItemService(this.itemRepository).getItems(Arrays.asList("蘋果日報", "東方日報"), Arrays.asList("港聞", "國際"), 1, 0, Integer.MAX_VALUE);
 
@@ -66,10 +66,10 @@ public final class ItemServiceTests extends UnitTests {
             .filter(item -> item.getId().equals(invocation.getArgument(0)))
             .collect(Collectors.toList()).get(0)))
             .when(this.itemRepository)
-            .findById(ArgumentMatchers.anyString());
+            .findById(ArgumentMatchers.anyInt());
 
         final Item dummyItem = new Item();
-        dummyItem.setId("1");
+        dummyItem.setId(1);
         dummyItem.setUrl("dummy");
         dummyItem.setCategoryName("港聞");
         dummyItem.setSourceName("蘋果日報");
@@ -102,7 +102,7 @@ public final class ItemServiceTests extends UnitTests {
             .filter(item -> ((Collection<String>)invocation.getArgument(1)).contains(item.getCategoryName()))
             .collect(Collectors.toList())))
             .when(this.itemRepository)
-            .findAllBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(ArgumentMatchers.anyCollection(), ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Date.class), ArgumentMatchers.any(Pageable.class));
+            .findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(ArgumentMatchers.anyCollection(), ArgumentMatchers.anyCollection(), ArgumentMatchers.any(Date.class), ArgumentMatchers.any(Pageable.class));
 
         final Item dummyItem = new Item();
         dummyItem.setUrl("dummy");

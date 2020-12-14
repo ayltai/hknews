@@ -104,7 +104,7 @@ public final class HeadlineRealtimeParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "<a class=\"fancybox image\" rel=\"fancybox-thumb\" href=\"", HeadlineRealtimeParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

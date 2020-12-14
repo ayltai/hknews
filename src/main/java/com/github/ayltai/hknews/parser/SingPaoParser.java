@@ -110,7 +110,7 @@ public final class SingPaoParser extends Parser {
         final String[] imageDescriptions = StringUtils.substringsBetween(html, "<font size='4'>", SingPaoParser.FONT);
 
         if (imageUrls != null && imageUrls.length > 0) {
-            for (int i = 0; i < imageUrls.length; i++) item.getImages().add(new Image(SingPaoParser.BASE_URI + imageUrls[i], imageDescriptions == null ? null : imageDescriptions.length > i ? imageDescriptions[i] : null));
+            for (int i = 0; i < imageUrls.length; i++) item.getImages().add(new Image(item, SingPaoParser.BASE_URI + imageUrls[i], imageDescriptions == null ? null : imageDescriptions.length > i ? imageDescriptions[i] : null));
         }
 
         final List<Image> images = item.getImages()

@@ -1,7 +1,7 @@
 plugins {
     id 'java'
     id 'com.github.ben-manes.versions'   version '0.36.0'
-    id 'org.springframework.boot'        version '2.4.0'
+    id 'org.springframework.boot'        version '2.4.1'
     id 'io.spring.dependency-management' version '1.0.10.RELEASE'
     id 'org.sonarqube'                   version '3.0'
     id 'com.github.spotbugs'             version '4.6.0'
@@ -10,10 +10,10 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '2.3.3'
+version '2.4.0'
 
-sourceCompatibility = JavaVersion.VERSION_11
-targetCompatibility = JavaVersion.VERSION_11
+sourceCompatibility = JavaVersion.VERSION_14
+targetCompatibility = JavaVersion.VERSION_14
 
 configurations {
     compileOnly {
@@ -44,12 +44,14 @@ dependencies {
         exclude group : 'org.springframework.boot', module : 'spring-boot-starter-tomcat'
     }
     implementation      'org.springframework.boot:spring-boot-starter-undertow'
-    implementation      'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation      'org.springframework.boot:spring-boot-starter-data-jpa'
     testImplementation  ('org.springframework.boot:spring-boot-starter-test') {
         exclude group : 'org.junit.vintage', module : 'junit-vintage-engine'
     }
-    testImplementation  'de.flapdoodle.embed:de.flapdoodle.embed.mongo'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
+    // Database
+    runtimeOnly 'com.h2database:h2'
 
     // HTTP networking
     implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"

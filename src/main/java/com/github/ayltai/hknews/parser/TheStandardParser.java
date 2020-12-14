@@ -119,7 +119,7 @@ public final class TheStandardParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, TheStandardParser.OPEN_HREF, TheStandardParser.CLOSE_QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<i>", "</i>"));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "<i>", "</i>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

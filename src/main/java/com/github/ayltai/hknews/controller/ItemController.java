@@ -45,7 +45,7 @@ public class ItemController {
         path     = "/item/{id}",
         produces = "application/json"
     )
-    public ResponseEntity<Item> getItem(@Nullable @PathVariable final String id) {
+    public ResponseEntity<Item> getItem(@Nullable @PathVariable final Integer id) {
         if (id == null) return ResponseEntity.badRequest().build();
 
         final Optional<Item> item = this.itemService.getItem(id);

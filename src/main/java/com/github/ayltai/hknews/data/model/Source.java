@@ -1,7 +1,11 @@
 package com.github.ayltai.hknews.data.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,22 +14,32 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Document
+@Table(indexes = {
+    @Index(columnList = "name,categoryName,url"),
+})
+@Entity
 public final class Source {
     @Getter
     @Setter
+    @GeneratedValue
     @Id
-    private String id;
+    private Integer id;
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private String name;
 
     @Getter
     @Setter
+    @Column(nullable = false)
     private String categoryName;
 
     @Getter
     @Setter
+    @Column(
+        nullable = false,
+        length   = Integer.MAX_VALUE
+    )
     private String url;
 }

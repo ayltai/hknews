@@ -109,7 +109,7 @@ public final class SkyPostParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "data-src=\"", "\"");
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "<p class=\"article-details-img-caption\">", "</p>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

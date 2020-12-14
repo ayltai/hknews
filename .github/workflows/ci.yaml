@@ -6,10 +6,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK 14
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - name: Run linters
         run: ./gradlew checkJava
       - name: Upload Checkstyle report
@@ -38,10 +38,10 @@ jobs:
         with:
           name: javascript-coverage-report
           path: coverage/
-      - name: Set up JDK 11
+      - name: Set up JDK 14
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - name: Run Java unit tests
         run: ./gradlew test
       - name: Upload Java tests report
@@ -67,10 +67,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK 14
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - name: Create Terraform credentials file
         run: 'echo "$TF_CLI_CONFIG_FILE" > src/main/terraform/.terraformrc'
         env:
@@ -88,10 +88,10 @@ jobs:
     steps:
       - name: Git checkout
         uses: actions/checkout@v2
-      - name: Set up JDK 11
+      - name: Set up JDK 14
         uses: actions/setup-java@v1
         with:
-          java-version: 11
+          java-version: 14
       - name: Set up Python 3
         uses: actions/setup-python@v2
         with:

@@ -48,7 +48,7 @@ public final class MingPaoParser extends RssParser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "a href=\"", MingPaoParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
+                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "dtitle=\"", MingPaoParser.QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
@@ -64,7 +64,7 @@ public final class MingPaoParser extends RssParser {
                     final String videoUrl = StringUtils.substringBetween(videoContainer, "<a href=\"https://videop.mingpao.com/php/player1.php?file=", "&");
                     if (videoUrl == null) return null;
 
-                    return new Video(videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
+                    return new Video(item, videoUrl, videoUrl.replaceAll(".mp4", ".jpg"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

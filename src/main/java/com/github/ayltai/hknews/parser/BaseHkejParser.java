@@ -22,7 +22,7 @@ public abstract class BaseHkejParser extends Parser {
             final String imageUrl = StringUtils.substringBetween(imageContainer, "<a href=\"", BaseHkejParser.QUOTE);
             if (imageUrl != null) {
                 item.getImages().clear();
-                item.getImages().add(new Image(imageUrl.startsWith("http") ? imageUrl : "https:" + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", BaseHkejParser.QUOTE)));
+                item.getImages().add(new Image(item, imageUrl.startsWith("http") ? imageUrl : "https:" + imageUrl, StringUtils.substringBetween(imageContainer, "title=\"", BaseHkejParser.QUOTE)));
             }
         }
     }
