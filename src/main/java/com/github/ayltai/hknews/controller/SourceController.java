@@ -12,6 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.ayltai.hknews.service.SourceService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -27,6 +33,31 @@ import lombok.RequiredArgsConstructor;
 public class SourceController {
     private final SourceService sourceService;
 
+    @Operation(
+        summary     = "Get a list of news publisher names",
+        description = "Get a list of news publisher names supported",
+        responses   = {
+            @ApiResponse(
+                responseCode = "200",
+                description  = "The requested list of news publisher names was returned successfully",
+                content      = {
+                    @Content(
+                        mediaType = "application/json",
+                        schema    = @Schema(
+                            type           = "array",
+                            implementation = String[].class
+                        ),
+                        examples  = {
+                            @ExampleObject("[\"蘋果日報\",\"香港電台\"]"),
+                        }
+                    ),
+                }
+            ),
+        },
+        tags        = {
+            "source",
+        }
+    )
     @NonNull
     @Cacheable(
         cacheNames = "sources",

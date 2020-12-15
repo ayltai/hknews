@@ -51,7 +51,7 @@ variable "aws_instance_type" {
 variable "aws_storage_size" {
   description = "The size of the storage attached to EC2 instances"
   type        = number
-  default     = 10
+  default     = 8
 }
 
 variable "firewall_ports" {
@@ -62,7 +62,6 @@ variable "firewall_ports" {
     22,
     80,
     443,
-    27017,
   ]
 }
 
@@ -97,7 +96,7 @@ variable "certbot_email" {
 }
 
 variable "instrumental_api_key" {
-  description = "The API key for instrumentald"
+  description = "The API key for InstrumentalD"
   type        = string
 }
 

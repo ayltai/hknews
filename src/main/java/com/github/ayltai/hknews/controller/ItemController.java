@@ -17,6 +17,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.service.ItemService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
@@ -29,6 +36,87 @@ import lombok.RequiredArgsConstructor;
 public class ItemController {
     private final ItemService itemService;
 
+    @Operation(
+        summary     = "Get a list of news records",
+        description = "Get a list of news records of specific news categories and from specific new publishers",
+        parameters  = {
+            @Parameter(
+                in          = ParameterIn.PATH,
+                name        = "sourceNames",
+                description = "A comma-separated list of news publisher names",
+                schema      = @Schema(
+                    type           = "string",
+                    implementation = String.class,
+                    example        = "蘋果日報,香港電台"
+                )
+            ),
+            @Parameter(
+                in          = ParameterIn.PATH,
+                name        = "categoryNames",
+                description = "A comma-separated list of news categories",
+                schema      = @Schema(
+                    type           = "string",
+                    implementation = String.class,
+                    example        = "港聞,國際"
+                )
+            ),
+            @Parameter(
+                in          = ParameterIn.PATH,
+                name        = "days",
+                description = "The number of previous days of news to retrieve",
+                schema      = @Schema(
+                    type           = "integer",
+                    implementation = int.class,
+                    example        = "2"
+                )
+            ),
+            @Parameter(
+                in          = ParameterIn.QUERY,
+                name        = "pageNumber",
+                description = "Page offset starting from 0",
+                schema      = @Schema(
+                    type           = "integer",
+                    implementation = int.class,
+                    defaultValue   = "0",
+                    example        = "1"
+                )
+            ),
+            @Parameter(
+                in          = ParameterIn.QUERY,
+                name        = "pageSize",
+                description = "The number of news records per page",
+                schema      = @Schema(
+                    type           = "integer",
+                    implementation = int.class,
+                    defaultValue   = "2147483647",
+                    example        = "10"
+                )
+            ),
+        },
+        responses   = {
+            @ApiResponse(
+                responseCode = "200",
+                description  = "The requested list of news records was returned successfully",
+                content      = {
+                    @Content(
+                        mediaType = "application/json",
+                        schema    = @Schema(implementation = Page.class)
+                    ),
+                }
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description  = "At least one of the request parameters was missing or invalid"
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description  = "The requested list of news records was not found"
+            )
+        },
+        tags        = {
+            "item",
+        }
+    )
     @NonNull
     @GetMapping(
         path     = "/items/{sourceNames}/{categoryNames}/{days}",
@@ -40,6 +128,47 @@ public class ItemController {
         return ResponseEntity.ok(this.itemService.getItems(sourceNames, categoryNames, days, pageNumber, pageSize));
     }
 
+    @Operation(
+        summary     = "Get a news record",
+        description = "Get a specific news record by its ID",
+        parameters  = {
+            @Parameter(
+                in          = ParameterIn.PATH,
+                name        = "id",
+                description = "An unique ID that represents the news record to be retrieved",
+                schema      = @Schema(
+                    type           = "string",
+                    implementation = String.class,
+                    format         = "uuid",
+                    example        = "3c765a4f-4cf9-46e7-8331-6ed6208c9644"
+                ),
+                required    = true
+            ),
+        },
+        responses   = {
+            @ApiResponse(
+                responseCode = "200",
+                description  = "The requested news record was returned successfully",
+                content      = {
+                    @Content(
+                        mediaType = "application/json",
+                        schema    = @Schema(implementation = Item.class)
+                    ),
+                }
+            ),
+            @ApiResponse(
+                responseCode = "400",
+                description  = "The \"id\" parameter was not specified in the request"
+            ),
+            @ApiResponse(
+                responseCode = "404",
+                description  = "The requested news record was not found"
+            ),
+        },
+        tags        = {
+            "item",
+        }
+    )
     @NonNull
     @GetMapping(
         path     = "/item/{id}",

@@ -10,7 +10,7 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '2.4.0'
+version '2.4.1'
 
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
@@ -35,6 +35,7 @@ ext {
     commonsLang3Version = '3.11'
     jacksonVersion      = '2.12.0'
     logzioVersion       = 'v1.0.25'
+    springDocVersion    = '1.5.1'
 }
 
 dependencies {
@@ -73,6 +74,10 @@ dependencies {
     // Code generation
     compileOnly         'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // Documentation
+    implementation "org.springdoc:springdoc-openapi-data-rest:$springDocVersion"
+    implementation "org.springdoc:springdoc-openapi-ui:$springDocVersion"
 }
 
 //region Checkstyle
