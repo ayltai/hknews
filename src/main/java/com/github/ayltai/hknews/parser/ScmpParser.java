@@ -88,7 +88,7 @@ public final class ScmpParser extends RssParser {
     @NonNull
     private static String extractSubHeadline(@NonNull final JSONArray elements) {
         return StreamSupport.stream(elements.spliterator(), false)
-            .map(element -> (JSONObject)element)
+            .map(JSONObject.class::cast)
             .map(json -> {
                 final String type = json.getString(ScmpParser.JSON_TYPE);
 
@@ -105,7 +105,7 @@ public final class ScmpParser extends RssParser {
     @NonNull
     private static String extractBody(@NonNull final JSONArray elements) {
         return StreamSupport.stream(elements.spliterator(), false)
-            .map(element -> (JSONObject)element)
+            .map(JSONObject.class::cast)
             .map(json -> {
                 final String type = json.getString(ScmpParser.JSON_TYPE);
 
@@ -121,7 +121,7 @@ public final class ScmpParser extends RssParser {
     @NonNull
     private static List<Image> extractImages(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
-            .map(element -> (JSONObject)element)
+            .map(JSONObject.class::cast)
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(img -> {
@@ -137,7 +137,7 @@ public final class ScmpParser extends RssParser {
     @NonNull
     private static List<Video> extractVideos(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
-            .map(element -> (JSONObject)element)
+            .map(JSONObject.class::cast)
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(video -> video.getString("videoId"))

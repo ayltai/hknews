@@ -69,7 +69,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
             })
             .filter(Objects::nonNull)
             .flatMap(objects -> StreamSupport.stream(objects.spliterator(), false))
-            .map(object -> (JSONObject)object)
+            .map(JSONObject.class::cast)
             .map(json -> {
                 final Item item = new Item();
                 item.setTitle(json.getString("title"));
@@ -91,7 +91,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
             final JSONObject json = new JSONObject(html.trim());
 
             item.setDescription(StreamSupport.stream(json.getJSONArray("contentArray").spliterator(), false)
-                .map(object -> (JSONObject)object)
+                .map(JSONObject.class::cast)
                 .map(element -> element.getString("paragraph"))
                 .filter(StringUtils::isNotEmpty)
                 .collect(Collectors.joining("<br><br>")));
@@ -106,7 +106,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
     private static String processImages(@NonNull final JSONObject json, @NonNull final Item item) {
         item.getImages().clear();
         item.getImages().addAll(StreamSupport.stream(json.getJSONArray("photo").spliterator(), false)
-            .map(object -> (JSONObject)object)
+            .map(JSONObject.class::cast)
             .map(element -> {
                 String imageUrl    = null;
                 String description = null;
@@ -135,7 +135,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
 
         item.getVideos().clear();
         item.getVideos().addAll(StreamSupport.stream(new JSONArray(this.contentServiceFactory.create().getHtml("https://hk.on.cc/hk/bkn/video/" + fullDate + "/articleVideo_news.js").execute().body()).spliterator(), false)
-            .map(object -> (JSONObject)object)
+            .map(JSONObject.class::cast)
             .filter(json -> articleId.equals(json.getString(OrientalDailyRealtimeParser.JSON_ARTICLE_ID)))
             .map(json -> {
                 final String videoUrl = json.getString("vid");

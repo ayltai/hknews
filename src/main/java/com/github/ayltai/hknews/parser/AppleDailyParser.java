@@ -71,7 +71,7 @@ public final class AppleDailyParser extends Parser {
             })
             .filter(Objects::nonNull)
             .flatMap(array -> StreamSupport.stream(array.spliterator(), false))
-            .map(object -> (JSONObject)object)
+            .map(JSONObject.class::cast)
             .map(json -> {
                 final Item item = new Item();
                 item.setTitle(json.getJSONObject("headlines").getString(AppleDailyParser.JSON_BASIC));
@@ -97,7 +97,7 @@ public final class AppleDailyParser extends Parser {
 
     private static void processDescriptions(@NonNull final JSONObject element, @NonNull final Item item) {
         item.setDescription(StreamSupport.stream(element.getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
-            .map(object -> (JSONObject)object)
+            .map(JSONObject.class::cast)
             .map(json -> {
                 final String type = json.optString(AppleDailyParser.JSON_TYPE);
 
@@ -122,7 +122,7 @@ public final class AppleDailyParser extends Parser {
 
             item.getImages().clear();
             item.getImages().addAll(StreamSupport.stream(element.getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
-                .map(object -> (JSONObject)object)
+                .map(JSONObject.class::cast)
                 .filter(json -> "image".equals(json.optString(AppleDailyParser.JSON_TYPE)))
                 .map(json -> {
                     final String imageUrl = json.optString(AppleDailyParser.JSON_URL);
