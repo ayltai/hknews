@@ -10,7 +10,7 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '2.4.1'
+version '2.4.2'
 
 sourceCompatibility = JavaVersion.VERSION_14
 targetCompatibility = JavaVersion.VERSION_14
@@ -390,7 +390,18 @@ task buildJava {
     }
 }
 
+task cleanJava {
+    group       'build'
+    description 'Deletes generated contents'
+
+    doLast {
+        delete "$projectDir/src/main/resources/public/static"
+        delete "$projectDir/src/main/resources/public/*.js"
+    }
+}
+
 bootJar.dependsOn('buildJava')
+clean.dependsOn('cleanJava')
 
 //endregion
 
