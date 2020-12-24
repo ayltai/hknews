@@ -1,4 +1,4 @@
-import { Card, CardActions, CardActionArea, CardContent, CardHeader, CardMedia, Grid, makeStyles, Tooltip, } from '@material-ui/core';
+import { Card, CardActions, CardActionArea, CardContent, CardHeader, Grid, makeStyles, Tooltip, } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { RichTextField, ShowButton, TextField, } from 'react-admin';
@@ -6,6 +6,7 @@ import TimeAgo from 'react-timeago';
 
 import { StringUtils, } from '../../util/StringUtils';
 import { Constants, } from '../../Constants';
+import { LazyCardMedia, } from '../LazyCardMedia';
 
 export const ItemGrid = ({ basePath, ids, data, }) => {
     const classes = makeStyles(theme => ({
@@ -97,7 +98,7 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                                     </div>
                                     {data[id].images && data[id].images.length > 0 && (
                                         <Tooltip title={data[id].images[0].description ? StringUtils.decode(data[id].images[0].description) : ''}>
-                                            <CardMedia
+                                            <LazyCardMedia
                                                 className={classes.media}
                                                 image={data[id].images[0].url} />
                                         </Tooltip>

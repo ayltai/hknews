@@ -51,6 +51,7 @@ export const App = props => {
         <MuiThemeProvider theme={appTheme}>
             <Admin
                 {...props}
+                disableTelemetry
                 title={Constants.APP_NAME}
                 authProvider={false}
                 dataProvider={dataProvider}

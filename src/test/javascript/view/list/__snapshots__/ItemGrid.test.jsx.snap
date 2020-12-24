@@ -89,15 +89,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               </span>
             </div>
             <div
-              aria-describedby={null}
-              className="MuiCardMedia-root makeStyles-media-7"
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseLeave={[Function]}
-              onMouseOver={[Function]}
-              onTouchEnd={[Function]}
-              onTouchStart={[Function]}
-              title=""
+              className="makeStyles-placeholder-9"
             />
           </div>
           <div
@@ -106,7 +98,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
             <a
               aria-disabled={false}
               aria-label="labels.read_more"
-              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-10 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
               href="//undefined/show"
               onBlur={[Function]}
               onClick={[Function]}
@@ -128,7 +120,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               >
                 <svg
                   aria-hidden={true}
-                  className="MuiSvgIcon-root RaButton-smallIcon-12"
+                  className="MuiSvgIcon-root RaButton-smallIcon-13"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -137,21 +129,15 @@ exports[`<ItemGrid /> renders without errors 1`] = `
                   />
                 </svg>
                 <span
-                  className="RaButton-label-10"
+                  className="RaButton-label-11"
                 >
                   labels.read_more
                 </span>
               </span>
-              <span
-                className="MuiTouchRipple-root"
-              />
             </a>
           </div>
           <span
             className="MuiCardActionArea-focusHighlight"
-          />
-          <span
-            className="MuiTouchRipple-root"
           />
         </a>
       </div>
@@ -238,15 +224,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               </span>
             </div>
             <div
-              aria-describedby={null}
-              className="MuiCardMedia-root makeStyles-media-7"
-              onBlur={[Function]}
-              onFocus={[Function]}
-              onMouseLeave={[Function]}
-              onMouseOver={[Function]}
-              onTouchEnd={[Function]}
-              onTouchStart={[Function]}
-              title=""
+              className="makeStyles-placeholder-16"
             />
           </div>
           <div
@@ -255,7 +233,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
             <a
               aria-disabled={false}
               aria-label="labels.read_more"
-              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-9 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
+              className="MuiButtonBase-root MuiButton-root MuiButton-text RaButton-button-10 MuiButton-textPrimary MuiButton-textSizeSmall MuiButton-sizeSmall"
               href="//undefined/show"
               onBlur={[Function]}
               onClick={[Function]}
@@ -277,7 +255,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               >
                 <svg
                   aria-hidden={true}
-                  className="MuiSvgIcon-root RaButton-smallIcon-12"
+                  className="MuiSvgIcon-root RaButton-smallIcon-13"
                   focusable="false"
                   viewBox="0 0 24 24"
                 >
@@ -286,21 +264,15 @@ exports[`<ItemGrid /> renders without errors 1`] = `
                   />
                 </svg>
                 <span
-                  className="RaButton-label-10"
+                  className="RaButton-label-11"
                 >
                   labels.read_more
                 </span>
               </span>
-              <span
-                className="MuiTouchRipple-root"
-              />
             </a>
           </div>
           <span
             className="MuiCardActionArea-focusHighlight"
-          />
-          <span
-            className="MuiTouchRipple-root"
           />
         </a>
       </div>
