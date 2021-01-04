@@ -14,7 +14,7 @@ jobs:
         with:
           java-version: 14
       - name: Set up Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2
         with:
           node-version: 15
       - name: Build application
@@ -28,7 +28,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: bootJar
-          path: build/libs/hknews-2.4.2.jar
+          path: build/libs/hknews-2.4.3.jar
   deploy:
     needs:
       - build

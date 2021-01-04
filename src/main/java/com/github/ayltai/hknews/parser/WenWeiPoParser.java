@@ -5,6 +5,7 @@ import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Objects;
@@ -85,7 +86,9 @@ public final class WenWeiPoParser extends Parser {
                 final String[] tokens = date.split("日 ");
                 final String[] times  = tokens[1].split(":");
 
-                item.setPublishDate(Date.from(now.withMonth(now.getMonthValue() - (now.getDayOfMonth() == Integer.parseInt(tokens[0]) ? 0 : 1))
+                final int month = now.getMonthValue() - (now.getDayOfMonth() == Integer.parseInt(tokens[0]) ? 0 : 1);
+
+                item.setPublishDate(Date.from(now.withMonth(month == 0 ? Calendar.DECEMBER + 1 : month)
                     .withDayOfMonth(Integer.parseInt(tokens[0]))
                     .withHour(Integer.parseInt(times[0]))
                     .withMinute(Integer.parseInt(times[1]))

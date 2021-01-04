@@ -53,7 +53,7 @@ Serves aggregated news from 13 local news publishers in Hong Kong. [https://hkne
 
 ## API definitions
 
-[OpenAPI specifications](https://hknews.dev/apidoc.yml)
+[OpenAPI specifications](https://hknews.dev/v3/api-docs)
 
 ## License
 [MIT](https://github.com/ayltai/hknews/blob/master/LICENSE)
