@@ -11,7 +11,7 @@
 [![Sonar Tech Debt](https://img.shields.io/sonar/tech_debt/ayltai_hknews?style=flat&server=https%3A%2F%2Fsonarcloud.io)](https://sonarcloud.io/dashboard?id=ayltai_hknews)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=ayltai_hknews&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=ayltai_hknews)
 [![Release](https://img.shields.io/github/release/ayltai/hknews.svg?style=flat)](https://github.com/ayltai/hknews/releases)
-![Maintenance](https://img.shields.io/maintenance/yes/2020?style=flat)
+![Maintenance](https://img.shields.io/maintenance/yes/2021?style=flat)
 [![License](https://img.shields.io/github/license/ayltai/hknews.svg?style=flat)](https://github.com/ayltai/hknews/blob/master/LICENSE)
 
 Serves aggregated news from 13 local news publishers in Hong Kong. [https://hknews.dev](https://hknews.dev)
