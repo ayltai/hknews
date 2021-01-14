@@ -50,7 +50,7 @@
         "ra-language-english": "^3.11.2",
         "react": "^16.14.0",
         "react-admin": "^3.11.2",
-        "react-detect-offline": "^2.4.0",
+        "react-detect-offline": "^2.4.1",
         "react-dom": "^16.14.0",
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
