@@ -35,7 +35,7 @@ ext {
     commonsLang3Version = '3.11'
     jacksonVersion      = '2.12.1'
     logzioVersion       = 'v1.0.25'
-    springDocVersion    = '1.5.2'
+    springDocVersion    = '1.5.3'
 }
 
 dependencies {
