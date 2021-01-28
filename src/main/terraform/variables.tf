@@ -8,99 +8,40 @@ variable "aws_secret_key" {
   type        = string
 }
 
-variable "tag" {
-  description = "The tag for all resources used in this project"
-  default     = "hknews"
-}
-
 variable "aws_region" {
   description = "AWS region"
-  default     = "us-west-2"
+  default     = "ap-southeast-1"
 }
 
-variable "aws_zone" {
-  description = "AWS availability zone"
-  default     = "us-west-2a"
+variable "aws_cloudfront_price_class" {
+  description = "The AWS CloudFront price class option"
+  default     = "PriceClass_200"
 }
 
-variable "vpc_cidr_block" {
-  description = "CIDR block for VPC"
-  default     = "10.0.0.0/24"
+variable "api_throttle_limit" {
+  description = "The AWS Lambda throttling rate limit per second"
+  default     = 1000
 }
 
-variable "subnet_cidr_block" {
-  description = "CIDR block for subnet"
-  default     = "10.0.0.0/28"
+variable "api_stage_name" {
+  description = "The API Gateway stage name"
+  default     = "api"
 }
 
-variable "ami_filter" {
-  description = "AMI filter"
-  default     = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
+variable "api_package_file" {
+  description = "The AWS Lambda deployment package file path"
+  default     = "../../../build/distributions/hknews.zip"
 }
 
-variable "ami_owner" {
-  description = "AMI owner is Canonical"
-  default     = "099720109477"
+variable "app_version" {
+  default = "3.0.0"
 }
 
-variable "aws_instance_type" {
-  description = "EC2 instance type"
-  default     = "t3a.micro"
+variable "app_domain" {
+  default = "hknews.dev"
 }
 
-variable "aws_storage_size" {
-  description = "The size of the storage attached to EC2 instances"
-  type        = number
-  default     = 8
-}
-
-variable "firewall_ports" {
-  description = "The ports to be opened"
-  type        = list(number)
-
-  default = [
-    22,
-    80,
-    443,
-  ]
-}
-
-variable "username" {
-  description = "VM user"
-  default     = "ubuntu"
-}
-
-variable "timeout" {
-  description = "The maximum amount of time allowed for post deployment configurations"
-  default     = "30m"
-}
-
-variable "timezone" {
-  description = "The timezone of HK News servers"
-  default     = "Asia/Hong_Kong"
-}
-
-variable "domain_name" {
-  description = "The public facing domain name to access HK News servers"
-  default     = "hknews.dev"
-}
-
-variable "key_store_password" {
-  description = "The password to access the key store with the domain SSL certificate"
-  type        = string
-}
-
-variable "certbot_email" {
-  description = "The email address for generating Let's Encrypt SSL certificate"
-  type        = string
-}
-
-variable "instrumental_api_key" {
-  description = "The API key for InstrumentalD"
-  type        = string
-}
-
-variable "logzio_token" {
-  description = "The Logz.io API token"
-  type        = string
+variable "tag" {
+  description = "The default project name for tagging all project resources to be created"
+  default     = "hknews"
 }

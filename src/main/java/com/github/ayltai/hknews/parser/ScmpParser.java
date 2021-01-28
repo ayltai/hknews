@@ -7,9 +7,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
-import org.springframework.lang.NonNull;
-import org.springframework.lang.Nullable;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
@@ -17,6 +15,8 @@ import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -34,13 +34,13 @@ public final class ScmpParser extends RssParser {
 
     //endregion
 
-    public ScmpParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceService, contentServiceFactory);
+    public ScmpParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentServiceFactory, logger);
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Item updateItem(@NonNull final Item item) throws IOException {
+    public Item updateItem(@NotNull final Item item) throws IOException {
         final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<script>window.__APOLLO_STATE__=", "</script>");
         if (html != null) {
             final JSONObject json = new JSONObject(html).getJSONObject("contentService");
@@ -74,7 +74,7 @@ public final class ScmpParser extends RssParser {
     }
 
     @Nullable
-    private static <T> T find(@NonNull final JSONObject json, @NonNull final String prefix) {
+    private static <T> T find(@NotNull final JSONObject json, @NotNull final String prefix) {
         final Iterator<String> iterator = json.keys();
 
         while (iterator.hasNext()) {
@@ -85,8 +85,8 @@ public final class ScmpParser extends RssParser {
         return null;
     }
 
-    @NonNull
-    private static String extractSubHeadline(@NonNull final JSONArray elements) {
+    @NotNull
+    private static String extractSubHeadline(@NotNull final JSONArray elements) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> {
@@ -102,8 +102,8 @@ public final class ScmpParser extends RssParser {
             .collect(Collectors.joining(ScmpParser.LINE_BREAK));
     }
 
-    @NonNull
-    private static String extractBody(@NonNull final JSONArray elements) {
+    @NotNull
+    private static String extractBody(@NotNull final JSONArray elements) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> {
@@ -118,8 +118,8 @@ public final class ScmpParser extends RssParser {
             .collect(Collectors.joining(ScmpParser.LINE_BREAK));
     }
 
-    @NonNull
-    private static List<Image> extractImages(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
+    @NotNull
+    private static List<Image> extractImages(@NotNull final JSONArray elements, @NotNull final JSONObject parent, @NotNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> json.getString(ScmpParser.JSON_ID))
@@ -128,20 +128,20 @@ public final class ScmpParser extends RssParser {
                 final String imageUrl = img.optString("url");
                 if (imageUrl == null) return null;
 
-                return new Image(item, imageUrl, img.optString("title"));
+                return new Image(imageUrl, img.optString("title"));
             })
             .filter(Objects::nonNull)
             .collect(Collectors.toList());
     }
 
-    @NonNull
-    private static List<Video> extractVideos(@NonNull final JSONArray elements, @NonNull final JSONObject parent, @NonNull final Item item) {
+    @NotNull
+    private static List<Video> extractVideos(@NotNull final JSONArray elements, @NotNull final JSONObject parent, @NotNull final Item item) {
         return StreamSupport.stream(elements.spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> json.getString(ScmpParser.JSON_ID))
             .map(parent::getJSONObject)
             .map(video -> video.getString("videoId"))
-            .map(videoId -> new Video(item, ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
+            .map(videoId -> new Video(ScmpParser.YOUTUBE_URL + videoId, ScmpParser.YOUTUBE_URL + videoId + "/hqdefault.jpg"))
             .collect(Collectors.toList());
     }
 }

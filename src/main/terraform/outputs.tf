@@ -1,8 +1,7 @@
-output "key_pair" {
-  value     = tls_private_key.this.private_key_pem
-  sensitive = true
+output "base_uri" {
+  value = aws_api_gateway_deployment.this.invoke_url
 }
 
-output "aws_public_ip" {
-  value = aws_eip.this.public_ip
+output "s3_bucket" {
+  value = aws_s3_bucket.this.bucket
 }

@@ -1,8 +1,8 @@
 export const Constants = {};
 
 Constants.IS_DEBUG     = process.env.NODE_ENV !== 'production';
-Constants.API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || (Constants.IS_DEBUG ? 'http://localhost:8080' : 'https://hknews.dev');
 Constants.PROJECT_URL  = process.env.REACT_APP_PROJECT_URL || 'https://github.com/ayltai/hknews';
+Constants.API_ENDPOINT = process.env.REACT_APP_API_ENDPOINT || 'http://localhost:3001';
 Constants.APP_NAME     = process.env.REACT_APP_NAME || 'HK News';
 
 Constants.PALETTE = {

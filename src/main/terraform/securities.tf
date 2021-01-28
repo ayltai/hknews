@@ -1,67 +1,53 @@
-resource "tls_private_key" "this" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+resource "aws_acm_certificate" "this" {
+  provider          = aws.acm_certificate_provider
+  domain_name       = "*.${var.app_domain}"
+  validation_method = "DNS"
 
-resource "local_file" "private_key" {
-  filename        = "${var.tag}.pem"
-  file_permission = "0600"
-  content         = tls_private_key.this.private_key_pem
-}
+  subject_alternative_names = [
+    var.app_domain,
+  ]
 
-resource "aws_key_pair" "this" {
-  key_name   = var.tag
-  public_key = tls_private_key.this.public_key_openssh
+  lifecycle {
+    create_before_destroy = true
+  }
 
   tags = {
-    Name = var.tag
+    Project = var.tag
   }
 }
 
-resource "aws_security_group" "this" {
-  name        = var.tag
-  description = "HK News security group"
-  vpc_id      = aws_vpc.this.id
+resource "aws_acm_certificate_validation" "this" {
+  provider        = aws.acm_certificate_provider
+  certificate_arn = aws_acm_certificate.this.arn
 
-  tags = {
-    Name = var.tag
-  }
+  validation_record_fqdns = [
+    for record in aws_route53_record.certificate_validation : record.fqdn
+  ]
+}
 
-  egress {
-    from_port = 0
-    to_port   = 0
-    protocol  = "-1"
+resource "aws_iam_role" "lambda" {
+  name               = var.tag
+  assume_role_policy = data.aws_iam_policy_document.lambda.json
+}
 
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
-  }
+resource "aws_iam_policy" "dynamodb" {
+  name   = "dynamodb"
+  path   = "/"
+  policy = data.aws_iam_policy_document.dynamodb.json
+}
 
-  ingress {
-    from_port = -1
-    to_port   = -1
-    protocol  = "icmp"
+resource "aws_iam_role_policy_attachment" "dynamodb" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = aws_iam_policy.dynamodb.arn
+}
 
-    cidr_blocks = [
-      "0.0.0.0/0",
-    ]
+resource "aws_iam_policy" "cloudwatch" {
+  name   = "cloudwatch"
+  path   = "/"
+  policy = data.aws_iam_policy_document.cloudwatch.json
+}
 
-    ipv6_cidr_blocks = [
-      "::/0",
-    ]
-  }
-
-  dynamic "ingress" {
-    for_each = var.firewall_ports
-
-    content {
-      from_port = ingress.value
-      to_port   = ingress.value
-      protocol  = "tcp"
-
-      cidr_blocks = [
-        "0.0.0.0/0",
-      ]
-    }
-  }
+resource "aws_iam_role_policy_attachment" "cloudwatch" {
+  role       = aws_iam_role.lambda.name
+  policy_arn = aws_iam_policy.cloudwatch.arn
 }

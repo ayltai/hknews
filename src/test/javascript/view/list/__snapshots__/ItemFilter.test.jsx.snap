@@ -17,68 +17,19 @@ exports[`<ItemFilter /> renders without errors 1`] = `
     data-source="source"
   >
     <div
-      className="MuiFormControl-root MuiTextField-root RaSelectInput-input-8 undefined MuiFormControl-marginDense"
+      className="MuiFormControl-root MuiFormControl-marginDense"
     >
       <label
-        className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-marginDense MuiInputLabel-filled"
-        data-shrink={false}
+        className="MuiFormLabel-root MuiInputLabel-root RaLabeled-label-9 MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-marginDense"
+        data-shrink={true}
         htmlFor="source"
-        id="source-label"
       >
         <span>
           labels.publisher
         </span>
       </label>
       <div
-        className="MuiInputBase-root MuiFilledInput-root MuiFilledInput-underline MuiInputBase-formControl MuiInputBase-marginDense MuiFilledInput-marginDense"
-        onClick={[Function]}
-      >
-        <div
-          aria-haspopup="listbox"
-          aria-labelledby="source-label source"
-          className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-filled MuiInputBase-input MuiFilledInput-input MuiInputBase-inputMarginDense MuiFilledInput-inputMarginDense"
-          id="source"
-          onBlur={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onMouseDown={[Function]}
-          role="button"
-          tabIndex={0}
-        >
-          <span
-            dangerouslySetInnerHTML={
-              Object {
-                "__html": "&#8203;",
-              }
-            }
-          />
-        </div>
-        <input
-          aria-describedby="source-helper-text"
-          aria-hidden={true}
-          autoFocus={false}
-          className="MuiSelect-nativeInput"
-          name="source"
-          onAnimationStart={[Function]}
-          onChange={[Function]}
-          required={false}
-          tabIndex={-1}
-          value=""
-        />
-        <svg
-          aria-hidden={true}
-          className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconFilled"
-          focusable="false"
-          viewBox="0 0 24 24"
-        >
-          <path
-            d="M7 10l5 5 5-5z"
-          />
-        </svg>
-      </div>
-      <p
-        className="MuiFormHelperText-root MuiFormHelperText-contained MuiFormHelperText-marginDense"
-        id="source-helper-text"
+        className="RaLabeled-value-10"
       />
     </div>
     <div

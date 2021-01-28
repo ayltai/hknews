@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -14,8 +15,7 @@ import java.util.stream.Stream;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 
-import org.springframework.lang.NonNull;
-
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -23,12 +23,9 @@ import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.jetbrains.annotations.NotNull;
 
 public final class WenWeiPoParser extends Parser {
-    private static final Logger LOGGER = LoggerFactory.getLogger(WenWeiPoParser.class);
-
     //region Constants
 
     private static final String CLOSE_QUOTE     = "\"";
@@ -37,38 +34,21 @@ public final class WenWeiPoParser extends Parser {
 
     //endregion
 
-    public WenWeiPoParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
-        super(sourceName, sourceService, contentServiceFactory);
+    public WenWeiPoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentServiceFactory, logger);
     }
 
-    @NonNull
+    @SuppressWarnings("java:S3776")
+    @NotNull
     @Override
-    public Collection<Item> getItems(@NonNull final String categoryName) {
+    protected Collection<Item> getItems(@NotNull final Source source) throws ProtocolException, SSLHandshakeException, SocketTimeoutException, SSLException, IOException {
+        final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<div class=\"content-art-box\">", "</article>");
+        if (sections == null) return Collections.emptyList();
+
         final LocalDateTime now = LocalDateTime.now();
 
-        return this.sourceService
-            .getSources(this.sourceName)
-            .stream()
-            .filter(source -> source.getCategoryName().equals(categoryName))
-            .map(Source::getUrl)
-            .map(url -> this.contentServiceFactory.create().getHtml(url))
-            .map(call -> {
-                try {
-                    return StringUtils.substringsBetween(call.execute().body(), "<div class=\"content-art-box\">", "</article>");
-                } catch (final ProtocolException e) {
-                    if (e.getMessage().startsWith("Too many follow-up requests")) WenWeiPoParser.LOGGER.info(e.getMessage(), e);
-                } catch (final SSLHandshakeException | SocketTimeoutException e) {
-                    WenWeiPoParser.LOGGER.info(e.getMessage(), e);
-                } catch (final SSLException e) {
-                    if (e.getMessage().equals("Connection reset")) WenWeiPoParser.LOGGER.info(e.getMessage(), e);
-                } catch (final IOException e) {
-                    WenWeiPoParser.LOGGER.error(this.getClass().getSimpleName(), e.getMessage(), e);
-                }
-
-                return null;
-            })
+        return Stream.of(sections)
             .filter(Objects::nonNull)
-            .flatMap(Stream::of)
             .map(section -> {
                 final String url = StringUtils.substringBetween(section, "<a href=\"", WenWeiPoParser.CLOSE_QUOTE);
                 if (url == null) return null;
@@ -80,8 +60,8 @@ public final class WenWeiPoParser extends Parser {
                 item.setTitle(StringUtils.substringBetween(section, "target=\"_blank\">", "</a>").trim());
                 item.setDescription(StringUtils.substringBetween(section, "<p class=\"txt\">", WenWeiPoParser.CLOSE_PARAGRAPH));
                 item.setUrl(url);
-                item.setSourceName(this.sourceName);
-                item.setCategoryName(categoryName);
+                item.setSourceName(source.getSourceName());
+                item.setCategoryName(source.getCategoryName());
 
                 final String[] tokens = date.split("日 ");
                 final String[] times  = tokens[1].split(":");
@@ -101,9 +81,9 @@ public final class WenWeiPoParser extends Parser {
             .collect(Collectors.toList());
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Item updateItem(@NonNull final Item item) throws IOException {
+    public Item updateItem(@NotNull final Item item) throws IOException {
         final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<!-- Content start -->", "!-- Content end -->");
         if (html != null) {
             String[] descriptions = StringUtils.substringsBetween(html, "<p >", WenWeiPoParser.CLOSE_PARAGRAPH);
@@ -118,7 +98,7 @@ public final class WenWeiPoParser extends Parser {
         return item;
     }
 
-    private static void processImages(@NonNull final String html, @NonNull final Item item) {
+    private static void processImages(@NotNull final String html, @NotNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<img ", ">");
         if (imageContainers != null) {
             item.getImages().clear();
@@ -127,7 +107,7 @@ public final class WenWeiPoParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "src=\"", WenWeiPoParser.CLOSE_QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

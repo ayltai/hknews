@@ -6,24 +6,11 @@
 *.iml
 
 # Gradle
-.gradle
+.gradle/
 build/
 !gradle-wrapper.jar
-
-# Java
-*.class
-javacore.*.txt
-jitdump.*.dmp
-Snap.*.trc
 
 # Node.js
 coverage/
 node_modules/
-.eslintcache
-
-# React
-src/main/resources/public
-!src/main/resources/public/images
-
-# ESLint
 .eslintcache

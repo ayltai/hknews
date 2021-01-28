@@ -1,11 +1,9 @@
 package com.github.ayltai.hknews.data.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,32 +12,24 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(indexes = {
-    @Index(columnList = "name,categoryName,url"),
-})
-@Entity
-public final class Source {
-    @Getter
+@DynamoDBTable(tableName = "Source")
+public final class Source implements Model {
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "SourceName"),
+    })
     @Setter
-    @GeneratedValue
-    @Id
-    private Integer id;
+    private String sourceName;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBRangeKey(attributeName = "CategoryName"),
+    })
     @Setter
-    @Column(nullable = false)
-    private String name;
-
-    @Getter
-    @Setter
-    @Column(nullable = false)
     private String categoryName;
 
-    @Getter
+
+    @Getter(onMethod_ = {
+        @DynamoDBHashKey(attributeName = "Url"),
+    })
     @Setter
-    @Column(
-        nullable = false,
-        length   = Integer.MAX_VALUE
-    )
     private String url;
 }

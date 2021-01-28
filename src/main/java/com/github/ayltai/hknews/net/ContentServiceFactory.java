@@ -1,8 +1,8 @@
 package com.github.ayltai.hknews.net;
 
-import org.springframework.lang.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 public interface ContentServiceFactory {
-    @NonNull
+    @NotNull
     ContentService create();
 }

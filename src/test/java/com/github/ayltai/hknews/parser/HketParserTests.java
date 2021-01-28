@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.RssFeed;
 import com.github.ayltai.hknews.net.ContentService;
@@ -16,12 +17,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.simpleframework.xml.core.Persister;
-
 import retrofit2.Call;
 import retrofit2.Response;
 
 public final class HketParserTests extends ParserTests {
     @Test
+    @Override
     public void testGetItems() throws Exception {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);
@@ -36,7 +37,7 @@ public final class HketParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getFeed("https://www.hket.com/rss/hongkong");
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new HketParser("經濟日報", this.sourceService, factory).getItems("港聞");
+            final Collection<Item> items = new HketParser("經濟日報", this.sourceService, factory, Mockito.mock(LambdaLogger.class)).getItems("港聞");
 
             Assertions.assertEquals(24, items.size(), "Incorrect item count");
             Assertions.assertEquals("【新冠肺炎】機動部隊23歲男警初步確診　同組訓練40多名警員或要檢疫", items.iterator().next().getTitle(), "Incorrect item title");
@@ -44,6 +45,7 @@ public final class HketParserTests extends ParserTests {
     }
 
     @Test
+    @Override
     public void testUpdateItem() throws IOException {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService service = Mockito.mock(ContentService.class);
@@ -61,7 +63,7 @@ public final class HketParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://topick.hket.com/article/2719226");
 
-            final Item updatedItem = new HketParser("經濟日報", this.sourceService, factory).updateItem(item);
+            final Item updatedItem = new HketParser("經濟日報", this.sourceService, factory, Mockito.mock(LambdaLogger.class)).updateItem(item);
 
             Assertions.assertEquals("本港第三波新冠肺炎疫情仍然嚴峻，衞生防護中心公布本港今日（9日）新增72宗確診個案，9宗是輸入個案，", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
             Assertions.assertEquals(1, updatedItem.getImages().size(), "Incorrect image count");

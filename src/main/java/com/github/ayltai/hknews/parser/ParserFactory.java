@@ -1,8 +1,10 @@
 package com.github.ayltai.hknews.parser;
 
-import org.springframework.lang.NonNull;
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
+
+import org.jetbrains.annotations.NotNull;
 
 public interface ParserFactory {
-    @NonNull
-    Parser create(@NonNull String sourceName);
+    @NotNull
+    Parser create(@NotNull String sourceName, @NotNull LambdaLogger logger);
 }

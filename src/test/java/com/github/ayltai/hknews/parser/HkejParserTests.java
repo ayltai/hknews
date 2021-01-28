@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
@@ -15,12 +16,12 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
-
 import retrofit2.Call;
 import retrofit2.Response;
 
 public final class HkejParserTests extends ParserTests {
     @Test
+    @Override
     public void testGetItems() throws Exception {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);
@@ -35,7 +36,7 @@ public final class HkejParserTests extends ParserTests {
             Mockito.doReturn(call).when(service).getHtml(ArgumentMatchers.anyString());
             Mockito.doReturn(response).when(call).execute();
 
-            final Collection<Item> items = new HkejParser("信報", this.sourceService, factory).getItems("港聞");
+            final Collection<Item> items = new HkejParser("信報", this.sourceService, factory, Mockito.mock(LambdaLogger.class)).getItems("港聞");
 
             Assertions.assertEquals(9 + 9, items.size(), "Incorrect item count");
             Assertions.assertEquals("內地客經港轉機恢復 空服員憂播毒", items.iterator().next().getTitle(), "Incorrect item title");
@@ -43,6 +44,7 @@ public final class HkejParserTests extends ParserTests {
     }
 
     @Test
+    @Override
     public void testUpdateItem() throws IOException {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);
@@ -60,7 +62,7 @@ public final class HkejParserTests extends ParserTests {
             final Item item = new Item();
             item.setUrl("https://www1.hkej.com/dailynews/views/article/2551793/%E5%85%A7%E5%9C%B0%E5%AE%A2%E7%B6%93%E6%B8%AF%E8%BD%89%E6%A9%9F%E6%81%A2%E5%BE%A9+%E7%A9%BA%E6%9C%8D%E5%93%A1%E6%86%82%E6%92%AD%E6%AF%92");
 
-            final Item updatedItem = new HkejParser("信報", this.sourceService, factory).updateItem(item);
+            final Item updatedItem = new HkejParser("信報", this.sourceService, factory, Mockito.mock(LambdaLogger.class)).updateItem(item);
 
             Assertions.assertEquals("本港新冠肺炎疫情反覆，昨日新增69宗確診。機管局宣布機場明天（15日）起，將恢復內地旅客來港轉機/過", updatedItem.getDescription().substring(0, 50), "Incorrect item description");
             Assertions.assertEquals(1, updatedItem.getImages().size(), "Incorrect image count");

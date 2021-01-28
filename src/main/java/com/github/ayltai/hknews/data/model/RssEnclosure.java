@@ -2,13 +2,11 @@ package com.github.ayltai.hknews.data.model;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Root;
-
 import lombok.Getter;
 
 @Root(
     name   = "enclosure",
-    strict = false
-)
+    strict = false)
 public final class RssEnclosure {
     private static final String TYPE_IMAGE = "image/";
     private static final String TYPE_VIDEO = "video/";
