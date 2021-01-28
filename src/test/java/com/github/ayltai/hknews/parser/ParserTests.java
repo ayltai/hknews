@@ -1,16 +1,15 @@
 package com.github.ayltai.hknews.parser;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.stream.Collectors;
+import java.io.IOException;
 
+import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.UnitTests;
-import com.github.ayltai.hknews.data.model.Source;
+import com.github.ayltai.hknews.data.AmazonDynamoDBFactory;
 import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.mockito.ArgumentMatchers;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 public abstract class ParserTests extends UnitTests {
@@ -21,18 +20,16 @@ public abstract class ParserTests extends UnitTests {
     public void setUp() {
         super.setUp();
 
-        final SourceRepository sourceRepository = Mockito.mock(SourceRepository.class);
-
-        Mockito.doReturn(0L).when(sourceRepository).count();
-        Mockito.doAnswer(invocation -> invocation.getArgument(0)).when(sourceRepository).saveAll(ArgumentMatchers.anyCollection());
-
-        this.sourceService = new SourceService(sourceRepository);
-        final List<Source> sources = this.sourceService.getSources();
-
-        Mockito.doAnswer(invocation -> Optional.of(sources.stream()
-            .filter(source -> source.getName().equals(invocation.getArgument(0)))
-            .collect(Collectors.toList())))
-            .when(sourceRepository)
-            .findByName(ArgumentMatchers.anyString());
+        try {
+            this.sourceService = new SourceService(new SourceRepository(AmazonDynamoDBFactory.create("http://localhost:8000"), Mockito.mock(LambdaLogger.class)), Mockito.mock(LambdaLogger.class));
+        } catch (final InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    @Test
+    public abstract void testGetItems() throws Exception;
+
+    @Test
+    public abstract void testUpdateItem() throws IOException;
 }

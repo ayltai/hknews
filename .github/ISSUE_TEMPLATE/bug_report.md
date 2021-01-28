@@ -24,12 +24,12 @@ Steps to reproduce the behavior:
 
 **Screenshots**
 
-*(If application, add screenshots to help explain your problem)*
+*(If applicable, add screenshots to help explain your problem)*
 
 **Environment (please complete the following information):**
 
-- OS: [e.g. macOS]
-- Version: [e.g. 10.15.7]
+- OS: [e.g., macOS]
+- Version: [e.g., 10.15.7]
 
 **Additional context**
 

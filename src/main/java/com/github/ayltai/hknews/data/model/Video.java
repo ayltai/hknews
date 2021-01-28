@@ -1,9 +1,7 @@
 package com.github.ayltai.hknews.data.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-
-import org.springframework.lang.NonNull;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -11,25 +9,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@EqualsAndHashCode(
-    callSuper              = true,
-    onlyExplicitlyIncluded = true
-)
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
-public final class Video extends Media {
-    @Getter
+@DynamoDBDocument
+public final class Video {
+    @EqualsAndHashCode.Include
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Url"),
+    })
     @Setter
-    @Column(
-        nullable = false,
-        length   = Integer.MAX_VALUE
-    )
+    private String url;
+
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Cover"),
+    })
+    @Setter
     private String cover;
-
-    public Video(@NonNull final Item item, @NonNull final String url, @NonNull final String cover) {
-        super(null, item, url);
-
-        this.cover = cover;
-    }
 }

@@ -1,5 +1,0 @@
-#!/bin/bash
-# {{ ansible_managed }}
-
-killall java 2>/dev/null
-LOGZIO_TOKEN={{ logzio_token }} java -server -Xverify:none -Xms224m -Xmx672m -Xss512k -XX:MaxRAM=720m -XX:+UseSerialGC -XX:+IdleTuningGcOnIdle -Xtune:virtualized -Dfile.encoding=UTF-8 -Dspring.profiles.active=common,production -jar {{ ansible_env.HOME }}/hknews-{{ hknews_version }}.jar

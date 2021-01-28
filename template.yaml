@@ -1,0 +1,441 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: A serverless backend API serviing alantai.dev
+Resources:
+  Source:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.SourceHandler::handleRequest
+      Runtime: java11
+      Description: Get a list of supported news publisher names
+      MemorySize: 256
+      Timeout: 30
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        HttpGet:
+          Type: Api
+          Properties:
+            Path: /sources
+            Method: get
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  Item:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.ItemHandler::handleRequest
+      Runtime: java11
+      Description: Get a specific news record by its unique ID
+      MemorySize: 256
+      Timeout: 30
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        HttpGet:
+          Type: Api
+          Properties:
+            Path: /item/{uid}
+            Method: get
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  Items:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.ItemsHandler::handleRequest
+      Runtime: java11
+      Description: Get a list of news records of specific news categories and from specific news publishers
+      MemorySize: 256
+      Timeout: 30
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        HttpGet:
+          Type: Api
+          Properties:
+            Path: /items/{sourceNames}/{categoryNames}/{days}
+            Method: get
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  AppleDailyParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.AppleDailyParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Apple Daily News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: AppleDailyParser
+            Schedule: cron(0/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  HeadlineParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.HeadlineParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Headline Daily News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: HeadlineParser
+            Schedule: cron(1/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  HeadlineRealtimeParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.HeadlineRealtimeParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Headline Realtime News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: HeadlineRealtimeParser
+            Schedule: cron(2/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  HkejParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.HkejParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from HKEJ News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: HkejParser
+            Schedule: cron(3/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  HkejRealtimeParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.HkejRealtimeParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from HKEJ Realtime News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: HkejRealtimeParser
+            Schedule: cron(4/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  HketParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.HketParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from HKET News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: HketParser
+            Schedule: cron(5/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  MingPaoParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.MingPaoParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Ming Pao website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: MingPaoParser
+            Schedule: cron(6/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  OrientalDailyParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.OrientalDailyParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Oriental Daily News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: OrientalDailyParser
+            Schedule: cron(7/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  OrientalDailyRealtimeParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.OrientalDailyRealtimeParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Oriental Daily Realtime News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: OrientalDailyRealtimeParser
+            Schedule: cron(8/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  RthkParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.RthkParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from RTHK News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: RthkParser
+            Schedule: cron(9/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  ScmpParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.ScmpParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from SCMP News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: ScmpParser
+            Schedule: cron(10/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  SingPaoParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.SingPaoParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Sing Pao News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: SingPaoParser
+            Schedule: cron(11/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  SingTaoParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.SingTaoParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Sing Tao Daily News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: SingTaoParser
+            Schedule: cron(12/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  SkyPostParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.SkyPostParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Sky Post Daily News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: SkyPostParser
+            Schedule: cron(13/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  TheStandardParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.TheStandardParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from The Standard News website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: TheStandardParser
+            Schedule: cron(14/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess
+  WenWeiPoParser:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews-3.0.0.zip
+      Handler: com.github.ayltai.hknews.handler.WenWeiPoParserHandler::handleRequest
+      Runtime: java11
+      Description: Parse news records from Wen Wei Po website
+      MemorySize: 512
+      Timeout: 600
+      Environment:
+        Variables:
+          AWS_DYNAMODB_URL: http://host.docker.internal:8000
+      Events:
+        Cron:
+          Type: Schedule
+          Properties:
+            Name: WenWeiPoParser
+            Schedule: cron(15/20 * * * ? *)
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - AmazonDynamoDBFullAccess
+        - CloudWatchLogsFullAccess

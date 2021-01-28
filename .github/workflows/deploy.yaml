@@ -1,0 +1,83 @@
+name: Deploy
+on:
+  release:
+    types:
+      - created
+jobs:
+  build-java:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+      - name: Build Java
+        run: ./gradlew pZ
+      - name: Save Java package
+        uses: actions/upload-artifact@v2
+        with:
+          name: java-package
+          path: build/distributions/hknews.zip
+  terraform:
+    needs:
+      - build-java
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Node.js 14
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+      - name: Install dependencies
+        run: npm ci
+      - name: Setup Terraform 0.14
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 0.14.x
+          cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
+      - name: Load Java package
+        uses: actions/download-artifact@v2
+        with:
+          name: java-package
+          path: build/distributions
+      - name: Terraform init
+        run: terraform init
+        working-directory: src/main/terraform
+        env:
+          TF_IN_AUTOMATION: true
+          TF_WORKSPACE: main
+      - name: Create Terraform variable file
+        run: 'echo "$TERRAFORM_VARIABLES" > src/main/terraform/secrets.tfvars'
+        env:
+          TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
+      - name: Terraform apply
+        run: terraform apply -lock-timeout=300s -auto-approve -var-file=secrets.tfvars
+        working-directory: src/main/terraform
+        env:
+          TF_IN_AUTOMATION: true
+          TF_WORKSPACE: main
+      - name: Save JavaScript package
+        uses: actions/upload-artifact@v2
+        with:
+          name: javascript-package
+          path: build/javascript
+  s3-sync:
+    needs:
+      - terraform
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Load JavaScript package
+        uses: actions/download-artifact@v2
+        with:
+          name: javascript-package
+          path: build/javascript
+      - name: Synchronize contents on AWS S3
+        run: aws s3 sync --delete --acl public-read build/javascript/ s3://hknews-3.0.0
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ap-southeast-1
+          AWS_DEFAULT_OUTPUT: json
+          AWS_EC2_METADATA_DISABLED: true

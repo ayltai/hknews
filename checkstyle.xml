@@ -267,12 +267,6 @@
                 name="standardPackageRegExp"
                 value="^(java|javax|java9)\.*" />
             <property
-                name="specialImportsRegExp"
-                value="^(org\.springframework|org\.gradle|android|androidx)\.*" />
-            <property
-                name="thirdPartyPackageRegExp"
-                value="^(com|io|net|okhttp3|org|retrofit2)\.*" />
-            <property
                 name="customImportOrderRules"
                 value="STANDARD_JAVA_PACKAGE###SPECIAL_IMPORTS###SAME_PACKAGE(1)###THIRD_PARTY_PACKAGE###STATIC" />
         </module>
