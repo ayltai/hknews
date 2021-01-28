@@ -7,22 +7,22 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Calendar;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 
-import org.springframework.lang.NonNull;
-
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,24 +37,54 @@ public final class WenWeiPoParser extends Parser {
 
     //endregion
 
-    public WenWeiPoParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+    public WenWeiPoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory) {
         super(sourceName, sourceService, contentServiceFactory);
     }
 
-    @NonNull
+    @SuppressWarnings("java:S3776")
+    @NotNull
     @Override
-    public Collection<Item> getItems(@NonNull final String categoryName) {
+    public Collection<Item> getItems(@NotNull final String categoryName) {
         final LocalDateTime now = LocalDateTime.now();
 
         return this.sourceService
-            .getSources(this.sourceName)
+            .getSources(this.sourceName, categoryName)
             .stream()
-            .filter(source -> source.getCategoryName().equals(categoryName))
-            .map(Source::getUrl)
-            .map(url -> this.contentServiceFactory.create().getHtml(url))
-            .map(call -> {
+            .map(source -> {
                 try {
-                    return StringUtils.substringsBetween(call.execute().body(), "<div class=\"content-art-box\">", "</article>");
+                    final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<div class=\"content-art-box\">", "</article>");
+                    if (sections != null) return Stream.of(sections)
+                        .filter(Objects::nonNull)
+                        .map(section -> {
+                            final String url = StringUtils.substringBetween(section, "<a href=\"", WenWeiPoParser.CLOSE_QUOTE);
+                            if (url == null) return null;
+
+                            final String date = StringUtils.substringBetween(section, "<p class=\"date\">[ ", " ]</p>");
+                            if (date == null) return null;
+
+                            final Item item = new Item();
+                            item.setTitle(StringUtils.substringBetween(section, "target=\"_blank\">", "</a>").trim());
+                            item.setDescription(StringUtils.substringBetween(section, "<p class=\"txt\">", WenWeiPoParser.CLOSE_PARAGRAPH));
+                            item.setUrl(url);
+                            item.setSourceName(source.getSourceName());
+                            item.setCategoryName(source.getCategoryName());
+
+                            final String[] tokens = date.split("日 ");
+                            final String[] times  = tokens[1].split(":");
+
+                            final int month = now.getMonthValue() - (now.getDayOfMonth() == Integer.parseInt(tokens[0]) ? 0 : 1);
+
+                            item.setPublishDate(Date.from(now.withMonth(month == 0 ? Calendar.DECEMBER + 1 : month)
+                                .withDayOfMonth(Integer.parseInt(tokens[0]))
+                                .withHour(Integer.parseInt(times[0]))
+                                .withMinute(Integer.parseInt(times[1]))
+                                .atZone(ZoneId.systemDefault())
+                                .toInstant()));
+
+                            return item;
+                        })
+                        .filter(Objects::nonNull)
+                        .collect(Collectors.toList());
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) WenWeiPoParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -65,45 +95,15 @@ public final class WenWeiPoParser extends Parser {
                     WenWeiPoParser.LOGGER.error(this.getClass().getSimpleName(), e.getMessage(), e);
                 }
 
-                return null;
+                return Collections.<Item>emptyList();
             })
-            .filter(Objects::nonNull)
-            .flatMap(Stream::of)
-            .map(section -> {
-                final String url = StringUtils.substringBetween(section, "<a href=\"", WenWeiPoParser.CLOSE_QUOTE);
-                if (url == null) return null;
-
-                final String date = StringUtils.substringBetween(section, "<p class=\"date\">[ ", " ]</p>");
-                if (date == null) return null;
-
-                final Item item = new Item();
-                item.setTitle(StringUtils.substringBetween(section, "target=\"_blank\">", "</a>").trim());
-                item.setDescription(StringUtils.substringBetween(section, "<p class=\"txt\">", WenWeiPoParser.CLOSE_PARAGRAPH));
-                item.setUrl(url);
-                item.setSourceName(this.sourceName);
-                item.setCategoryName(categoryName);
-
-                final String[] tokens = date.split("日 ");
-                final String[] times  = tokens[1].split(":");
-
-                final int month = now.getMonthValue() - (now.getDayOfMonth() == Integer.parseInt(tokens[0]) ? 0 : 1);
-
-                item.setPublishDate(Date.from(now.withMonth(month == 0 ? Calendar.DECEMBER + 1 : month)
-                    .withDayOfMonth(Integer.parseInt(tokens[0]))
-                    .withHour(Integer.parseInt(times[0]))
-                    .withMinute(Integer.parseInt(times[1]))
-                    .atZone(ZoneId.systemDefault())
-                    .toInstant()));
-
-                return item;
-            })
-            .filter(Objects::nonNull)
+            .flatMap(List::stream)
             .collect(Collectors.toList());
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Item updateItem(@NonNull final Item item) throws IOException {
+    public Item updateItem(@NotNull final Item item) throws IOException {
         final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<!-- Content start -->", "!-- Content end -->");
         if (html != null) {
             String[] descriptions = StringUtils.substringsBetween(html, "<p >", WenWeiPoParser.CLOSE_PARAGRAPH);
@@ -118,7 +118,7 @@ public final class WenWeiPoParser extends Parser {
         return item;
     }
 
-    private static void processImages(@NonNull final String html, @NonNull final Item item) {
+    private static void processImages(@NotNull final String html, @NotNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<img ", ">");
         if (imageContainers != null) {
             item.getImages().clear();
@@ -127,7 +127,7 @@ public final class WenWeiPoParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "src=\"", WenWeiPoParser.CLOSE_QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

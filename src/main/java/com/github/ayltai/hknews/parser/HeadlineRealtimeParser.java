@@ -7,22 +7,22 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 
-import org.springframework.lang.NonNull;
-
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.apache.commons.lang3.StringUtils;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,22 +31,38 @@ public final class HeadlineRealtimeParser extends Parser {
 
     private static final String QUOTE = "\"";
 
-    public HeadlineRealtimeParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+    public HeadlineRealtimeParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory) {
         super(sourceName, sourceService, contentServiceFactory);
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Collection<Item> getItems(@NonNull final String categoryName) {
+    public Collection<Item> getItems(@NotNull final String categoryName) {
         return this.sourceService
-            .getSources(this.sourceName)
+            .getSources(this.sourceName, categoryName)
             .stream()
-            .filter(source -> source.getCategoryName().equals(categoryName))
-            .map(Source::getUrl)
-            .map(url -> this.contentServiceFactory.create().getHtml(url))
-            .map(call -> {
+            .map(source -> {
                 try {
-                    return StringUtils.substringsBetween(call.execute().body(), "<div class=\"topic\">", "<p class=\"text-left\">");
+                    final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<div class=\"topic\">", "<p class=\"text-left\">");
+                    if (sections != null) return Stream.of(sections)
+                        .filter(Objects::nonNull)
+                        .map(section -> {
+                            final String url = StringUtils.substringBetween(section, "<a href=\"", HeadlineRealtimeParser.QUOTE);
+                            if (url == null) return null;
+
+                            final String date = StringUtils.substringBetween(section, "</i>", "</span>");
+                            if (date == null) return null;
+
+                            final Item item = new Item();
+                            item.setTitle(StringUtils.substringBetween(section, " title=\"", HeadlineRealtimeParser.QUOTE));
+                            item.setUrl("https://hd.stheadline.com" + url);
+                            item.setPublishDate(Date.from(LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).atZone(ZoneId.systemDefault()).toInstant()));
+                            item.setSourceName(source.getSourceName());
+                            item.setCategoryName(source.getCategoryName());
+
+                            return item;
+                        })
+                        .collect(Collectors.toList());
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) HeadlineRealtimeParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -57,33 +73,15 @@ public final class HeadlineRealtimeParser extends Parser {
                     HeadlineRealtimeParser.LOGGER.error(this.getClass().getSimpleName(), e.getMessage(), e);
                 }
 
-                return null;
+                return Collections.<Item>emptyList();
             })
-            .filter(Objects::nonNull)
-            .flatMap(Stream::of)
-            .map(section -> {
-                final String url = StringUtils.substringBetween(section, "<a href=\"", HeadlineRealtimeParser.QUOTE);
-                if (url == null) return null;
-
-                final String date = StringUtils.substringBetween(section, "</i>", "</span>");
-                if (date == null) return null;
-
-                final Item item = new Item();
-                item.setTitle(StringUtils.substringBetween(section, " title=\"", HeadlineRealtimeParser.QUOTE));
-                item.setUrl("https://hd.stheadline.com" + url);
-                item.setPublishDate(Date.from(LocalDateTime.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")).atZone(ZoneId.systemDefault()).toInstant()));
-                item.setSourceName(this.sourceName);
-                item.setCategoryName(categoryName);
-
-                return item;
-            })
-            .filter(Objects::nonNull)
+            .flatMap(List::stream)
             .collect(Collectors.toList());
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Item updateItem(@NonNull final Item item) throws IOException {
+    public Item updateItem(@NotNull final Item item) throws IOException {
         final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<div class=\"content post-content\">", "</article>");
         if (html != null) {
             final String description = StringUtils.substringBetween(html, "<p>", "</p>");
@@ -95,7 +93,7 @@ public final class HeadlineRealtimeParser extends Parser {
         return item;
     }
 
-    private static void processImages(@NonNull final String html, @NonNull final Item item) {
+    private static void processImages(@NotNull final String html, @NotNull final Item item) {
         final String[] imageContainers = StringUtils.substringsBetween(html, "<figure", "</figure>");
         if (imageContainers != null) {
             item.getImages().clear();
@@ -104,7 +102,7 @@ public final class HeadlineRealtimeParser extends Parser {
                     final String imageUrl = StringUtils.substringBetween(imageContainer, "<a class=\"fancybox image\" rel=\"fancybox-thumb\" href=\"", HeadlineRealtimeParser.QUOTE);
                     if (imageUrl == null) return null;
 
-                    return new Image(item, imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
+                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "<figcaption class=\"caption-text\">", "</figcaption>"));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));

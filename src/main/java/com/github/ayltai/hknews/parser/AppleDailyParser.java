@@ -5,22 +5,22 @@ import java.net.ProtocolException;
 import java.net.SocketTimeoutException;
 import java.time.Instant;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLHandshakeException;
 
-import org.springframework.lang.NonNull;
-
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,22 +41,36 @@ public final class AppleDailyParser extends Parser {
 
     //endregion
 
-    public AppleDailyParser(@NonNull final String sourceName, @NonNull final SourceService sourceService, @NonNull final ContentServiceFactory contentServiceFactory) {
+    public AppleDailyParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory) {
         super(sourceName, sourceService, contentServiceFactory);
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Collection<Item> getItems(@NonNull final String categoryName) {
+    public Collection<Item> getItems(@NotNull final String categoryName) {
         return this.sourceService
-            .getSources(this.sourceName)
+            .getSources(this.sourceName, categoryName)
             .stream()
-            .filter(source -> source.getCategoryName().equals(categoryName))
-            .map(Source::getUrl)
-            .map(url -> this.contentServiceFactory.create().getHtml(url))
-            .map(call -> {
+            .map(source -> {
                 try {
-                    return new JSONObject(call.execute().body()).getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS);
+                    final String html = this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body();
+                    if (html != null) return StreamSupport.stream(new JSONObject(html).getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
+                        .map(JSONObject.class::cast)
+                        .map(json -> {
+                            final Item item = new Item();
+                            item.setTitle(json.getJSONObject("headlines").getString(AppleDailyParser.JSON_BASIC));
+                            item.setUrl("https://hk.appledaily.com" + json.getString("website_url"));
+                            item.setPublishDate(Date.from(Instant.parse(json.getString("publish_date"))));
+                            item.setSourceName(source.getSourceName());
+                            item.setCategoryName(source.getCategoryName());
+
+                            AppleDailyParser.processDescriptions(json, item);
+                            AppleDailyParser.processImages(json, item);
+                            AppleDailyParser.processVideos(json, item);
+
+                            return item;
+                        })
+                        .collect(Collectors.toList());
                 } catch (final ProtocolException e) {
                     if (e.getMessage().startsWith("Too many follow-up requests")) AppleDailyParser.LOGGER.info(e.getMessage(), e);
                 } catch (final SSLHandshakeException | SocketTimeoutException e) {
@@ -67,35 +81,19 @@ public final class AppleDailyParser extends Parser {
                     AppleDailyParser.LOGGER.error(this.getClass().getSimpleName(), e.getMessage(), e);
                 }
 
-                return null;
+                return Collections.<Item>emptyList();
             })
-            .filter(Objects::nonNull)
-            .flatMap(array -> StreamSupport.stream(array.spliterator(), false))
-            .map(JSONObject.class::cast)
-            .map(json -> {
-                final Item item = new Item();
-                item.setTitle(json.getJSONObject("headlines").getString(AppleDailyParser.JSON_BASIC));
-                item.setUrl("https://hk.appledaily.com" + json.getString("website_url"));
-                item.setPublishDate(Date.from(Instant.parse(json.getString("publish_date"))));
-                item.setSourceName(this.sourceName);
-                item.setCategoryName(categoryName);
-
-                AppleDailyParser.processDescriptions(json, item);
-                AppleDailyParser.processImages(json, item);
-                AppleDailyParser.processVideos(json, item);
-
-                return item;
-            })
+            .flatMap(List::stream)
             .collect(Collectors.toList());
     }
 
-    @NonNull
+    @NotNull
     @Override
-    public Item updateItem(@NonNull final Item item) throws IOException {
+    public Item updateItem(@NotNull final Item item) throws IOException {
         return item;
     }
 
-    private static void processDescriptions(@NonNull final JSONObject element, @NonNull final Item item) {
+    private static void processDescriptions(@NotNull final JSONObject element, @NotNull final Item item) {
         item.setDescription(StreamSupport.stream(element.getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> {
@@ -111,13 +109,13 @@ public final class AppleDailyParser extends Parser {
             .collect(Collectors.joining()));
     }
 
-    private static void processImages(@NonNull final JSONObject element, @NonNull final Item item) {
+    private static void processImages(@NotNull final JSONObject element, @NotNull final Item item) {
         final JSONObject promoItems = element.optJSONObject(AppleDailyParser.JSON_PROMO_ITEMS);
         if (promoItems != null) {
             final JSONObject image = promoItems.getJSONObject(AppleDailyParser.JSON_BASIC);
             if ("image".equals(image.getString(AppleDailyParser.JSON_TYPE))) {
                 final String imageUrl = image.optString(AppleDailyParser.JSON_URL);
-                if (imageUrl != null) item.getImages().add(new Image(item, imageUrl, image.optString(AppleDailyParser.JSON_CAPTION)));
+                if (imageUrl != null) item.getImages().add(new Image(imageUrl, image.optString(AppleDailyParser.JSON_CAPTION)));
             }
 
             item.getImages().clear();
@@ -128,20 +126,20 @@ public final class AppleDailyParser extends Parser {
                     final String imageUrl = json.optString(AppleDailyParser.JSON_URL);
                     if (imageUrl == null) return null;
 
-                    return new Image(item, imageUrl, json.optString(AppleDailyParser.JSON_CAPTION));
+                    return new Image(imageUrl, json.optString(AppleDailyParser.JSON_CAPTION));
                 })
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
         }
     }
 
-    private static void processVideos(@NonNull final JSONObject element, @NonNull final Item item) {
+    private static void processVideos(@NotNull final JSONObject element, @NotNull final Item item) {
         final JSONObject promoItems = element.optJSONObject(AppleDailyParser.JSON_PROMO_ITEMS);
         if (promoItems != null) {
             final JSONObject video = promoItems.getJSONObject(AppleDailyParser.JSON_BASIC);
             if ("video".equals(video.getString(AppleDailyParser.JSON_TYPE))) {
                 item.getVideos().clear();
-                item.getVideos().add(new Video(item, video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
+                item.getVideos().add(new Video(video.getJSONArray("streams").getJSONObject(0).getString(AppleDailyParser.JSON_URL), video.getJSONObject("promo_image").getString(AppleDailyParser.JSON_URL)));
             }
         }
     }

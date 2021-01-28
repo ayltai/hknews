@@ -1,24 +1,45 @@
 package com.github.ayltai.hknews.data.repository;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Repository;
-
+import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.github.ayltai.hknews.data.model.Source;
 
-@Repository
-public interface SourceRepository extends JpaRepository<Source, Integer> {
-    @NonNull
-    @Query("SELECT DISTINCT name FROM Source")
-    Optional<List<String>> findDistinctNames();
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-    @NonNull
-    Optional<List<Source>> findByName(@NonNull String name);
+public final class SourceRepository extends Repository<Source> {
+    public SourceRepository(@NotNull final AmazonDynamoDB client) throws InterruptedException {
+        super(client);
+    }
 
-    @NonNull
-    Optional<List<Source>> findByNameAndCategoryName(@NonNull String name, @NonNull String categoryName);
+    @NotNull
+    public Collection<Source> findBySourceNameAndCategoryName(@NotNull final String sourceName, @Nullable final String categoryName) {
+        final Map<String, AttributeValue> values = new HashMap<>();
+        values.put(":SourceName", new AttributeValue().withS(sourceName));
+        if (categoryName != null) values.put(":CategoryName", new AttributeValue().withS(categoryName));
+
+        return this.mapper
+            .scan(Source.class, new DynamoDBScanExpression()
+            .withFilterExpression(categoryName == null ? "SourceName = :SourceName" : "SourceName = :SourceName AND CategoryName = :CategoryName")
+            .withExpressionAttributeValues(values));
+    }
+
+    @NotNull
+    public Collection<String> findDistinctNames() {
+        final DynamoDBScanExpression expression = new DynamoDBScanExpression()
+            .withProjectionExpression("SourceName");
+
+        return this.mapper
+            .scan(Source.class, expression)
+            .stream()
+            .map(Source::getSourceName)
+            .distinct()
+            .collect(Collectors.toList());
+    }
 }

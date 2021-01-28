@@ -39,7 +39,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               <img
                 alt=""
                 height={40}
-                src="http://localhost:8080/images/undefined.png"
+                src="http://localhost:3001/images/undefined.png"
                 title=""
                 width={40}
               />
@@ -174,7 +174,7 @@ exports[`<ItemGrid /> renders without errors 1`] = `
               <img
                 alt=""
                 height={40}
-                src="http://localhost:8080/images/undefined.png"
+                src="http://localhost:3001/images/undefined.png"
                 title=""
                 width={40}
               />

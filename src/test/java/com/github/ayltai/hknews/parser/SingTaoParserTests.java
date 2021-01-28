@@ -20,6 +20,7 @@ import retrofit2.Response;
 
 public final class SingTaoParserTests extends ParserTests {
     @Test
+    @Override
     public void testGetItems() throws IOException {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);
@@ -51,6 +52,7 @@ public final class SingTaoParserTests extends ParserTests {
     }
 
     @Test
+    @Override
     public void testUpdateItem() throws IOException {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);

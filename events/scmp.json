@@ -1,0 +1,13 @@
+{
+    "id": "0e4e809f-48bc-456b-8a82-e62489006f4b",
+    "version": "0",
+    "source": "aws.events",
+    "account": "012345678999",
+    "region": "us-west-2",
+    "resources": [
+        "arn:aws:events:us-west-2:012345678999:rule/ScmpParser"
+    ],
+    "time": "2020-01-27T18:51:00Z",
+    "detail-type": "Scheduled Event",
+    "detail": {}
+}

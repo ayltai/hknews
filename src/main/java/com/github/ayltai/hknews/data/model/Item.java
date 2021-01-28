@@ -1,95 +1,98 @@
 package com.github.ayltai.hknews.data.model;
 
+import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Index;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
-import org.springframework.lang.NonNull;
-
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor
-@Table(indexes = {
-    @Index(
-        columnList = "url",
-        unique     = true
-    ),
-    @Index(columnList = "publishDate DESC"),
-    @Index(columnList = "title"),
-    @Index(columnList = "description"),
-    @Index(columnList = "sourceName,categoryName"),
-})
-@Entity
-public final class Item {
-    @Getter
+@DynamoDBTable(tableName = "Item")
+public final class Item implements Model {
+    @Getter(onMethod_ = {
+        @DynamoDBHashKey(attributeName = "Uid"),
+    })
     @Setter
-    @GeneratedValue
-    @Id
-    private Integer id;
+    private String uid;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Title"),
+    })
     @Setter
-    @Column(length = Integer.MAX_VALUE)
     private String title;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Description"),
+    })
     @Setter
-    @Column(length = Integer.MAX_VALUE)
     private String description;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Url"),
+    })
     @Setter
-    @Column(
-        nullable = false,
-        unique   = true,
-        length   = Integer.MAX_VALUE
-    )
     private String url;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
+    @Getter(onMethod_ = {
+        @SuppressFBWarnings(
+            value         = "EI_EXPOSE_REP",
+            justification = "Date is the only supported date/time type in Amazon DynamoDB"),
+        @DynamoDBRangeKey(attributeName = "PublishDate"),
+    })
+    @Setter(onMethod_ = {
+        @SuppressFBWarnings(
+            value         = "EI_EXPOSE_REP2",
+            justification = "Date is the only supported date/time type in Amazon DynamoDB"),
+    })
     private Date publishDate;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "SourceName"),
+    })
     @Setter
-    @Column(nullable = false)
     private String sourceName;
 
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "CategoryName"),
+    })
     @Setter
-    @Column(nullable = false)
     private String categoryName;
 
-    @NonNull
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Images"),
+    })
     @Setter
     @JsonManagedReference
-    @OneToMany(
-        cascade       = CascadeType.ALL,
-        orphanRemoval = true
-    )
     private List<Image> images = new ArrayList<>();
 
-    @NonNull
-    @Getter
+    @Getter(onMethod_ = {
+        @DynamoDBAttribute(attributeName = "Videos"),
+    })
     @Setter
     @JsonManagedReference
-    @OneToMany(
-        cascade       = CascadeType.ALL,
-        orphanRemoval = true
-    )
     private List<Video> videos = new ArrayList<>();
+
+    public String toUid() {
+        try {
+            final MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(this.url.getBytes(StandardCharsets.UTF_8));
+
+            return String.format("%032x", new BigInteger(1, digest.digest()));
+        } catch (final NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

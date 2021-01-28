@@ -1,15 +1,12 @@
 package com.github.ayltai.hknews.parser;
 
-import org.springframework.lang.NonNull;
-import org.springframework.stereotype.Component;
-
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 import com.github.ayltai.hknews.service.SourceService;
 
+import org.jetbrains.annotations.NotNull;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-@Component
 public final class DefaultParserFactory implements ParserFactory {
     //region Constants
 
@@ -36,9 +33,9 @@ public final class DefaultParserFactory implements ParserFactory {
     private final ContentServiceFactory contentServiceFactory;
 
     @SuppressWarnings("checkstyle:cyclomaticComplexity")
-    @NonNull
+    @NotNull
     @Override
-    public Parser create(@NonNull final String sourceName) {
+    public Parser create(@NotNull final String sourceName) {
         switch (sourceName) {
             case DefaultParserFactory.SOURCE_APPLE_DAILY:
                 return new AppleDailyParser(DefaultParserFactory.SOURCE_APPLE_DAILY, this.sourceService, this.contentServiceFactory);

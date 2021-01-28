@@ -6,13 +6,11 @@ import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 import org.simpleframework.xml.Text;
-
 import lombok.Getter;
 
 @Root(
     name   = "item",
-    strict = false
-)
+    strict = false)
 public final class RssItem {
     @Path("title")
     @Text(data = true)
@@ -21,23 +19,20 @@ public final class RssItem {
     @Path("link")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String link;
 
     @Path("guid")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String guid;
 
     @Getter
     @Path("description")
     @Text(
         required = false,
-        data     = true
-    )
+        data     = true)
     private String description;
 
     @Getter
@@ -50,8 +45,7 @@ public final class RssItem {
         name     = "enclosure",
         required = false,
         inline   = true,
-        type     = RssEnclosure.class
-    )
+        type     = RssEnclosure.class)
     private List<RssEnclosure> enclosures;
 
     public String getTitle() {

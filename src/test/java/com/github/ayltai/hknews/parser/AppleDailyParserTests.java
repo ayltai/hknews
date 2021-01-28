@@ -12,6 +12,7 @@ import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.net.ContentServiceFactory;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
@@ -21,6 +22,7 @@ import retrofit2.Response;
 
 public final class AppleDailyParserTests extends ParserTests {
     @Test
+    @Override
     public void testGetItems() throws IOException {
         final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
         final ContentService        service = Mockito.mock(ContentService.class);
@@ -50,5 +52,11 @@ public final class AppleDailyParserTests extends ParserTests {
             Assertions.assertEquals("https://d2i91erehhsxi2.cloudfront.net/appledaily/2020/08/07/5f2da5dac9e77c0007f8a51c/20200807_int_03_nAD_w.mp4", item.getVideos().get(0).getUrl(), "Incorrect video URL");
             Assertions.assertEquals("https://d87urpdhi5rdo.cloudfront.net/08-07-2020/t_06b7c281c7aa4ababbf911eda144d34c_name_1596825337_0d56.jpg", item.getVideos().get(0).getCover(), "Incorrect video thumb URL");
         }
+    }
+
+    @Disabled("The logic for updateItem() is already handled in getItems()")
+    @Test
+    @Override
+    public void testUpdateItem() throws IOException {
     }
 }
