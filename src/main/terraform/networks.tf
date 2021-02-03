@@ -1,3 +1,17 @@
+locals {
+  status_codes = [
+    "200", "400", "404", "500",
+  ]
+}
+
+data "template_file" "api" {
+  template = file("./templates/api.yaml")
+
+  vars = {
+    base_uri = aws_api_gateway_deployment.this.invoke_url
+  }
+}
+
 resource "aws_api_gateway_rest_api" "this" {
   name                     = var.tag
   minimum_compression_size = var.api_minimum_compression_size
@@ -20,12 +34,61 @@ resource "aws_api_gateway_method_settings" "this" {
   }
 }
 
+resource "aws_api_gateway_method" "root" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  resource_id   = aws_api_gateway_rest_api.this.root_resource_id
+  http_method   = "HEAD"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "root" {
+  for_each    = toset(local.status_codes)
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_rest_api.this.root_resource_id
+  http_method = aws_api_gateway_method.root.http_method
+  status_code = each.value
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_api_gateway_integration" "root" {
+  rest_api_id             = aws_api_gateway_rest_api.this.id
+  resource_id             = aws_api_gateway_rest_api.this.root_resource_id
+  http_method             = aws_api_gateway_method.root.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  passthrough_behavior    = "WHEN_NO_MATCH"
+  uri                     = aws_lambda_function.root.invoke_arn
+}
+
+resource "aws_api_gateway_integration_response" "root" {
+  for_each    = toset(local.status_codes)
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_rest_api.this.root_resource_id
+  http_method = aws_api_gateway_method_response.root[each.value].http_method
+  status_code = each.value
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,HEAD,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.root,
+  ]
+}
+
 resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   stage_name  = var.api_stage_name
 
   triggers = {
-    redeployment = sha1(join(",", list(jsonencode(module.lambda_source), jsonencode(module.lambda_item), jsonencode(module.lambda_items))))
+    redeployment = sha1(join(",", list(jsonencode(aws_api_gateway_integration.root), jsonencode(module.lambda_source), jsonencode(module.lambda_item), jsonencode(module.lambda_items))))
   }
 
   lifecycle {
@@ -33,6 +96,8 @@ resource "aws_api_gateway_deployment" "this" {
   }
 
   depends_on = [
+    aws_api_gateway_integration.root,
+    aws_api_gateway_integration_response.root,
     module.lambda_source,
     module.lambda_item,
     module.lambda_items,

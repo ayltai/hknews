@@ -1,15 +1,33 @@
 AWSTemplateFormatVersion: 2010-09-09
 Transform: AWS::Serverless-2016-10-31
-Description: A serverless backend API serviing alantai.dev
+Description: A serverless backend API serviing https://hknews.dev/
 Resources:
+  Root:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: build/distributions/hknews.zip
+      Handler: com.github.ayltai.hknews.handler.RootHandler::handleRequest
+      Runtime: java11
+      MemorySize: 1024
+      Timeout: 30
+      Events:
+        HttpGet:
+          Type: Api
+          Properties:
+            Path: /
+            Method: head
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambdaReadOnlyAccess
+        - CloudWatchLogsFullAccess
   Source:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.SourceHandler::handleRequest
       Runtime: java11
       Description: Get a list of supported news publisher names
-      MemorySize: 256
+      MemorySize: 1024
       Timeout: 30
       Environment:
         Variables:
@@ -28,11 +46,11 @@ Resources:
   Item:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.ItemHandler::handleRequest
       Runtime: java11
       Description: Get a specific news record by its unique ID
-      MemorySize: 256
+      MemorySize: 1024
       Timeout: 30
       Environment:
         Variables:
@@ -51,11 +69,11 @@ Resources:
   Items:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.ItemsHandler::handleRequest
       Runtime: java11
       Description: Get a list of news records of specific news categories and from specific news publishers
-      MemorySize: 256
+      MemorySize: 1024
       Timeout: 30
       Environment:
         Variables:
@@ -74,11 +92,10 @@ Resources:
   AppleDailyParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.AppleDailyParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Apple Daily News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -97,11 +114,10 @@ Resources:
   HeadlineParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.HeadlineParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Headline Daily News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -120,11 +136,10 @@ Resources:
   HeadlineRealtimeParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.HeadlineRealtimeParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Headline Realtime News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -143,11 +158,10 @@ Resources:
   HkejParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.HkejParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from HKEJ News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -166,11 +180,10 @@ Resources:
   HkejRealtimeParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.HkejRealtimeParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from HKEJ Realtime News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -189,11 +202,10 @@ Resources:
   HketParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.HketParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from HKET News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -212,11 +224,10 @@ Resources:
   MingPaoParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.MingPaoParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Ming Pao website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -235,11 +246,10 @@ Resources:
   OrientalDailyParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.OrientalDailyParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Oriental Daily News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -258,11 +268,10 @@ Resources:
   OrientalDailyRealtimeParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.OrientalDailyRealtimeParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Oriental Daily Realtime News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -281,11 +290,10 @@ Resources:
   RthkParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.RthkParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from RTHK News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -304,11 +312,10 @@ Resources:
   ScmpParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.ScmpParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from SCMP News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -327,11 +334,10 @@ Resources:
   SingPaoParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.SingPaoParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Sing Pao News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -350,11 +356,10 @@ Resources:
   SingTaoParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.SingTaoParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Sing Tao Daily News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -373,11 +378,10 @@ Resources:
   SkyPostParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.SkyPostParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Sky Post Daily News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -396,11 +400,10 @@ Resources:
   TheStandardParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.TheStandardParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from The Standard News website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:
@@ -419,11 +422,10 @@ Resources:
   WenWeiPoParser:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: build/distributions/hknews-3.0.0.zip
+      CodeUri: build/distributions/hknews.zip
       Handler: com.github.ayltai.hknews.handler.WenWeiPoParserHandler::handleRequest
       Runtime: java11
-      Description: Parse news records from Wen Wei Po website
-      MemorySize: 512
+      MemorySize: 384
       Timeout: 600
       Environment:
         Variables:

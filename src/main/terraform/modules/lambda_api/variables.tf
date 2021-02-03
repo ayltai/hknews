@@ -50,6 +50,11 @@ variable "path_part" {
   type = string
 }
 
+variable "http_method" {
+  type    = string
+  default = "ANY"
+}
+
 variable "log_retention" {
   type    = number
   default = 14
