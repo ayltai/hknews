@@ -2,7 +2,7 @@ openapi: 3.0.3
 info:
   title: HK News
   description: Serves aggregated news from 13 local news publishers in Hong Kong
-  version: "3.1"
+  version: "3.2"
   contact:
     name: GitHub
     url: https://github.com/ayltai/hknews
@@ -12,11 +12,6 @@ info:
 servers:
   - url: ${base_uri}
 paths:
-  /:
-    head:
-      responses:
-        200:
-          description: Successfully returned the headers requested
   /sources:
     get:
       summary: Gets a list of news publishers supported

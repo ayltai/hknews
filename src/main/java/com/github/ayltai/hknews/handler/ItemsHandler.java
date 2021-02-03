@@ -25,8 +25,6 @@ public final class ItemsHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        this.log(event, context);
-
         final Map<String, String> parameters    = event.getPathParameters();
         final Map<String, String> queries       = event.getQueryStringParameters();
         final String              sourceNames   = URLDecoder.decode(parameters.get("sourceNames"), StandardCharsets.UTF_8);

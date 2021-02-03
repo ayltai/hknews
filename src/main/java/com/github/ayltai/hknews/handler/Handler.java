@@ -14,8 +14,6 @@ public abstract class Handler<I, O> implements RequestHandler<I, O> {
     public abstract O handleRequest(@NotNull I event, @NotNull Context context);
 
     protected final void log(@NotNull final Throwable throwable, @NotNull final Object event, @NotNull final Context context) {
-        this.log(event, context);
-
         context.getLogger().log(String.format("EXCEPTION: %s", Handler.GSON.toJson(throwable)));
     }
 

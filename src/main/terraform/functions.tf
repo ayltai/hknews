@@ -105,44 +105,6 @@ locals {
   ]
 }
 
-resource "aws_lambda_function" "root" {
-  function_name    = "Root"
-  filename         = var.api_package_file
-  source_code_hash = filebase64sha256(var.api_package_file)
-  handler          = "com.github.ayltai.hknews.handler.RootHandler::handleRequest"
-  runtime          = var.api_runtime
-  memory_size      = var.api_memory
-  timeout          = var.api_timeout
-  role             = aws_iam_role.lambda.arn
-
-  environment {
-    variables = {
-      AWS_DYNAMODB_URL = "https://dynamodb.${var.aws_region}.amazonaws.com"
-    }
-  }
-
-  depends_on = [
-    aws_cloudwatch_log_group.this,
-  ]
-
-  tags = {
-    Project = var.tag
-  }
-}
-
-resource "aws_lambda_permission" "root" {
-  statement_id  = "AllowExecutionFromApiGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.root.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
-}
-
-resource "aws_cloudwatch_log_group" "root" {
-  name              = "/aws/lambda/${aws_lambda_function.root.function_name}"
-  retention_in_days = var.api_log_retention
-}
-
 module "lambda_source" {
   source                 = "./modules/lambda_api"
   function_name          = "Source"
