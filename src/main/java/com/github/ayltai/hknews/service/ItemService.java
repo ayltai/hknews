@@ -2,6 +2,7 @@ package com.github.ayltai.hknews.service;
 
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
@@ -26,7 +27,10 @@ public final class ItemService extends Service<ItemRepository, Item> {
 
     @NotNull
     public Collection<Item> putItems(@NotNull final Collection<Item> items) {
-        this.repository.add(items);
+        this.repository
+            .add(items.stream()
+                .distinct()
+                .collect(Collectors.toList()));
 
         return items;
     }
