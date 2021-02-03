@@ -21,6 +21,7 @@
         "hk"
     ],
     "scripts": {
+        "api": "swagger-cli validate src/main/terraform/templates/api.yaml",
         "eject": "react-scripts eject",
         "build": "cross-env SKIP_PREFLIGHT_CHECK=true GENERATE_SOURCEMAP=false react-app-rewired build",
         "serve": "serve -s build",
@@ -29,6 +30,7 @@
         "test": "cross-env SKIP_PREFLIGHT_CHECK=true react-app-rewired test --watchAll=false"
     },
     "devDependencies": {
+        "@apidevtools/swagger-cli": "^4.0.4",
         "@testing-library/jest-dom": "^5.11.9",
         "@testing-library/react": "^11.2.4",
         "@testing-library/user-event": "^12.6.3",

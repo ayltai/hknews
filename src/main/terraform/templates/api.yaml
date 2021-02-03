@@ -1,0 +1,267 @@
+openapi: 3.0.3
+info:
+  title: HK News
+  description: Serves aggregated news from 13 local news publishers in Hong Kong
+  version: "3.1"
+  contact:
+    name: GitHub
+    url: https://github.com/ayltai/hknews
+  license:
+    name: MIT
+    url: https://github.com/ayltai/hknews/blob/master/LICENSE
+servers:
+  - url: ${base_uri}
+paths:
+  /:
+    head:
+      responses:
+        200:
+          description: Successfully returned the headers requested
+  /sources:
+    get:
+      summary: Gets a list of news publishers supported
+      responses:
+        200:
+          description: Successfully returned the list of news publishers supported
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        500:
+          description: An unexpected internal server error has occurred
+  /item/{uid}:
+    get:
+      summary: Gets a specific news record by its unique ID
+      parameters:
+        - in: path
+          name: uid
+          description: An unique ID that represents the news record to be retrieved
+          schema:
+            type: string
+            format: uuid
+            example: 3c765a4f-4cf9-46e7-8331-6ed6208c9644
+          required: true
+      responses:
+        200:
+          description: Successfully returned the news record requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Item'
+        400:
+          description: Request parameter {uid} was missing or invalid
+        404:
+          description: No news record specified by the given unique ID was found
+        500:
+          description: An unexpected internal server error has occurred
+  /items/{sourceNames}/{categoryNames}/{days}:
+    get:
+      summary: Gets a list of news records of specific news categories and from specific news publishers
+      parameters:
+        - in: path
+          name: sourceNames
+          description: A list of news publishers, separated by commas
+          schema:
+            type: string
+            example: 蘋果日報,香港電台
+          required: true
+        - in: path
+          name: categoryNames
+          description: A list of news categories, separated by commas
+          schema:
+            type: string
+            example: 港聞,國際
+          required: true
+        - in: path
+          name: days
+          description: The number of previous days of news to retrieve
+          schema:
+            type: integer
+            example: 2
+          required: true
+        - in: query
+          name: pageNumber
+          description: Page offset
+          schema:
+            type: integer
+            example: 1
+          required: true
+        - in: query
+          name: pageSize
+          description: Page size
+          schema:
+            type: integer
+            example: 10
+          required: true
+      responses:
+        200:
+          description: Successfully returned the list of news records requested
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PageOfItems'
+        400:
+          description: At least one of the request parameters was missing or invalid
+        500:
+          description: An unexpected internal server error has occurred
+components:
+  schemas:
+    Sort:
+      type: object
+      required:
+        - sorted
+        - unsorted
+        - empty
+      properties:
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+        empty:
+          type: boolean
+    Pageable:
+      type: object
+      required:
+        - sort
+        - offset
+        - pageNumber
+        - pageSize
+        - paged
+        - unpaged
+      properties:
+        sort:
+          $ref: '#/components/schemas/Sort'
+        offset:
+          type: integer
+          description: The offset to be taken according to the corresponding page number and page size
+        pageNumber:
+          type: integer
+          description: The page to be returned
+        pageSize:
+          type: integer
+          description: The nunber of items to be returned
+        paged:
+          type: boolean
+          description: Whether the current object contains pagination information
+        unpaged:
+          type: boolean
+          description: Whether the current object does not contain pagination information
+    Page:
+      type: object
+      required:
+        - pageable
+        - sort
+        - number
+        - size
+        - totalPages
+        - totalElements
+        - numberOfElements
+        - first
+        - last
+        - empty
+      properties:
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        sort:
+          $ref: '#/components/schemas/Sort'
+        number:
+          type: integer
+          description: The page offset of current page
+        size:
+          type: integer
+          description: The maximum number of items on a page
+        totalPages:
+          type: integer
+          description: The number of total pages
+        totalElements:
+          type: integer
+          description: The total amount of items available
+        numberOfElements:
+          type: integer
+          description: The number of items currently on this page
+        first:
+          type: boolean
+          description: Whether the current page is the first one
+        last:
+          type: boolean
+          description: Whether the current page is the last one
+        empty:
+          type: boolean
+          description: Whether the current page is empty
+    PageOfItems:
+      allOf:
+        - type: object
+          required:
+            - content
+          properties:
+            content:
+              type: array
+              items:
+                $ref: '#/components/schemas/Item'
+        - $ref: '#/components/schemas/Page'
+    Item:
+      type: object
+      required:
+        - uid
+        - url
+        - publishDate
+        - sourceName
+        - categoryName
+        - images
+        - videos
+      properties:
+        uid:
+          type: string
+          format: uuid
+          description: The unique ID that represents a news record
+          example: 3c765a4f-4cf9-46e7-8331-6ed6208c9644
+        title:
+          type: string
+          description: The news title
+        description:
+          type: string
+          description: The news details description
+        url:
+          type: string
+          description: The URL where the news was retrieved from
+        publishDate:
+          type: string
+          format: date-time
+          description: The date and time when the news record was first published
+        sourceName:
+          type: string
+          description: The name of the news publisher who published the news record
+          example: 蘋果日報
+        categoryName:
+          type: string
+          description: The news category that the news record belongs to
+          example: 港聞
+        images:
+          type: array
+          items:
+            type: object
+            required:
+              - url
+            properties:
+              url:
+                type: string
+                description: The URL of the image that belongs to a news record
+              description:
+                type: string
+                description: The text description associated with the image
+        videos:
+          type: array
+          items:
+            type: object
+            required:
+              - url
+              - cover
+            properties:
+              url:
+                type: string
+                description: The URL of the video that belongs to a news record
+              cover:
+                type: string
+                description: The URL of the video thumbnail that belongs to a news record

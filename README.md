@@ -44,6 +44,10 @@ Serves aggregated news from 13 local news publishers in Hong Kong. [https://hkne
 * [The Standard (英文虎報)](http://www.thestandard.com.hk)
 * [Wen Wei Po (文匯報)](http://news.wenweipo.com)
 
+## Available APIs
+
+[OpenAPI](https://hknews.dev/api.yaml)
+
 ## Deployment
 
 ![Architecture](diagram.svg)
