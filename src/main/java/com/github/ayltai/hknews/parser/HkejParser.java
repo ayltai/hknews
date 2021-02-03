@@ -1,8 +1,6 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.net.ProtocolException;
-import java.net.SocketTimeoutException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -11,8 +9,6 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
@@ -30,7 +26,7 @@ public final class HkejParser extends BaseHkejParser {
 
     @NotNull
     @Override
-    protected Collection<Item> getItems(@NotNull final Source source) throws ProtocolException, SSLHandshakeException, SocketTimeoutException, SSLException, IOException {
+    protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final LocalDate now = LocalDate.now();
 
         final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<h2>", "</div>");

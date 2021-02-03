@@ -1,8 +1,6 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.net.ProtocolException;
-import java.net.SocketTimeoutException;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -12,8 +10,6 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
@@ -42,7 +38,7 @@ public final class OrientalDailyParser extends Parser {
 
     @NotNull
     @Override
-    protected Collection<Item> getItems(@NotNull final Source source) throws ProtocolException, SSLHandshakeException, SocketTimeoutException, SSLException, IOException {
+    protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final LocalDate now = LocalDate.now();
 
         String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body(), "<div id=\"articleList\">", "<!--//articleList-->");

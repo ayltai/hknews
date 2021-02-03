@@ -28,7 +28,7 @@ import com.google.gson.Gson;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Repository<T extends Model> {
-    private static final Gson GSON   = new Gson();
+    private static final Gson GSON = new Gson();
 
     protected final DynamoDB       client;
     protected final Table          table;

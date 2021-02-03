@@ -62,7 +62,7 @@ public abstract class Parser {
     }
 
     @NotNull
-    protected abstract Collection<Item> getItems(@NotNull Source source) throws ProtocolException, SSLHandshakeException, SocketTimeoutException, SSLException, IOException;
+    protected abstract Collection<Item> getItems(@NotNull Source source) throws IOException;
 
     @NotNull
     public abstract Item updateItem(@NotNull Item item) throws IOException;

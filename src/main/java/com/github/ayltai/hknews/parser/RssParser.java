@@ -1,8 +1,6 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.net.ProtocolException;
-import java.net.SocketTimeoutException;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,8 +8,6 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.stream.Collectors;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLHandshakeException;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
@@ -33,7 +29,7 @@ public abstract class RssParser extends Parser {
 
     @NotNull
     @Override
-    protected Collection<Item> getItems(@NotNull final Source source) throws ProtocolException, SSLHandshakeException, SocketTimeoutException, SSLException, IOException {
+    protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final RssFeed feed = this.contentServiceFactory.create().getFeed(source.getUrl()).execute().body();
         return (feed == null || feed.getItems() == null || feed.getItems().isEmpty() ? Collections.<RssItem>emptyList() : feed.getItems())
             .stream()
