@@ -28,7 +28,7 @@ public final class PurgeHandler extends CronHandler {
     @Nullable
     @Override
     public Void handleRequest(@NotNull final ScheduledEvent event, @NotNull final Context context) {
-        this.itemService.removeOldItems(Configuration.DEFAULT.getRetentionDays());
+        this.getItemService(context.getLogger()).removeOldItems(Configuration.DEFAULT.getRetentionDays());
 
         return null;
     }
