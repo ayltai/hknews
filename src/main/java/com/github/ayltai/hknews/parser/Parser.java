@@ -40,7 +40,7 @@ public abstract class Parser {
     public Collection<Item> getItems(@NotNull final String categoryName) {
         return this.sourceService
             .getSources(this.sourceName, categoryName)
-            .stream()
+            .parallelStream()
             .map(source -> {
                 try {
                     return this.getItems(source);

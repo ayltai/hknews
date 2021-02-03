@@ -1,5 +1,6 @@
 package com.github.ayltai.hknews.handler;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 
 import com.amazonaws.services.lambda.runtime.Context;
@@ -7,6 +8,7 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
 import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.AmazonDynamoDBFactory;
+import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.repository.ItemRepository;
 import com.github.ayltai.hknews.data.repository.SourceRepository;
 import com.github.ayltai.hknews.net.DefaultContentServiceFactory;
@@ -15,7 +17,6 @@ import com.github.ayltai.hknews.parser.Parser;
 import com.github.ayltai.hknews.parser.ParserFactory;
 import com.github.ayltai.hknews.service.ItemService;
 import com.github.ayltai.hknews.service.SourceService;
-
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -74,9 +75,11 @@ public abstract class ParserHandler extends CronHandler {
         sourceService.getSources(this.getSourceName())
             .forEach(source -> {
                 try {
-                    itemService.putItems(parser.getItems(source.getCategoryName())
-                        .stream()
-                        .filter(item -> itemService.getItem(item.toUid()).isEmpty())
+                    final Collection<Item> items         = parser.getItems(source.getCategoryName());
+                    final Collection<Item> existingItems = itemService.getItems(items.stream().map(Item::getUid).collect(Collectors.toList()));
+
+                    itemService.putItems(items.parallelStream()
+                        .filter(item -> !existingItems.contains(item))
                         .map(item -> {
                             try {
                                 return parser.updateItem(item);

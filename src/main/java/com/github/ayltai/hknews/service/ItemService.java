@@ -21,6 +21,11 @@ public final class ItemService extends Service<ItemRepository, Item> {
     }
 
     @NotNull
+    public Collection<Item> getItems(@NotNull final Collection<String> uids) {
+        return this.repository.findByUids(uids);
+    }
+
+    @NotNull
     public Collection<Item> getItems(@NotNull final Collection<String> sourceNames, @NotNull final Collection<String> categoryNames, final int days) {
         return this.repository.findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(sourceNames, categoryNames, days);
     }
