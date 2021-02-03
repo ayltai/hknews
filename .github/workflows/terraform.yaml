@@ -28,7 +28,7 @@ jobs:
           terraform_version: 0.14.x
           cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
       - name: Initialize
-        run: terraform init
+        run: terraform init -lock-timeout=600s
         working-directory: src/main/terraform
         env:
           TF_IN_AUTOMATION: true
@@ -55,7 +55,7 @@ jobs:
         env:
           TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
       - name: Plan
-        run: terraform plan -lock-timeout=300s -var-file=secrets.tfvars -no-color
+        run: terraform plan -lock-timeout=600s -var-file=secrets.tfvars -no-color
         working-directory: src/main/terraform
         env:
           TF_IN_AUTOMATION: true

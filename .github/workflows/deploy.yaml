@@ -42,7 +42,7 @@ jobs:
           name: java-package
           path: build/distributions
       - name: Terraform init
-        run: terraform init
+        run: terraform init -lock-timeout=600s
         working-directory: src/main/terraform
         env:
           TF_IN_AUTOMATION: true
@@ -52,7 +52,7 @@ jobs:
         env:
           TERRAFORM_VARIABLES: ${{ secrets.TERRAFORM_VARIABLES }}
       - name: Terraform apply
-        run: terraform apply -lock-timeout=300s -auto-approve -var-file=secrets.tfvars
+        run: terraform apply -lock-timeout=600s -auto-approve -var-file=secrets.tfvars
         working-directory: src/main/terraform
         env:
           TF_IN_AUTOMATION: true
