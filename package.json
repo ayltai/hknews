@@ -1,7 +1,7 @@
 {
     "name": "hknews",
     "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
-    "version": "3.0.0",
+    "version": "3.1.0",
     "author": {
         "name": "Alan Tai"
     },
@@ -32,7 +32,7 @@
     "devDependencies": {
         "@apidevtools/swagger-cli": "^4.0.4",
         "@testing-library/jest-dom": "^5.11.9",
-        "@testing-library/react": "^11.2.4",
+        "@testing-library/react": "^11.2.5",
         "@testing-library/user-event": "^12.6.3",
         "cross-env": "^7.0.3",
         "enzyme": "^3.11.0",
@@ -70,13 +70,11 @@
         ],
         "testPathIgnorePatterns": [
             "./src/test/resources/testdata/",
-            "./src/main/resources/",
-            "./src/main/javascript/serviceWorker.js"
+            "./src/main/resources/"
         ],
         "coveragePathIgnorePatterns": [
             "./src/test/resources/testdata/",
-            "./src/main/resources/",
-            "./src/main/javascript/serviceWorker.js"
+            "./src/main/resources/"
         ],
         "collectCoverage": true,
         "coverageDirectory": "./coverage"

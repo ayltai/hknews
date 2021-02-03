@@ -29,6 +29,14 @@ resource "aws_lambda_function" "this" {
   }
 }
 
+resource "aws_lambda_permission" "this" {
+  statement_id  = "AllowExecutionFromApiGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.this.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${var.rest_api_execution_arn}/*/*"
+}
+
 resource "aws_api_gateway_resource" "this" {
   rest_api_id = var.rest_api_id
   parent_id   = var.rest_api_root_id
@@ -67,11 +75,12 @@ resource "aws_api_gateway_integration" "this" {
 }
 
 resource "aws_api_gateway_integration_response" "this" {
-  for_each    = toset(local.status_codes)
-  rest_api_id = aws_api_gateway_method_response.this[each.value].rest_api_id
-  resource_id = aws_api_gateway_method_response.this[each.value].resource_id
-  http_method = aws_api_gateway_method_response.this[each.value].http_method
-  status_code = each.value
+  for_each          = toset(local.status_codes)
+  rest_api_id       = aws_api_gateway_method_response.this[each.value].rest_api_id
+  resource_id       = aws_api_gateway_method_response.this[each.value].resource_id
+  http_method       = aws_api_gateway_method_response.this[each.value].http_method
+  status_code       = each.value
+  selection_pattern = each.value
 
   response_parameters = {
     "method.response.header.Access-Control-Allow-Headers" = "'Content-Type'"
@@ -87,12 +96,4 @@ resource "aws_api_gateway_integration_response" "this" {
 resource "aws_cloudwatch_log_group" "this" {
   name              = "/aws/lambda/${var.function_name}"
   retention_in_days = var.log_retention
-}
-
-resource "aws_lambda_permission" "this" {
-  statement_id  = "AllowExecutionFromApiGateway"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.this.function_name
-  principal     = "apigateway.amazonaws.com"
-  source_arn    = "${var.rest_api_execution_arn}/*/*"
 }

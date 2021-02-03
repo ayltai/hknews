@@ -130,6 +130,14 @@ resource "aws_lambda_function" "root" {
   }
 }
 
+resource "aws_lambda_permission" "root" {
+  statement_id  = "AllowExecutionFromApiGateway"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.root.function_name
+  principal     = "apigateway.amazonaws.com"
+  source_arn    = "${aws_api_gateway_rest_api.this.execution_arn}/*/*"
+}
+
 resource "aws_cloudwatch_log_group" "root" {
   name              = "/aws/lambda/${aws_lambda_function.root.function_name}"
   retention_in_days = var.api_log_retention
