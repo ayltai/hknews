@@ -13,7 +13,6 @@ import java.util.stream.StreamSupport;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.KeyPair;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.Configuration;
@@ -45,16 +44,6 @@ public final class ItemRepository extends Repository<Item> {
             .withExpressionAttributeValues(Collections.singletonMap(":Uid", new AttributeValue().withS(uid))))
             .stream()
             .findFirst();
-    }
-
-    @NotNull
-    public Collection<Item> findByUids(@NotNull final Collection<String> uids) {
-        return this.mapper
-            .batchLoad(Collections.singletonMap(Item.class, uids.stream().map(uid -> new KeyPair().withHashKey(uid)).collect(Collectors.toList())))
-            .get("Item")
-            .stream()
-            .map(object -> (Item)object)
-            .collect(Collectors.toList());
     }
 
     @NotNull
