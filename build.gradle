@@ -27,7 +27,7 @@ repositories {
 ext {
     retrofitVersion = '2.9.0'
     lombokVersion   = '1.18.18'
-    junitVersion    = '5.7.0'
+    junitVersion    = '5.7.1'
 }
 
 dependencies {
