@@ -34,12 +34,61 @@ resource "aws_api_gateway_method_settings" "this" {
   }
 }
 
+resource "aws_api_gateway_method" "root" {
+  rest_api_id   = aws_api_gateway_rest_api.this.id
+  resource_id   = aws_api_gateway_rest_api.this.root_resource_id
+  http_method   = "ANY"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_method_response" "root" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_rest_api.this.root_resource_id
+  http_method = aws_api_gateway_method.root.http_method
+  status_code = "200"
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = true
+    "method.response.header.Access-Control-Allow-Methods" = true
+    "method.response.header.Access-Control-Allow-Origin"  = true
+  }
+}
+
+resource "aws_api_gateway_integration" "root" {
+  rest_api_id          = aws_api_gateway_rest_api.this.id
+  resource_id          = aws_api_gateway_rest_api.this.root_resource_id
+  http_method          = aws_api_gateway_method.root.http_method
+  type                 = "MOCK"
+  passthrough_behavior = "WHEN_NO_MATCH"
+}
+
+resource "aws_api_gateway_integration_response" "root" {
+  rest_api_id = aws_api_gateway_rest_api.this.id
+  resource_id = aws_api_gateway_rest_api.this.root_resource_id
+  http_method = aws_api_gateway_method.root.http_method
+  status_code = aws_api_gateway_method_response.root.status_code
+
+  response_parameters = {
+    "method.response.header.Access-Control-Allow-Headers" = "'Content-Type'"
+    "method.response.header.Access-Control-Allow-Methods" = "'GET,HEAD,OPTIONS'"
+    "method.response.header.Access-Control-Allow-Origin"  = "'*'"
+  }
+
+  response_templates = {
+    "application/json" = "{\"statusCode\": ${aws_api_gateway_method_response.root.status_code}}"
+  }
+
+  depends_on = [
+    aws_api_gateway_integration.root,
+  ]
+}
+
 resource "aws_api_gateway_deployment" "this" {
   rest_api_id = aws_api_gateway_rest_api.this.id
   stage_name  = var.api_stage_name
 
   triggers = {
-    redeployment = sha1(join(",", list(jsonencode(module.lambda_source), jsonencode(module.lambda_item), jsonencode(module.lambda_items))))
+    redeployment = sha1(join(",", list(jsonencode(module.lambda_source), jsonencode(module.lambda_item), jsonencode(module.lambda_items), jsonencode(aws_api_gateway_integration.root))))
   }
 
   lifecycle {
@@ -50,6 +99,8 @@ resource "aws_api_gateway_deployment" "this" {
     module.lambda_source,
     module.lambda_item,
     module.lambda_items,
+    aws_api_gateway_integration.root,
+    aws_api_gateway_integration_response.root,
   ]
 }
 
