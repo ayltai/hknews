@@ -1,7 +1,9 @@
 package com.github.ayltai.hknews.handler;
 
+import java.util.Collection;
 import java.util.stream.Collectors;
 
+import com.amazonaws.cache.Cache;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
@@ -16,12 +18,22 @@ public final class SourceHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        try {
-            return APIGatewayProxyResponseEventFactory.ok(new SourceService(new SourceRepository(AmazonDynamoDBFactory.create(), context.getLogger()), context.getLogger()).getSources().stream().map(Source::getSourceName).distinct().collect(Collectors.toList()));
-        } catch (final InterruptedException e) {
-            this.log(e, event, context);
+        final Cache<String, Object> cache    = this.getCache();
+        final Object                response = cache.get(event.getPath());
+
+        if (response == null) {
+            try {
+                final Collection<String> sourceNames = new SourceService(new SourceRepository(AmazonDynamoDBFactory.create(), context.getLogger()), context.getLogger()).getSources().stream().map(Source::getSourceName).distinct().collect(Collectors.toList());
+                cache.put(event.getPath(), sourceNames);
+
+                return APIGatewayProxyResponseEventFactory.ok(sourceNames);
+            } catch (final InterruptedException e) {
+                this.log(e, event, context);
+            }
+
+            return APIGatewayProxyResponseEventFactory.badRequest();
         }
 
-        return APIGatewayProxyResponseEventFactory.badRequest();
+        return APIGatewayProxyResponseEventFactory.ok(response);
     }
 }

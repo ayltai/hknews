@@ -1,7 +1,7 @@
 {
     "name": "hknews",
     "description": "Serves aggregated news from 13 local news publishers in Hong Kong",
-    "version": "3.3.0",
+    "version": "3.3.1",
     "author": {
         "name": "Alan Tai"
     },
