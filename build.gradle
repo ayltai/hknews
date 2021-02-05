@@ -22,12 +22,13 @@ configurations {
 repositories {
     jcenter()
     mavenCentral()
+    maven { url 'https://dl.bintray.com/mockito/maven' }
 }
 
 ext {
     retrofitVersion = '2.9.0'
     lombokVersion   = '1.18.18'
-    junitVersion    = '5.7.0'
+    junitVersion    = '5.7.1'
 }
 
 dependencies {
@@ -65,7 +66,7 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     // Unit testing
-    testImplementation 'org.mockito:mockito-core:3.7.7'
+    testImplementation 'org.mockito:mockito-core:3.7.13'
     testImplementation 'com.amazonaws:aws-lambda-java-tests:1.0.0'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly    "org.junit.jupiter:junit-jupiter-engine:$junitVersion"

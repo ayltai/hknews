@@ -7,7 +7,6 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.amazonaws.cache.Cache;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyRequestEvent;
 import com.amazonaws.services.lambda.runtime.events.APIGatewayProxyResponseEvent;
@@ -26,9 +25,7 @@ public final class ItemsHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        final Cache<String, Object> cache    = this.getCache();
-        final Object                response = cache.get(event.getPath());
-
+        final Object response = ApiHandler.CACHE.get(event.getPath());
         if (response == null) {
             final Map<String, String> parameters    = event.getPathParameters();
             final Map<String, String> queries       = event.getQueryStringParameters();
@@ -49,7 +46,7 @@ public final class ItemsHandler extends ApiHandler {
                 final boolean          isEmpty    = items.isEmpty() || pageable.getPageNumber() < 1 || pageable.getPageNumber() > totalPages;
                 final Page<Item>       page       = new Page<>(pageable, sort, pageable.getPageSize(), totalPages, items.size(), pagedItems.size(), pageable.getPageNumber() == 1, pageable.getPageNumber() == totalPages, isEmpty, pagedItems);
 
-                cache.put(event.getPath(), page);
+                ApiHandler.CACHE.put(event.getPath(), page);
 
                 return APIGatewayProxyResponseEventFactory.ok(page);
             } catch (final InterruptedException e) {
