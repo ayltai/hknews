@@ -66,7 +66,7 @@ dependencies {
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
     // Unit testing
-    testImplementation 'org.mockito:mockito-core:3.7.13'
+    testImplementation 'org.mockito:mockito-core:3.7.15'
     testImplementation 'com.amazonaws:aws-lambda-java-tests:1.0.0'
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly    "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
