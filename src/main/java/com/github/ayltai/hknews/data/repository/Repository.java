@@ -30,7 +30,8 @@ import org.jetbrains.annotations.NotNull;
 public abstract class Repository<T extends Model> {
     private static final Gson GSON = new Gson();
 
-    protected final DynamoDB       client;
+    private static DynamoDB client;
+
     protected final Table          table;
     protected final DynamoDBMapper mapper;
 
@@ -38,21 +39,20 @@ public abstract class Repository<T extends Model> {
     private final LambdaLogger logger;
 
     protected Repository(@NotNull final AmazonDynamoDB client, @NotNull final LambdaLogger logger) throws InterruptedException {
-        this.client     = new DynamoDB(client);
+        if (Repository.client == null) Repository.client = new DynamoDB(client);
+
         this.modelClass = (Class<T>)((ParameterizedType)this.getClass().getGenericSuperclass()).getActualTypeArguments()[0];
         this.logger     = logger;
 
-        if (StreamSupport.stream(this.client.listTables().spliterator(), false).noneMatch(table -> this.modelClass.getSimpleName().equals(table.getTableName()))) {
-            this.client
-                .createTable(new CreateTableRequest()
+        if (!Boolean.getBoolean(System.getenv("AWS_DYNAMODB_INIT")) && StreamSupport.stream(Repository.client.listTables().spliterator(), false).noneMatch(table -> this.modelClass.getSimpleName().equals(table.getTableName()))) Repository.client
+            .createTable(new CreateTableRequest()
                 .withTableName(this.modelClass.getSimpleName())
                 .withKeySchema(this.getKeySchemaElements())
                 .withAttributeDefinitions(this.getAttributeDefinitions())
                 .withBillingMode(BillingMode.PAY_PER_REQUEST))
-                .waitForActive();
-        }
+            .waitForActive();
 
-        this.table  = this.client.getTable(this.modelClass.getSimpleName());
+        this.table  = Repository.client.getTable(this.modelClass.getSimpleName());
         this.mapper = new DynamoDBMapper(client);
     }
 

@@ -15,10 +15,10 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class WenWeiPoParser extends Parser {
@@ -30,15 +30,15 @@ public final class WenWeiPoParser extends Parser {
 
     //endregion
 
-    public WenWeiPoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public WenWeiPoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @SuppressWarnings("java:S3776")
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<div class=\"content-art-box\">", "</article>");
+        final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<div class=\"content-art-box\">", "</article>");
         if (sections == null) return Collections.emptyList();
 
         final LocalDateTime now = LocalDateTime.now();
@@ -80,7 +80,7 @@ public final class WenWeiPoParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<!-- Content start -->", "!-- Content end -->");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<!-- Content start -->", "!-- Content end -->");
         if (html != null) {
             String[] descriptions = StringUtils.substringsBetween(html, "<p >", WenWeiPoParser.CLOSE_PARAGRAPH);
             if (descriptions != null) item.setDescription(String.join(WenWeiPoParser.LINE_BREAKS, descriptions));

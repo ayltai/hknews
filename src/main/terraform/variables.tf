@@ -18,21 +18,6 @@ variable "aws_cloudfront_price_class" {
   default     = "PriceClass_200"
 }
 
-variable "api_runtime" {
-  type    = string
-  default = "java11"
-}
-
-variable "api_memory" {
-  type    = number
-  default = 1024
-}
-
-variable "api_timeout" {
-  type    = number
-  default = 30
-}
-
 variable "api_throttle_limit" {
   description = "The AWS Lambda throttling rate limit per second"
   default     = 1000

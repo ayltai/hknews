@@ -3,7 +3,6 @@ package com.github.ayltai.hknews.parser;
 import java.io.IOException;
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.jetbrains.annotations.NotNull;
@@ -34,17 +33,14 @@ public final class AppleDailyParser extends Parser {
 
     //endregion
 
-    public AppleDailyParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public AppleDailyParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final String html = this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body();
-        if (html == null) return Collections.emptyList();
-
-        return StreamSupport.stream(new JSONObject(html).getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
+        return StreamSupport.stream(new JSONObject(this.contentService.getHtml(source.getUrl())).getJSONArray(AppleDailyParser.JSON_CONTENT_ELEMENTS).spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> {
                 final Item item = new Item();

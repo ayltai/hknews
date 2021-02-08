@@ -12,58 +12,58 @@ import java.util.stream.Collectors;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
-import com.github.ayltai.hknews.data.model.RssEnclosure;
-import com.github.ayltai.hknews.data.model.RssFeed;
-import com.github.ayltai.hknews.data.model.RssItem;
 import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.data.model.rss.Enclosure;
+import com.github.ayltai.hknews.data.model.rss.Entry;
+import com.github.ayltai.hknews.data.model.rss.Root;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
 
 import org.jetbrains.annotations.NotNull;
 
 public abstract class RssParser extends Parser {
-    RssParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    RssParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final RssFeed feed = this.contentServiceFactory.create().getFeed(source.getUrl()).execute().body();
-        return (feed == null || feed.getItems() == null || feed.getItems().isEmpty() ? Collections.<RssItem>emptyList() : feed.getItems())
+        final Root rss = this.contentService.getRss(source.getUrl());
+        return (rss.getChannel().getItems() == null || rss.getChannel().getItems().isEmpty()) ? Collections.emptyList() : rss.getChannel().getItems()
             .stream()
-            .filter(rssItem -> rssItem.getLink() != null)
-            .map(rssItem -> {
+            .filter(entry -> entry.getLink() != null)
+            .map(entry -> {
                 final Item item = new Item();
 
-                item.setTitle(rssItem.getTitle() == null ? null : rssItem.getTitle().trim());
-                item.setDescription(rssItem.getDescription() == null ? null : rssItem.getDescription().trim());
-                item.setUrl(rssItem.getLink().trim());
-                item.setPublishDate(Date.from(ZonedDateTime.parse(rssItem.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
+                item.setTitle(entry.getTitle() == null ? null : entry.getTitle().trim());
+                item.setDescription(entry.getDescription() == null ? null : entry.getDescription().trim());
+                item.setUrl(entry.getLink().trim());
+                item.setPublishDate(Date.from(ZonedDateTime.parse(entry.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 
-                RssParser.processImages(item, rssItem);
-                RssParser.processVideos(item, rssItem);
+                RssParser.processImages(item, entry);
+                RssParser.processVideos(item, entry);
 
                 return item;
             })
             .collect(Collectors.toList());
     }
 
-    private static void processImages(@NotNull final Item item, @NotNull final RssItem rssItem) {
-        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getImages().addAll(rssItem.getEnclosures()
+    private static void processImages(@NotNull final Item item, @NotNull final Entry entry) {
+        if (entry.getEnclosures() != null && !entry.getEnclosures().isEmpty()) item.getImages().addAll(entry.getEnclosures()
             .stream()
-            .filter(RssEnclosure::isImage)
+            .filter(Enclosure::isImage)
             .map(enclosure -> new Image(enclosure.getUrl(), null))
             .collect(Collectors.toList()));
     }
 
-    private static void processVideos(@NotNull final Item item, @NotNull final RssItem rssItem) {
-        if (rssItem.getEnclosures() != null && !rssItem.getEnclosures().isEmpty()) item.getVideos().addAll(rssItem.getEnclosures()
+    private static void processVideos(@NotNull final Item item, @NotNull final Entry entry) {
+        if (entry.getEnclosures() != null && !entry.getEnclosures().isEmpty()) item.getVideos().addAll(entry.getEnclosures()
             .stream()
-            .filter(RssEnclosure::isVideo)
+            .filter(Enclosure::isVideo)
             .map(enclosure -> new Video(enclosure.getUrl(), item.getImages().get(0).getUrl()))
             .collect(Collectors.toList()));
     }

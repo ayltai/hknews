@@ -26,7 +26,7 @@ variable "runtime" {
 
 variable "memory" {
   type    = number
-  default = 1024
+  default = 768
 }
 
 variable "timeout" {

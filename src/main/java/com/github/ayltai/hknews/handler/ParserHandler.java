@@ -5,11 +5,10 @@ import java.util.stream.Collectors;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.events.ScheduledEvent;
-import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.AmazonDynamoDBFactory;
 import com.github.ayltai.hknews.data.repository.ItemRepository;
 import com.github.ayltai.hknews.data.repository.SourceRepository;
-import com.github.ayltai.hknews.net.DefaultContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.parser.DefaultParserFactory;
 import com.github.ayltai.hknews.parser.Parser;
 import com.github.ayltai.hknews.parser.ParserFactory;
@@ -59,7 +58,7 @@ public abstract class ParserHandler extends CronHandler {
 
     @NotNull
     private ParserFactory getParserFactory(@NotNull final LambdaLogger logger) {
-        if (this.parserFactory == null) this.parserFactory = new DefaultParserFactory(this.getSourceService(logger), new DefaultContentServiceFactory(Configuration.DEFAULT));
+        if (this.parserFactory == null) this.parserFactory = new DefaultParserFactory(this.getSourceService(logger), new ContentService());
 
         return this.parserFactory;
     }

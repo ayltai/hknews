@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.net.ContentService;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
@@ -18,27 +17,17 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 
-import retrofit2.Call;
-import retrofit2.Response;
-
 public final class AppleDailyParserTests extends ParserTests {
     @Test
     @Override
     public void testGetItems() throws IOException {
-        final ContentServiceFactory factory = Mockito.mock(ContentServiceFactory.class);
-        final ContentService        service = Mockito.mock(ContentService.class);
-
-        Mockito.doReturn(service).when(factory).create();
+        final ContentService service = Mockito.mock(ContentService.class);
 
         try (InputStreamReader inputStreamReader = new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("testdata/appledaily.json"), StandardCharsets.UTF_8);
              BufferedReader    bufferedReader    = new BufferedReader(inputStreamReader)) {
-            final Call             call     = Mockito.mock(Call.class);
-            final Response<String> response = Response.success(bufferedReader.lines().collect(Collectors.joining("\n")));
+            Mockito.doReturn(bufferedReader.lines().collect(Collectors.joining("\n"))).when(service).getHtml(ArgumentMatchers.anyString());
 
-            Mockito.doReturn(call).when(service).getHtml(ArgumentMatchers.anyString());
-            Mockito.doReturn(response).when(call).execute();
-
-            final Collection<Item> items = new AppleDailyParser("蘋果日報", this.sourceService, factory, Mockito.mock(LambdaLogger.class)).getItems("港聞");
+            final Collection<Item> items = new AppleDailyParser("蘋果日報", this.sourceService, service, Mockito.mock(LambdaLogger.class)).getItems("港聞");
 
             Assertions.assertEquals(100 + 100, items.size(), "Incorrect item count");
 

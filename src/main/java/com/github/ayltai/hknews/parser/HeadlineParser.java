@@ -15,23 +15,23 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class HeadlineParser extends Parser {
     private static final String QUOTE = "\"";
 
-    public HeadlineParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public HeadlineParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<div class=\"topic\">", "<p class=\"text-left\">");
+        final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<div class=\"topic\">", "<p class=\"text-left\">");
         if (sections == null) return Collections.emptyList();
 
         return Arrays.stream(sections)
@@ -59,7 +59,7 @@ public final class HeadlineParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<div class=\"content", "<div class=\"content-fb-landing\">");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<div class=\"content", "<div class=\"content-fb-landing\">");
         if (html != null) {
             final String description = StringUtils.substringBetween(html, "<div id=\"news-content\" class=\"set-font-aera\" style=\"visibility: visible;\">", "</div>");
             if (description != null) item.setDescription(description);

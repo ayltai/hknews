@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Objects;
@@ -18,10 +17,10 @@ import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,8 +29,8 @@ public final class OrientalDailyRealtimeParser extends Parser {
     private static final String SLASH           = "/";
     private static final String JSON_ARTICLE_ID = "articleId";
 
-    public OrientalDailyRealtimeParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public OrientalDailyRealtimeParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
@@ -39,10 +38,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final LocalDate now = LocalDate.now();
 
-        final String html = this.contentServiceFactory.create().getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body();
-        if (html == null) return Collections.emptyList();
-
-        return StreamSupport.stream(new JSONArray(html).spliterator(), false)
+        return StreamSupport.stream(new JSONArray(this.contentService.getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd"))))).spliterator(), false)
             .map(JSONObject.class::cast)
             .map(json -> {
                 final Item item = new Item();
@@ -60,7 +56,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "ONCC.Content.data = [", "];");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "ONCC.Content.data = [", "];");
         if (html != null) {
             final JSONObject json = new JSONObject(html.trim());
 
@@ -108,9 +104,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
         final String    fullDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         item.getVideos().clear();
-
-        final String videos = this.contentServiceFactory.create().getHtml("https://hk.on.cc/hk/bkn/video/" + fullDate + "/articleVideo_news.js").execute().body();
-        if (videos != null) item.getVideos().addAll(StreamSupport.stream(new JSONArray(videos).spliterator(), false)
+        item.getVideos().addAll(StreamSupport.stream(new JSONArray(this.contentService.getHtml("https://hk.on.cc/hk/bkn/video/" + fullDate + "/articleVideo_news.js")).spliterator(), false)
             .map(JSONObject.class::cast)
             .filter(json -> articleId.equals(json.getString(OrientalDailyRealtimeParser.JSON_ARTICLE_ID)))
             .map(json -> {

@@ -16,10 +16,10 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class SingPaoParser extends Parser {
@@ -32,14 +32,14 @@ public final class SingPaoParser extends Parser {
 
     //endregion
 
-    public SingPaoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public SingPaoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().getHtml(source.getUrl()).execute().body(), "<tr valign='top'><td width='220'>", "</td></tr>");
+        final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<tr valign='top'><td width='220'>", "</td></tr>");
         if (sections == null) return Collections.emptyList();
 
         return Stream.of(sections)
@@ -68,7 +68,7 @@ public final class SingPaoParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<td class='news_title'>", "您可能有興趣:");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<td class='news_title'>", "您可能有興趣:");
         if (html != null) {
             String[] descriptions = StringUtils.substringsBetween(html, "<p class=\"內文\">", SingPaoParser.PARAGRAPH);
             if (descriptions == null) descriptions = StringUtils.substringsBetween(html, "<p>", SingPaoParser.PARAGRAPH);

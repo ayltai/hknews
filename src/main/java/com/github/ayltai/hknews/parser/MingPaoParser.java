@@ -9,24 +9,24 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class MingPaoParser extends RssParser {
     private static final String DIV_CLEAR = "<div class=\"clear\"></div>";
     private static final String QUOTE     = "\"";
 
-    public MingPaoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public MingPaoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<hgroup>", "<h3>上 / 下一篇新聞</h3>");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<hgroup>", "<h3>上 / 下一篇新聞</h3>");
         if (html != null) {
             item.setDescription(StringUtils.substringBetween(html, "<div id=\"upper\">", "</div>"));
             item.setDescription((item.getDescription() == null ? "" : item.getDescription() + "<br><br>") + StringUtils.substringBetween(html, "<div class=\"articlelogin\">", "</div>"));

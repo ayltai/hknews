@@ -6,27 +6,25 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class RthkParser extends RssParser {
-    public RthkParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public RthkParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body();
-        if (html != null) {
-            final String description = StringUtils.substringBetween(html, "<div class=\"itemFullText\">", "</div>");
-            if (description != null) item.setDescription(description.trim());
+        final String html = this.contentService.getHtml(item.getUrl());
+        final String description = StringUtils.substringBetween(html, "<div class=\"itemFullText\">", "</div>");
+        if (description != null) item.setDescription(description.trim());
 
-            RthkParser.processImagesAndVideos(html, item);
-        }
+        RthkParser.processImagesAndVideos(html, item);
 
         return item;
     }

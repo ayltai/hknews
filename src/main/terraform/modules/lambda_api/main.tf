@@ -16,7 +16,9 @@ resource "aws_lambda_function" "this" {
 
   environment {
     variables = {
-      AWS_DYNAMODB_URL = "https://dynamodb.${var.aws_region}.amazonaws.com"
+      AWS_DYNAMODB_URL  = "https://dynamodb.${var.aws_region}.amazonaws.com"
+      AWS_DYNAMODB_INIT = false
+      AWS_CSM_ENABLED   = true
     }
   }
 

@@ -16,10 +16,10 @@ import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.data.model.Video;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class OrientalDailyParser extends Parser {
@@ -32,8 +32,8 @@ public final class OrientalDailyParser extends Parser {
 
     //endregion
 
-    public OrientalDailyParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public OrientalDailyParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
@@ -41,7 +41,8 @@ public final class OrientalDailyParser extends Parser {
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final LocalDate now = LocalDate.now();
 
-        String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))).execute().body(), "<div id=\"articleList\">", "<!--//articleList-->");
+        String html = StringUtils.substringBetween(this.contentService.getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))), "<div id=\"articleList\">", "<!--//articleList-->");
+        if (html == null) return Collections.emptyList();
 
         if ("國際".equals(source.getCategoryName())) html = StringUtils.substringBetween(html, "<h2>要聞</h2>", "<h2>兩岸</h2>");
         if ("兩岸".equals(source.getCategoryName())) html = StringUtils.substringBetween(html, "<h2>兩岸</h2>", OrientalDailyParser.CLOSE);
@@ -67,7 +68,7 @@ public final class OrientalDailyParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<div id=\"contentCTN-top\"", "</div><!--//contentCTN-->");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<div id=\"contentCTN-top\"", "</div><!--//contentCTN-->");
         if (html != null) {
             final String[] descriptions = StringUtils.substringsBetween(html.replace("<h3>", "<p>").replace("</h3>", "</p>"), "<p>", "</p>");
             if (descriptions != null) item.setDescription(String.join("<br><br>", descriptions));
@@ -98,26 +99,25 @@ public final class OrientalDailyParser extends Parser {
     private void processVideos(@NotNull final Item item) throws IOException {
         final LocalDate date     = item.getPublishDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         final String    fullDate = date.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        final String    xml      = this.contentServiceFactory.create().getHtml(OrientalDailyParser.BASE_URL + "/cnt/keyinfo/" + fullDate + "/videolist.xml").execute().body();
+        final String    xml      = this.contentService.getHtml(OrientalDailyParser.BASE_URL + "/cnt/keyinfo/" + fullDate + "/videolist.xml");
 
-        if (xml != null) {
-            final String key = "odn-" + fullDate + "-" + date.format(DateTimeFormatter.ofPattern("MMdd")) + "_" + StringUtils.substringBetween(item.getUrl(), fullDate + OrientalDailyParser.SLASH, ".html");
+        final String key = "odn-" + fullDate + "-" + date.format(DateTimeFormatter.ofPattern("MMdd")) + "_" + StringUtils.substringBetween(item.getUrl(), fullDate + OrientalDailyParser.SLASH, ".html");
 
-            item.getVideos().clear();
-            item.getVideos().addAll(Stream.of(StringUtils.substringsBetween(xml, "<news>", "</news>"))
-                .filter(section -> key.equals(StringUtils.substringBetween(section, "<articleID>", "</articleID>")))
-                .map(section -> {
-                    final String videoUrl     = StringUtils.substringBetween(section, "<video_url>", "</video_url>");
-                    final String thumbnailUrl = StringUtils.substringBetween(section, "<thumbnail>", "</thumbnail>");
+        item.getVideos().clear();
+        item.getVideos().addAll(Stream.of(StringUtils.substringsBetween(xml, "<news>", "</news>"))
+            .filter(Objects::nonNull)
+            .filter(section -> key.equals(StringUtils.substringBetween(section, "<articleID>", "</articleID>")))
+            .map(section -> {
+                final String videoUrl     = StringUtils.substringBetween(section, "<video_url>", "</video_url>");
+                final String thumbnailUrl = StringUtils.substringBetween(section, "<thumbnail>", "</thumbnail>");
 
-                    if (videoUrl == null || thumbnailUrl == null) return null;
+                if (videoUrl == null || thumbnailUrl == null) return null;
 
-                    final String shortDate = date.format(DateTimeFormatter.ofPattern("yyyyMM"));
+                final String shortDate = date.format(DateTimeFormatter.ofPattern("yyyyMM"));
 
-                    return new Video("https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList()));
-        }
+                return new Video("https://video-cdn.on.cc/Video/" + shortDate + OrientalDailyParser.SLASH + StringUtils.substringBetween(videoUrl, "?mid=", "&amp;mtype=video") + "_ipad.mp4", "https://tv.on.cc/xml/Thumbnail/" + shortDate + "/bigthumbnail/" + thumbnailUrl);
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList()));
     }
 }

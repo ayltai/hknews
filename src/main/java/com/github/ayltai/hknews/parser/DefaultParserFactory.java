@@ -1,7 +1,7 @@
 package com.github.ayltai.hknews.parser;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ public final class DefaultParserFactory implements ParserFactory {
 
     //endregion
 
-    private final SourceService         sourceService;
-    private final ContentServiceFactory contentServiceFactory;
+    private final SourceService  sourceService;
+    private final ContentService contentService;
 
     @SuppressWarnings("checkstyle:cyclomaticComplexity")
     @NotNull
@@ -39,52 +39,52 @@ public final class DefaultParserFactory implements ParserFactory {
     public Parser create(@NotNull final String sourceName, @NotNull final LambdaLogger logger) {
         switch (sourceName) {
             case DefaultParserFactory.SOURCE_APPLE_DAILY:
-                return new AppleDailyParser(DefaultParserFactory.SOURCE_APPLE_DAILY, this.sourceService, this.contentServiceFactory, logger);
+                return new AppleDailyParser(DefaultParserFactory.SOURCE_APPLE_DAILY, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_HEADLINE:
-                return new HeadlineParser(DefaultParserFactory.SOURCE_HEADLINE, this.sourceService, this.contentServiceFactory, logger);
+                return new HeadlineParser(DefaultParserFactory.SOURCE_HEADLINE, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_HEADLINE_REALTIME:
-                return new HeadlineRealtimeParser(DefaultParserFactory.SOURCE_HEADLINE_REALTIME, this.sourceService, this.contentServiceFactory, logger);
+                return new HeadlineRealtimeParser(DefaultParserFactory.SOURCE_HEADLINE_REALTIME, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_HKEJ:
-                return new HkejParser(DefaultParserFactory.SOURCE_HKEJ, this.sourceService, this.contentServiceFactory, logger);
+                return new HkejParser(DefaultParserFactory.SOURCE_HKEJ, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_HKEJ_REALTIME:
-                return new HkejRealtimeParser(DefaultParserFactory.SOURCE_HKEJ_REALTIME, this.sourceService, this.contentServiceFactory, logger);
+                return new HkejRealtimeParser(DefaultParserFactory.SOURCE_HKEJ_REALTIME, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_HKET:
-                return new HketParser(DefaultParserFactory.SOURCE_HKET, this.sourceService, this.contentServiceFactory, logger);
+                return new HketParser(DefaultParserFactory.SOURCE_HKET, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_MING_PAO:
-                return new MingPaoParser(DefaultParserFactory.SOURCE_MING_PAO, this.sourceService, this.contentServiceFactory, logger);
+                return new MingPaoParser(DefaultParserFactory.SOURCE_MING_PAO, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_ORIENTAL_DAILY:
-                return new OrientalDailyParser(DefaultParserFactory.SOURCE_ORIENTAL_DAILY, this.sourceService, this.contentServiceFactory, logger);
+                return new OrientalDailyParser(DefaultParserFactory.SOURCE_ORIENTAL_DAILY, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_ORIENTAL_DAILY_REALTIME:
-                return new OrientalDailyRealtimeParser(DefaultParserFactory.SOURCE_ORIENTAL_DAILY_REALTIME, this.sourceService, this.contentServiceFactory, logger);
+                return new OrientalDailyRealtimeParser(DefaultParserFactory.SOURCE_ORIENTAL_DAILY_REALTIME, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_RTHK:
-                return new RthkParser(DefaultParserFactory.SOURCE_RTHK, this.sourceService, this.contentServiceFactory, logger);
+                return new RthkParser(DefaultParserFactory.SOURCE_RTHK, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_SCMP:
-                return new ScmpParser(DefaultParserFactory.SOURCE_SCMP, this.sourceService, this.contentServiceFactory, logger);
+                return new ScmpParser(DefaultParserFactory.SOURCE_SCMP, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_SING_PAO:
-                return new SingPaoParser(DefaultParserFactory.SOURCE_SING_PAO, this.sourceService, this.contentServiceFactory, logger);
+                return new SingPaoParser(DefaultParserFactory.SOURCE_SING_PAO, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_SING_TAO:
-                return new SingTaoParser(DefaultParserFactory.SOURCE_SING_TAO, this.sourceService, this.contentServiceFactory, logger);
+                return new SingTaoParser(DefaultParserFactory.SOURCE_SING_TAO, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_SKYPOST:
-                return new SkyPostParser(DefaultParserFactory.SOURCE_SKYPOST, this.sourceService, this.contentServiceFactory, logger);
+                return new SkyPostParser(DefaultParserFactory.SOURCE_SKYPOST, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_THE_STANDARD:
-                return new TheStandardParser(DefaultParserFactory.SOURCE_THE_STANDARD, this.sourceService, this.contentServiceFactory, logger);
+                return new TheStandardParser(DefaultParserFactory.SOURCE_THE_STANDARD, this.sourceService, this.contentService, logger);
 
             case DefaultParserFactory.SOURCE_WEN_WEI_PO:
-                return new WenWeiPoParser(DefaultParserFactory.SOURCE_WEN_WEI_PO, this.sourceService, this.contentServiceFactory, logger);
+                return new WenWeiPoParser(DefaultParserFactory.SOURCE_WEN_WEI_PO, this.sourceService, this.contentService, logger);
 
             default:
                 throw new IllegalArgumentException("Unrecognized source " + sourceName);

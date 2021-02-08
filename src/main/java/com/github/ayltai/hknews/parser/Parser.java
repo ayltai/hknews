@@ -12,7 +12,7 @@ import javax.net.ssl.SSLHandshakeException;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
 import com.google.gson.Gson;
 
@@ -31,7 +31,7 @@ public abstract class Parser {
     protected final SourceService sourceService;
 
     @NotNull
-    protected final ContentServiceFactory contentServiceFactory;
+    protected final ContentService contentService;
 
     @NotNull
     protected final LambdaLogger logger;

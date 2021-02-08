@@ -8,16 +8,10 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '3.3.1'
+version '3.3.2'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
-    }
-}
 
 repositories {
     jcenter()
@@ -26,38 +20,46 @@ repositories {
 }
 
 ext {
-    retrofitVersion = '2.9.0'
-    lombokVersion   = '1.18.18'
-    junitVersion    = '5.7.1'
+    awsSdkVersion          = '1.11.950'
+    awsLambdaCoreVersion   = '1.2.1'
+    awsLambdaEventsVersion = '3.7.0'
+    jacksonVersion         = '2.12.1'
+    gsonVersion            = '2.8.6'
+    jsonVersion            = '20201115'
+    lombokVersion          = '1.18.18'
+    spotBugsVersion        = '4.2.1'
+    jetBrainsVersion       = '20.1.0'
+    junitVersion           = '5.7.1'
+    mockitoVersion         = '3.7.15'
+}
+
+configurations {
+    all {
+        resolutionStrategy {
+            force "com.fasterxml.jackson.core:jackson-core:$jacksonVersion"
+            force "com.fasterxml.jackson.dataformat:jackson-databind:$jacksonVersion"
+            force "com.fasterxml.jackson.dataformat:jackson-dataformat-cbor:$jacksonVersion"
+        }
+    }
+
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
 }
 
 dependencies {
     // AWS SDK libraries
-    implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.948')
+    implementation platform("com.amazonaws:aws-java-sdk-bom:$awsSdkVersion")
     implementation 'com.amazonaws:aws-java-sdk-dynamodb'
-    implementation 'com.amazonaws:aws-java-sdk-s3'
 
     // AWS Lambda libraries
-    implementation 'com.amazonaws:aws-lambda-java-core:1.2.1'
-    implementation 'com.amazonaws:aws-lambda-java-events:3.7.0'
-    runtimeOnly    'com.amazonaws:aws-lambda-java-log4j2:1.2.0'
-
-    // HTTP networking
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-scalars:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-simplexml:$retrofitVersion"
+    implementation     "com.amazonaws:aws-lambda-java-core:$awsLambdaCoreVersion"
+    implementation     "com.amazonaws:aws-lambda-java-events:$awsLambdaEventsVersion"
 
     // JSON and XML
-    implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'org.json:json:20201115'
-    implementation 'org.simpleframework:simple-xml:2.7.1'
-
-    // Utilities
-    implementation 'org.apache.commons:commons-lang3:3.11'
-    compileOnly    'org.jetbrains:annotations:20.1.0'
-    compileOnly    'com.github.spotbugs:spotbugs-annotations:4.2.0'
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-xml:$jacksonVersion"
+    implementation "com.google.code.gson:gson:$gsonVersion"
+    implementation "org.json:json:$jsonVersion"
 
     // Code generation
     compileOnly             "org.projectlombok:lombok:$lombokVersion"
@@ -65,9 +67,13 @@ dependencies {
     testCompileOnly         "org.projectlombok:lombok:$lombokVersion"
     testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
 
+    // Utilities
+    compileOnly     "com.github.spotbugs:spotbugs-annotations:$spotBugsVersion"
+    compileOnly     "org.jetbrains:annotations:$jetBrainsVersion"
+    testCompileOnly "org.jetbrains:annotations:$jetBrainsVersion"
+
     // Unit testing
-    testImplementation 'org.mockito:mockito-core:3.7.13'
-    testImplementation 'com.amazonaws:aws-lambda-java-tests:1.0.0'
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "org.junit.jupiter:junit-jupiter-api:$junitVersion"
     testRuntimeOnly    "org.junit.jupiter:junit-jupiter-engine:$junitVersion"
 }
@@ -100,7 +106,7 @@ tasks.withType(Checkstyle) {
 //region SpotBugs
 
 spotbugs {
-    toolVersion.set('4.2.0')
+    toolVersion.set(spotBugsVersion)
     ignoreFailures.set(true)
     excludeFilter.set(file('./spotbugs-exclude.xml'))
 

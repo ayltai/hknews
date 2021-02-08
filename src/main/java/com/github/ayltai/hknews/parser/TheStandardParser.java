@@ -18,10 +18,10 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
-import com.github.ayltai.hknews.net.ContentServiceFactory;
+import com.github.ayltai.hknews.net.ContentService;
 import com.github.ayltai.hknews.service.SourceService;
+import com.github.ayltai.hknews.util.StringUtils;
 
-import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class TheStandardParser extends Parser {
@@ -37,15 +37,15 @@ public final class TheStandardParser extends Parser {
 
     //endregion
 
-    public TheStandardParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentServiceFactory contentServiceFactory, @NotNull final LambdaLogger logger) {
-        super(sourceName, sourceService, contentServiceFactory, logger);
+    public TheStandardParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
+        super(sourceName, sourceService, contentService, logger);
     }
 
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
         final String[] tokens   = source.getUrl().split(Pattern.quote("?"));
-        final String[] sections = StringUtils.substringsBetween(this.contentServiceFactory.create().postHtml(tokens[0], Integer.parseInt(tokens[1].split("=")[1]), 1).execute().body(), "<li class='caption'>", "</li>");
+        final String[] sections = StringUtils.substringsBetween(this.contentService.postHtml(tokens[0], Integer.parseInt(tokens[1].split("=")[1]), 1), "<li class='caption'>", "</li>");
 
         if (sections == null) return Collections.emptyList();
 
@@ -75,7 +75,7 @@ public final class TheStandardParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentServiceFactory.create().getHtml(item.getUrl()).execute().body(), "<div class=\"content\">", "<div class=\"related\">");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<div class=\"content\">", "<div class=\"related\">");
         if (html != null) {
             final String[] descriptions = StringUtils.substringsBetween(html, TheStandardParser.OPEN_PARAGRAPH, TheStandardParser.CLOSE_PARAGRAPH);
             if (descriptions != null) item.setDescription(String.join("<br><br>", descriptions));
