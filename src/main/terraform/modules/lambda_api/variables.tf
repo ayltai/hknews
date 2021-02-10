@@ -26,7 +26,7 @@ variable "runtime" {
 
 variable "memory" {
   type    = number
-  default = 768
+  default = 1024
 }
 
 variable "timeout" {
@@ -58,6 +58,16 @@ variable "http_method" {
 variable "log_retention" {
   type    = number
   default = 14
+}
+
+variable "log_filter_pattern" {
+  type    = string
+  default = "EXCEPTION="
+}
+
+variable "log_filter_namespace" {
+  type    = string
+  default = "API"
 }
 
 variable "tag" {

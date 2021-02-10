@@ -16,7 +16,7 @@ public final class ItemHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        final Object response = ApiHandler.CACHE.get(event.getPath());
+        final Object response = this.getCache(event, context);
         if (response == null) {
             final String uid = event.getPathParameters().get("uid");
             if (uid == null) return APIGatewayProxyResponseEventFactory.badRequest();
@@ -25,7 +25,7 @@ public final class ItemHandler extends ApiHandler {
                 final Optional<Item> item = new ItemService(new ItemRepository(AmazonDynamoDBFactory.create(), context.getLogger()), context.getLogger()).getItem(uid);
                 if (item.isEmpty()) return APIGatewayProxyResponseEventFactory.notFound();
 
-                ApiHandler.CACHE.put(event.getPath(), item.get());
+                this.putCache(event, context, item.get());
 
                 return APIGatewayProxyResponseEventFactory.ok(item.get());
             } catch (final InterruptedException e) {

@@ -25,6 +25,14 @@ resource "aws_lambda_function" "this" {
   }
 }
 
+resource "aws_lambda_permission" "this" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  principal     = "events.amazonaws.com"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.this.function_name
+  source_arn    = aws_cloudwatch_event_rule.this.arn
+}
+
 resource "aws_cloudwatch_event_rule" "this" {
   name                = var.event_name
   schedule_expression = var.schedule_expression
@@ -45,10 +53,14 @@ resource "aws_cloudwatch_log_group" "this" {
   retention_in_days = var.log_retention
 }
 
-resource "aws_lambda_permission" "this" {
-  statement_id  = "AllowExecutionFromCloudWatch"
-  principal     = "events.amazonaws.com"
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.this.function_name
-  source_arn    = aws_cloudwatch_event_rule.this.arn
+resource "aws_cloudwatch_log_metric_filter" "this" {
+  name           = var.function_name
+  log_group_name = aws_cloudwatch_log_group.this.name
+  pattern        = var.log_filter_pattern
+
+  metric_transformation {
+    name      = "ErrorCount"
+    namespace = var.log_filter_namespace
+    value     = "1"
+  }
 }

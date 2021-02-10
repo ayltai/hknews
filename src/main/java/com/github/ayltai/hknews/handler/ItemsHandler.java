@@ -25,7 +25,7 @@ public final class ItemsHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        final Object response = ApiHandler.CACHE.get(event.getPath());
+        final Object response = this.getCache(event, context);
         if (response == null) {
             final Map<String, String> parameters    = event.getPathParameters();
             final Map<String, String> queries       = event.getQueryStringParameters();
@@ -46,7 +46,7 @@ public final class ItemsHandler extends ApiHandler {
                 final boolean          isEmpty    = items.isEmpty() || pageable.getPageNumber() < 1 || pageable.getPageNumber() > totalPages;
                 final Page<Item>       page       = new Page<>(pageable, sort, pageable.getPageSize(), totalPages, items.size(), pagedItems.size(), pageable.getPageNumber() == 1, pageable.getPageNumber() == totalPages, isEmpty, pagedItems);
 
-                ApiHandler.CACHE.put(event.getPath(), page);
+                this.putCache(event, context, page);
 
                 return APIGatewayProxyResponseEventFactory.ok(page);
             } catch (final InterruptedException e) {

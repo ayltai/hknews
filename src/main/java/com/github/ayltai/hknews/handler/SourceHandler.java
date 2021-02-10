@@ -17,11 +17,11 @@ public final class SourceHandler extends ApiHandler {
     @NotNull
     @Override
     public APIGatewayProxyResponseEvent handleRequest(@NotNull final APIGatewayProxyRequestEvent event, @NotNull final Context context) {
-        final Object response = ApiHandler.CACHE.get(event.getPath());
+        final Object response = this.getCache(event, context);
         if (response == null) {
             try {
                 final Collection<String> sourceNames = new SourceService(new SourceRepository(AmazonDynamoDBFactory.create(), context.getLogger()), context.getLogger()).getSources().stream().map(Source::getSourceName).distinct().collect(Collectors.toList());
-                ApiHandler.CACHE.put(event.getPath(), sourceNames);
+                this.putCache(event, context, sourceNames);
 
                 return APIGatewayProxyResponseEventFactory.ok(sourceNames);
             } catch (final InterruptedException e) {
