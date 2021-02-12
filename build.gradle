@@ -20,7 +20,7 @@ repositories {
 }
 
 ext {
-    awsSdkVersion          = '1.11.951'
+    awsSdkVersion          = '1.11.953'
     awsLambdaCoreVersion   = '1.2.1'
     awsLambdaEventsVersion = '3.7.0'
     jacksonVersion         = '2.12.1'
@@ -30,7 +30,7 @@ ext {
     spotBugsVersion        = '4.2.1'
     jetBrainsVersion       = '20.1.0'
     junitVersion           = '5.7.1'
-    mockitoVersion         = '3.7.15'
+    mockitoVersion         = '3.7.16'
 }
 
 configurations {
