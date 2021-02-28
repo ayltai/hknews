@@ -2,7 +2,7 @@ plugins {
     id 'java'
     id 'com.github.ben-manes.versions' version '0.36.0'
     id 'org.sonarqube'                 version '3.1.1'
-    id 'com.github.spotbugs'           version '4.6.0'
+    id 'com.github.spotbugs'           version '4.6.2'
     id 'checkstyle'
     id 'jacoco'
 }
@@ -15,12 +15,10 @@ targetCompatibility = JavaVersion.VERSION_11
 
 repositories {
     jcenter()
-    mavenCentral()
-    maven { url 'https://dl.bintray.com/mockito/maven' }
 }
 
 ext {
-    awsSdkVersion          = '1.11.953'
+    awsSdkVersion          = '1.11.964'
     awsLambdaCoreVersion   = '1.2.1'
     awsLambdaEventsVersion = '3.7.0'
     jacksonVersion         = '2.12.1'
@@ -30,7 +28,7 @@ ext {
     spotBugsVersion        = '4.2.1'
     jetBrainsVersion       = '20.1.0'
     junitVersion           = '5.7.1'
-    mockitoVersion         = '3.7.16'
+    mockitoVersion         = '3.8.0'
 }
 
 configurations {
@@ -81,7 +79,7 @@ dependencies {
 //region Checkstyle
 
 checkstyle {
-    toolVersion    = '8.39'
+    toolVersion    = '8.40'
     configFile     = file('./checkstyle.xml')
     ignoreFailures = true
     showViolations = true
