@@ -25,6 +25,7 @@
         "eject": "react-scripts eject",
         "build": "cross-env SKIP_PREFLIGHT_CHECK=true GENERATE_SOURCEMAP=false react-app-rewired build",
         "serve": "serve -s build",
+        "preinstall": "npx npm-force-resolutions",
         "start": "cross-env SKIP_PREFLIGHT_CHECK=true react-app-rewired start",
         "pretest": "eslint src/**/*.{js,jsx}",
         "test": "cross-env SKIP_PREFLIGHT_CHECK=true react-app-rewired test --watchAll=false"
@@ -38,6 +39,7 @@
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
         "eslint": "^7.21.0",
+        "npm-force-resolutions": "^0.0.10",
         "react-app-rewired": "^2.1.8",
         "react-scripts": "^4.0.3",
         "react-test-renderer": "^16.14.0",
@@ -46,6 +48,7 @@
     "dependencies": {
         "@material-ui/core": "^4.11.3",
         "@material-ui/icons": "^4.11.2",
+        "lodash": "^4.17.21",
         "prop-types": "^15.7.2",
         "ra-core": "^3.13.0",
         "ra-i18n-polyglot": "^3.13.0",
@@ -59,6 +62,9 @@
         "react-router-dom": "^5.2.0",
         "react-timeago": "^5.2.0",
         "video-react": "^0.14.1"
+    },
+    "resolutions": {
+        "lodash": "4.17.21"
     },
     "eslintConfig": {
         "extends": [
