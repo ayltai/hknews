@@ -27,8 +27,6 @@ resource "aws_api_gateway_method_settings" "this" {
   stage_name  = aws_api_gateway_deployment.this.stage_name
 
   settings {
-    logging_level          = "ERROR"
-    metrics_enabled        = true
     throttling_rate_limit  = var.api_throttle_limit
     throttling_burst_limit = var.api_throttle_limit
   }
@@ -103,11 +101,6 @@ resource "aws_api_gateway_deployment" "this" {
     aws_api_gateway_integration.root,
     aws_api_gateway_integration_response.root,
   ]
-}
-
-resource "aws_cloudwatch_log_group" "this" {
-  name              = "API-Gateway-Execution-Logs_${aws_api_gateway_rest_api.this.id}/${var.api_stage_name}"
-  retention_in_days = var.api_log_retention
 }
 
 resource "aws_route53_zone" "this" {
