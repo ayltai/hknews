@@ -1,6 +1,6 @@
 import { mount, } from 'enzyme';
 import React from 'react';
-import { TestContext, } from 'react-admin';
+import { TestContext, } from 'ra-test';
 import renderer from 'react-test-renderer';
 
 import { Gallery, } from '../../../../main/javascript/view/list/Gallery';

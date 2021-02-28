@@ -1,7 +1,7 @@
 import { createMuiTheme, MuiThemeProvider, } from '@material-ui/core';
 import { render, } from 'enzyme';
 import React from 'react';
-import { TestContext, } from 'react-admin';
+import { TestContext, } from 'ra-test';
 import renderer from 'react-test-renderer';
 
 import { ItemGrid, } from '../../../../main/javascript/view/list/ItemGrid';

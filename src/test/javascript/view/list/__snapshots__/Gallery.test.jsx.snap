@@ -6,6 +6,7 @@ exports[`<Gallery /> renders without errors 1`] = `
   label="label"
 >
   <img
+    basePath={null}
     onClick={[Function]}
     record={
       Object {
@@ -16,6 +17,7 @@ exports[`<Gallery /> renders without errors 1`] = `
     src="image1"
   />
   <img
+    basePath={null}
     onClick={[Function]}
     record={
       Object {

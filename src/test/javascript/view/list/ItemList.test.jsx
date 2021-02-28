@@ -1,7 +1,7 @@
 import { createMuiTheme, MuiThemeProvider, } from '@material-ui/core';
 import { mount, render, } from 'enzyme';
 import React from 'react';
-import { TestContext, } from 'react-admin';
+import { TestContext, } from 'ra-test';
 
 import { ItemList, } from '../../../../main/javascript/view/list/ItemList';
 
