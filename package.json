@@ -50,7 +50,7 @@
         "ra-core": "^3.13.0",
         "ra-i18n-polyglot": "^3.13.0",
         "ra-language-english": "^3.13.0",
-        "react": "^16.14.0",
+        "react": "^17.0.1",
         "react-admin": "^3.13.0",
         "react-detect-offline": "^2.4.2",
         "react-dom": "^16.14.0",
