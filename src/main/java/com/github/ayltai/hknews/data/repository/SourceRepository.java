@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Source;
@@ -24,9 +25,13 @@ public final class SourceRepository extends Repository<Source> {
         values.put(":SourceName", new AttributeValue().withS(sourceName));
         if (categoryName != null) values.put(":CategoryName", new AttributeValue().withS(categoryName));
 
-        return this.mapper
+        final PaginatedList<Source> page = this.mapper
             .scan(Source.class, new DynamoDBScanExpression()
             .withFilterExpression(categoryName == null ? "SourceName = :SourceName" : "SourceName = :SourceName AND CategoryName = :CategoryName")
             .withExpressionAttributeValues(values));
+
+        page.loadAllResults();
+
+        return page;
     }
 }

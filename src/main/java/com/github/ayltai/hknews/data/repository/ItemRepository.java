@@ -13,6 +13,7 @@ import java.util.stream.StreamSupport;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.Configuration;
@@ -41,18 +42,22 @@ public final class ItemRepository extends Repository<Item> {
         return this.mapper
             .query(Item.class, new DynamoDBQueryExpression<Item>()
             .withKeyConditionExpression("Uid = :Uid")
-            .withExpressionAttributeValues(Collections.singletonMap(":Uid", new AttributeValue().withS(uid))))
+            .withExpressionAttributeValues(Collections.singletonMap(":Uid", new AttributeValue().withS(uid)))
+            .withLimit(1))
             .stream()
             .findFirst();
     }
 
     @NotNull
     public Collection<Item> findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(@NotNull final Collection<String> sourceNames, @NotNull final Collection<String> categoryNames, final int days) {
-        return this.mapper
+        final PaginatedList<Item> page = this.mapper
             .scan(Item.class, new DynamoDBScanExpression()
                 .withFilterExpression("PublishDate >= :PublishDate")
-                .withExpressionAttributeValues(Collections.singletonMap(":PublishDate", new AttributeValue().withS(LocalDate.ofInstant(Instant.now(), ZoneId.of(Configuration.DEFAULT.getTimeZone())).atStartOfDay().minusDays(days).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))))
-            .stream()
+                .withExpressionAttributeValues(Collections.singletonMap(":PublishDate", new AttributeValue().withS(LocalDate.ofInstant(Instant.now(), ZoneId.of(Configuration.DEFAULT.getTimeZone())).atStartOfDay().minusDays(days).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))));
+
+        page.loadAllResults();
+
+        return page.stream()
             .filter(item -> sourceNames.contains(item.getSourceName()))
             .filter(item -> categoryNames.contains(item.getCategoryName()))
             .sorted((left, right) -> right.getPublishDate().compareTo(left.getPublishDate()))
@@ -61,9 +66,13 @@ public final class ItemRepository extends Repository<Item> {
 
     @NotNull
     public Collection<Item> findByPublishDateBefore(final int days) {
-        return this.mapper
+        final PaginatedList<Item> page = this.mapper
             .scan(Item.class, new DynamoDBScanExpression()
                 .withFilterExpression("PublishDate < :PublishDate")
                 .withExpressionAttributeValues(Collections.singletonMap(":PublishDate", new AttributeValue().withS(LocalDate.ofInstant(Instant.now(), ZoneId.of(Configuration.DEFAULT.getTimeZone())).atStartOfDay().minusDays(days).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))));
+
+        page.loadAllResults();
+
+        return page;
     }
 }
