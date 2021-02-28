@@ -20,8 +20,9 @@ public final class RthkParser extends RssParser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = this.contentService.getHtml(item.getUrl());
+        final String html        = this.contentService.getHtml(item.getUrl());
         final String description = StringUtils.substringBetween(html, "<div class=\"itemFullText\">", "</div>");
+
         if (description != null) item.setDescription(description.trim());
 
         RthkParser.processImagesAndVideos(html, item);
