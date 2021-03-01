@@ -1,6 +1,7 @@
 package com.github.ayltai.hknews.data.repository;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
@@ -15,8 +16,8 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
 import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Item;
-
 import org.jetbrains.annotations.NotNull;
 
 public final class ItemRepository extends Repository<Item> {
@@ -51,7 +52,8 @@ public final class ItemRepository extends Repository<Item> {
         expression.addFilterCondition(Item.COLUMN_PUBLISH_DATE, new Condition()
             .withComparisonOperator(ComparisonOperator.GE)
             .withAttributeValueList(new AttributeValue()
-                .withS(OffsetDateTime.now()
+                .withS(LocalDate.now()
+                    .atStartOfDay(ZoneId.of(Configuration.DEFAULT.getTimeZone()))
                     .minusDays(days)
                     .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))));
 
@@ -70,7 +72,8 @@ public final class ItemRepository extends Repository<Item> {
         expression.addFilterCondition(Item.COLUMN_PUBLISH_DATE, new Condition()
             .withComparisonOperator(ComparisonOperator.LT)
             .withAttributeValueList(new AttributeValue()
-                .withS(OffsetDateTime.now()
+                .withS(LocalDate.now()
+                    .atStartOfDay(ZoneId.of(Configuration.DEFAULT.getTimeZone()))
                     .minusDays(days)
                     .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))));
 

@@ -76,7 +76,7 @@ export const ItemGrid = ({ basePath, ids, data, }) => {
                                             record={data[id]}
                                             source='sourceName' />
                                     }
-                                    subheader={<TimeAgo date={data[id].publishDate} />}
+                                    subheader={<TimeAgo date={`${data[id].publishDate} GMT`} />}
                                     avatar={
                                         <img
                                             src={`/images/${Constants.SOURCE_IMAGES[data[id].sourceName]}.png`}
