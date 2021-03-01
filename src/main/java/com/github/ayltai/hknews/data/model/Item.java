@@ -24,26 +24,36 @@ import lombok.Setter;
 @NoArgsConstructor
 @DynamoDBTable(tableName = "Item")
 public final class Item implements Model {
+    public static final String COLUMN_UID           = "Uid";
+    public static final String COLUMN_TITLE         = "Title";
+    public static final String COLUMN_DESCRIPTION   = "Description";
+    public static final String COLUMN_URL           = "Url";
+    public static final String COLUMN_PUBLISH_DATE  = "PublishDate";
+    public static final String COLUMN_SOURCE_NAME   = "SourceName";
+    public static final String COLUMN_CATEGORY_NAME = "CategoryName";
+    public static final String COLUMN_IMAGES        = "Images";
+    public static final String COLUMN_VIDEOS        = "Videos";
+
     @Getter(onMethod_ = {
-        @DynamoDBHashKey(attributeName = "Uid"),
+        @DynamoDBHashKey(attributeName = Item.COLUMN_UID),
     })
     @Setter
     private String uid;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "Title"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_TITLE),
     })
     @Setter
     private String title;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "Description"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_DESCRIPTION),
     })
     @Setter
     private String description;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "Url"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_URL),
     })
     @Setter
     private String url;
@@ -52,7 +62,7 @@ public final class Item implements Model {
         @SuppressFBWarnings(
             value         = "EI_EXPOSE_REP",
             justification = "Date is the only supported date/time type in Amazon DynamoDB"),
-        @DynamoDBRangeKey(attributeName = "PublishDate"),
+        @DynamoDBRangeKey(attributeName = Item.COLUMN_PUBLISH_DATE),
     })
     @Setter(onMethod_ = {
         @SuppressFBWarnings(
@@ -62,26 +72,26 @@ public final class Item implements Model {
     private Date publishDate;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "SourceName"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_SOURCE_NAME),
     })
     @Setter
     private String sourceName;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "CategoryName"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_CATEGORY_NAME),
     })
     @Setter
     private String categoryName;
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "Images"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_IMAGES),
     })
     @Setter
     @JsonManagedReference
     private List<Image> images = new ArrayList<>();
 
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "Videos"),
+        @DynamoDBAttribute(attributeName = Item.COLUMN_VIDEOS),
     })
     @Setter
     @JsonManagedReference

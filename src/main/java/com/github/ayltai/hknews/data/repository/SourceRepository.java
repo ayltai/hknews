@@ -1,13 +1,12 @@
 package com.github.ayltai.hknews.data.repository;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Source;
 
@@ -21,17 +20,10 @@ public final class SourceRepository extends Repository<Source> {
 
     @NotNull
     public Collection<Source> findBySourceNameAndCategoryName(@NotNull final String sourceName, @Nullable final String categoryName) {
-        final Map<String, AttributeValue> values = new HashMap<>();
-        values.put(":SourceName", new AttributeValue().withS(sourceName));
-        if (categoryName != null) values.put(":CategoryName", new AttributeValue().withS(categoryName));
+        final DynamoDBScanExpression expression = new DynamoDBScanExpression();
+        expression.addFilterCondition(Source.COLUMN_SOURCE_NAME, new Condition().withComparisonOperator(ComparisonOperator.EQ).withAttributeValueList(new AttributeValue().withS(sourceName)));
+        if (categoryName != null) expression.addFilterCondition(Source.COLUMN_CATEGORY_NAME, new Condition().withComparisonOperator(ComparisonOperator.EQ).withAttributeValueList(new AttributeValue().withS(categoryName)));
 
-        final PaginatedList<Source> page = this.mapper
-            .scan(Source.class, new DynamoDBScanExpression()
-            .withFilterExpression(categoryName == null ? "SourceName = :SourceName" : "SourceName = :SourceName AND CategoryName = :CategoryName")
-            .withExpressionAttributeValues(values));
-
-        page.loadAllResults();
-
-        return page;
+        return this.mapper.scan(Source.class, expression);
     }
 }

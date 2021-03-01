@@ -1,8 +1,6 @@
 package com.github.ayltai.hknews.data.repository;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.time.OffsetDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,10 +11,10 @@ import java.util.stream.StreamSupport;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
-import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Item;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,38 +39,46 @@ public final class ItemRepository extends Repository<Item> {
     public Optional<Item> findByUid(@NotNull final String uid) {
         return this.mapper
             .query(Item.class, new DynamoDBQueryExpression<Item>()
-            .withKeyConditionExpression("Uid = :Uid")
-            .withExpressionAttributeValues(Collections.singletonMap(":Uid", new AttributeValue().withS(uid)))
-            .withLimit(1))
+                .withKeyConditionExpression("Uid = :Uid")
+                .withExpressionAttributeValues(Collections.singletonMap(":Uid", new AttributeValue().withS(uid))))
             .stream()
             .findFirst();
     }
 
     @NotNull
     public Collection<Item> findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(@NotNull final Collection<String> sourceNames, @NotNull final Collection<String> categoryNames, final int days) {
-        final PaginatedList<Item> page = this.mapper
-            .scan(Item.class, new DynamoDBScanExpression()
-                .withFilterExpression("PublishDate >= :PublishDate")
-                .withExpressionAttributeValues(Collections.singletonMap(":PublishDate", new AttributeValue().withS(LocalDate.ofInstant(Instant.now(), ZoneId.of(Configuration.DEFAULT.getTimeZone())).atStartOfDay().minusDays(days).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))));
+        final DynamoDBScanExpression expression = new DynamoDBScanExpression();
 
-        page.loadAllResults();
+        expression.addFilterCondition(Item.COLUMN_PUBLISH_DATE, new Condition()
+            .withComparisonOperator(ComparisonOperator.GE)
+            .withAttributeValueList(new AttributeValue()
+                .withS(OffsetDateTime.now()
+                    .minusDays(days)
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))));
+        expression.addFilterCondition(Item.COLUMN_SOURCE_NAME, new Condition()
+            .withComparisonOperator(ComparisonOperator.IN)
+            .withAttributeValueList(new AttributeValue().withSS(sourceNames)));
+        expression.addFilterCondition(Item.COLUMN_CATEGORY_NAME, new Condition()
+            .withComparisonOperator(ComparisonOperator.IN)
+            .withAttributeValueList(new AttributeValue().withSS(categoryNames)));
 
-        return page.stream()
-            .filter(item -> sourceNames.contains(item.getSourceName()))
-            .filter(item -> categoryNames.contains(item.getCategoryName()))
+        return this.mapper
+            .scan(Item.class, expression)
+            .stream()
             .sorted((left, right) -> right.getPublishDate().compareTo(left.getPublishDate()))
             .collect(Collectors.toList());
     }
 
     @NotNull
     public Collection<Item> findByPublishDateBefore(final int days) {
-        final PaginatedList<Item> page = this.mapper
-            .scan(Item.class, new DynamoDBScanExpression()
-                .withFilterExpression("PublishDate < :PublishDate")
-                .withExpressionAttributeValues(Collections.singletonMap(":PublishDate", new AttributeValue().withS(LocalDate.ofInstant(Instant.now(), ZoneId.of(Configuration.DEFAULT.getTimeZone())).atStartOfDay().minusDays(days).format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)))));
+        final DynamoDBScanExpression expression = new DynamoDBScanExpression();
+        expression.addFilterCondition(Item.COLUMN_PUBLISH_DATE, new Condition()
+            .withComparisonOperator(ComparisonOperator.LT)
+            .withAttributeValueList(new AttributeValue()
+                .withS(OffsetDateTime.now()
+                    .minusDays(days)
+                    .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))));
 
-        page.loadAllResults();
-
-        return page;
+        return this.mapper.scan(Item.class, expression);
     }
 }

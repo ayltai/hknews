@@ -14,21 +14,25 @@ import lombok.Setter;
 @AllArgsConstructor
 @DynamoDBTable(tableName = "Source")
 public final class Source implements Model {
+    public static final String COLUMN_SOURCE_NAME   = "SourceName";
+    public static final String COLUMN_CATEGORY_NAME = "CategoryName";
+    public static final String COLUMN_URL           = "Url";
+
     @Getter(onMethod_ = {
-        @DynamoDBAttribute(attributeName = "SourceName"),
+        @DynamoDBAttribute(attributeName = Source.COLUMN_SOURCE_NAME),
     })
     @Setter
     private String sourceName;
 
     @Getter(onMethod_ = {
-        @DynamoDBRangeKey(attributeName = "CategoryName"),
+        @DynamoDBRangeKey(attributeName = Source.COLUMN_CATEGORY_NAME),
     })
     @Setter
     private String categoryName;
 
 
     @Getter(onMethod_ = {
-        @DynamoDBHashKey(attributeName = "Url"),
+        @DynamoDBHashKey(attributeName = Source.COLUMN_URL),
     })
     @Setter
     private String url;
