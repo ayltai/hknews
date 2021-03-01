@@ -39,11 +39,6 @@ variable "log_retention" {
   default = 14
 }
 
-variable "log_filter_pattern" {
-  type    = string
-  default = "EXCEPTION="
-}
-
 variable "log_filter_namespace" {
   type    = string
   default = "CronJob"
