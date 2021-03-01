@@ -48,23 +48,18 @@ public final class ItemRepository extends Repository<Item> {
     @NotNull
     public Collection<Item> findBySourceNameInAndCategoryNameInAndPublishDateAfterOrderByPublishDateDesc(@NotNull final Collection<String> sourceNames, @NotNull final Collection<String> categoryNames, final int days) {
         final DynamoDBScanExpression expression = new DynamoDBScanExpression();
-
         expression.addFilterCondition(Item.COLUMN_PUBLISH_DATE, new Condition()
             .withComparisonOperator(ComparisonOperator.GE)
             .withAttributeValueList(new AttributeValue()
                 .withS(OffsetDateTime.now()
                     .minusDays(days)
                     .format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))));
-        expression.addFilterCondition(Item.COLUMN_SOURCE_NAME, new Condition()
-            .withComparisonOperator(ComparisonOperator.IN)
-            .withAttributeValueList(new AttributeValue().withSS(sourceNames)));
-        expression.addFilterCondition(Item.COLUMN_CATEGORY_NAME, new Condition()
-            .withComparisonOperator(ComparisonOperator.IN)
-            .withAttributeValueList(new AttributeValue().withSS(categoryNames)));
 
         return this.mapper
             .scan(Item.class, expression)
             .stream()
+            .filter(item -> sourceNames.contains(item.getSourceName()))
+            .filter(item -> categoryNames.contains(item.getCategoryName()))
             .sorted((left, right) -> right.getPublishDate().compareTo(left.getPublishDate()))
             .collect(Collectors.toList());
     }
