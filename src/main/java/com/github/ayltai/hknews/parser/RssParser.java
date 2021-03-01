@@ -1,7 +1,6 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
@@ -40,7 +39,7 @@ public abstract class RssParser extends Parser {
                 item.setTitle(entry.getTitle() == null ? null : entry.getTitle().trim());
                 item.setDescription(entry.getDescription() == null ? null : entry.getDescription().trim());
                 item.setUrl(entry.getLink().trim());
-                item.setPublishDate(Date.from(ZonedDateTime.parse(entry.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).withZoneSameInstant(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(ZonedDateTime.parse(entry.getPubDate().trim(), DateTimeFormatter.RFC_1123_DATE_TIME).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

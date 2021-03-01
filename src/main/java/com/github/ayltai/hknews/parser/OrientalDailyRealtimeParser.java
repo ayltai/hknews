@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -36,7 +38,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final LocalDate now = LocalDate.now();
+        final ZonedDateTime now = LocalDateTime.now().atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone()));
 
         return StreamSupport.stream(new JSONArray(this.contentService.getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd"))))).spliterator(), false)
             .map(JSONObject.class::cast)
@@ -44,7 +46,7 @@ public final class OrientalDailyRealtimeParser extends Parser {
                 final Item item = new Item();
                 item.setTitle(json.getString("title"));
                 item.setUrl("https://hk.on.cc" + json.getString("link"));
-                item.setPublishDate(Date.from(LocalDateTime.parse(json.getString("pubDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(LocalDateTime.parse(json.getString("pubDate"), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")).atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

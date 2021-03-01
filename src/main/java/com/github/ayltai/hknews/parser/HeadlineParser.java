@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -46,7 +47,7 @@ public final class HeadlineParser extends Parser {
                 final Item item = new Item();
                 item.setTitle(StringUtils.substringBetween(section, " title=\"", HeadlineParser.QUOTE).trim());
                 item.setUrl("https://hd.stheadline.com" + url);
-                item.setPublishDate(Date.from(LocalDate.parse(date).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(LocalDate.parse(date).atStartOfDay(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

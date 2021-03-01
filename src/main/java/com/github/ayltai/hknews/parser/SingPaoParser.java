@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -55,7 +56,7 @@ public final class SingPaoParser extends Parser {
                 item.setTitle(StringUtils.substringBetween(section, "class='list_title'>", "</a>").trim());
                 item.setDescription(StringUtils.substringBetween(section, "<br><br>\n", SingPaoParser.FONT));
                 item.setUrl(SingPaoParser.BASE_URI + url);
-                item.setPublishDate(Date.from(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(LocalDate.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

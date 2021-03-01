@@ -1,7 +1,8 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,6 +12,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -57,7 +59,7 @@ public final class WenWeiPoParser extends Parser {
         final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<main class=\"mainbody\">", "<div class=\"post-footer\">");
         if (html != null) {
             final String date = StringUtils.substringBetween(html, "<span class=\"publish-date\">", "</span>");
-            if (date != null) item.setPublishDate(Date.from(ZonedDateTime.parse(date, DateTimeFormatter.ofPattern(WenWeiPoParser.DATE_FORMAT)).toInstant()));
+            if (date != null) item.setPublishDate(Date.from(LocalDateTime.parse(date, DateTimeFormatter.ofPattern(WenWeiPoParser.DATE_FORMAT)).atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant()));
 
             final String[] descriptions = StringUtils.substringsBetween(html, "<p>", "</p>");
             if (descriptions != null) item.setDescription(String.join("<br><br>", descriptions));

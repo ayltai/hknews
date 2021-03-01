@@ -2,7 +2,10 @@ package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
@@ -12,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -39,7 +43,7 @@ public final class OrientalDailyParser extends Parser {
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final LocalDate now = LocalDate.now();
+        final ZonedDateTime now = LocalDateTime.now().atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone())).with(LocalTime.of(0, 0, 0, 0));
 
         String html = StringUtils.substringBetween(this.contentService.getHtml(String.format(source.getUrl(), now.format(DateTimeFormatter.ofPattern("yyyyMMdd")))), "<div id=\"articleList\">", "<!--//articleList-->");
         if (html == null) return Collections.emptyList();
@@ -56,7 +60,7 @@ public final class OrientalDailyParser extends Parser {
                 final Item item = new Item();
                 item.setTitle(StringUtils.substringBetween(section, "\">", "<"));
                 item.setUrl(OrientalDailyParser.BASE_URL + StringUtils.substringBetween(section, "<a href=\"", "\""));
-                item.setPublishDate(Date.from(now.atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(now.toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

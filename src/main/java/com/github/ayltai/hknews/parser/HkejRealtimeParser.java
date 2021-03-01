@@ -2,9 +2,10 @@ package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
 import java.sql.Date;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
 import com.github.ayltai.hknews.net.ContentService;
@@ -29,7 +31,7 @@ public final class HkejRealtimeParser extends BaseHkejParser {
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final LocalDate now = LocalDate.now();
+        final ZonedDateTime now = LocalDateTime.now().atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone()));
 
         final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<h3>", "</div>");
         if (sections == null) return Collections.emptyList();
@@ -47,7 +49,7 @@ public final class HkejRealtimeParser extends BaseHkejParser {
                 final Item item = new Item();
                 item.setTitle(StringUtils.substringBetween(section, "\">", "</a>"));
                 item.setUrl("https://www2.hkej.com" + url);
-                item.setPublishDate(Date.from(now.atTime(LocalTime.parse(date, DateTimeFormatter.ofPattern("HH:mm"))).atZone(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(now.with(LocalTime.parse(date, DateTimeFormatter.ofPattern("HH:mm"))).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 

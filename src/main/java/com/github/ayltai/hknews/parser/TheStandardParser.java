@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
+import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.Image;
 import com.github.ayltai.hknews.data.model.Item;
 import com.github.ayltai.hknews.data.model.Source;
@@ -62,7 +63,7 @@ public final class TheStandardParser extends Parser {
                 item.setTitle(StringUtils.substringBetween(StringUtils.substringBetween(section, "<h1>", "</h1>"), "\">", "</a>").trim());
                 item.setDescription(StringUtils.substringBetween(section, TheStandardParser.OPEN_PARAGRAPH, TheStandardParser.CLOSE_PARAGRAPH));
                 item.setUrl(url);
-                item.setPublishDate(Date.from(date.length() > TheStandardParser.FORMAT_SHORT.length() + 1 ? LocalDateTime.parse(date, new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern(TheStandardParser.FORMAT_LONG).toFormatter()).atZone(ZoneId.systemDefault()).toInstant() : LocalDate.parse(date, DateTimeFormatter.ofPattern(TheStandardParser.FORMAT_SHORT)).atStartOfDay(ZoneId.systemDefault()).toInstant()));
+                item.setPublishDate(Date.from(date.length() > TheStandardParser.FORMAT_SHORT.length() + 1 ? LocalDateTime.parse(date, new DateTimeFormatterBuilder().parseCaseInsensitive().appendPattern(TheStandardParser.FORMAT_LONG).toFormatter()).atZone(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant() : LocalDate.parse(date, DateTimeFormatter.ofPattern(TheStandardParser.FORMAT_SHORT)).atStartOfDay(ZoneId.of(Configuration.DEFAULT.getTimeZone())).toInstant()));
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
 
