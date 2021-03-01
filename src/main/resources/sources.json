@@ -2,62 +2,62 @@
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "港聞",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/local\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/local\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "港聞",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/local\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/local\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "國際",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/international\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/international\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "國際",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/international\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/international\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "兩岸",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/china\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/china\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "兩岸",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/china\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/china\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "經濟",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/finance\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/finance\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "經濟",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/finance\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/finance\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "娛樂",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/entertainment\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/entertainment\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "娛樂",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/entertainment\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/entertainment\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "體育",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/daily/sports\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/daily/sports\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "蘋果日報",
         "categoryName" : "體育",
-        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={\"feedOffset\":0,\"feedQuery\":\"taxonomy.primary_section._id:\\\"/realtime/sports\\\"+AND+type:story+AND+publish_date:[now-48h/h+TO+now]\",\"feedSize\":100,\"sort\":\"display_date:desc\"}"
+        "url"          : "https://hk.appledaily.com/pf/api/v3/content/fetch/query-feed?query={%22feedOffset%22:0,%22feedQuery%22:%22taxonomy.primary_section._id:\\%22/realtime/sports\\%22+AND+type:story+AND+publish_date:[now-48h/h+TO+now]%22,%22feedSize%22:100,%22sort%22:%22display_date:desc%22}"
     },
     {
         "sourceName"   : "東方日報",
