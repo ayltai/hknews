@@ -1,15 +1,14 @@
 package com.github.ayltai.hknews.parser;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Calendar;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.github.ayltai.hknews.data.model.Image;
@@ -22,54 +21,29 @@ import com.github.ayltai.hknews.util.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 public final class WenWeiPoParser extends Parser {
-    //region Constants
-
-    private static final String CLOSE_QUOTE     = "\"";
-    private static final String CLOSE_PARAGRAPH = "</p>";
-    private static final String LINE_BREAKS     = "<br><br>";
-
-    //endregion
+    private static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
     public WenWeiPoParser(@NotNull final String sourceName, @NotNull final SourceService sourceService, @NotNull final ContentService contentService, @NotNull final LambdaLogger logger) {
         super(sourceName, sourceService, contentService, logger);
     }
 
-    @SuppressWarnings("java:S3776")
     @NotNull
     @Override
     protected Collection<Item> getItems(@NotNull final Source source) throws IOException {
-        final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<div class=\"content-art-box\">", "</article>");
+        final String[] sections = StringUtils.substringsBetween(this.contentService.getHtml(source.getUrl()), "<div class=\"story-item ", "<div class=\"story-item-tag ");
         if (sections == null) return Collections.emptyList();
 
-        final LocalDateTime now = LocalDateTime.now();
-
-        return Stream.of(sections)
+        return Arrays.stream(sections)
             .filter(Objects::nonNull)
             .map(section -> {
-                final String url = StringUtils.substringBetween(section, "<a href=\"", WenWeiPoParser.CLOSE_QUOTE);
+                final String url = StringUtils.substringBetween(section, "<a href=\"", "\"");
                 if (url == null) return null;
 
-                final String date = StringUtils.substringBetween(section, "<p class=\"date\">[ ", " ]</p>");
-                if (date == null) return null;
-
                 final Item item = new Item();
-                item.setTitle(StringUtils.substringBetween(section, "target=\"_blank\">", "</a>").trim());
-                item.setDescription(StringUtils.substringBetween(section, "<p class=\"txt\">", WenWeiPoParser.CLOSE_PARAGRAPH));
+                item.setTitle(StringUtils.substringBetween(section, "title=\"", "\""));
                 item.setUrl(url);
                 item.setSourceName(source.getSourceName());
                 item.setCategoryName(source.getCategoryName());
-
-                final String[] tokens = date.split("日 ");
-                final String[] times  = tokens[1].split(":");
-
-                final int month = now.getMonthValue() - (now.getDayOfMonth() == Integer.parseInt(tokens[0]) ? 0 : 1);
-
-                item.setPublishDate(Date.from(now.withMonth(month == 0 ? Calendar.DECEMBER + 1 : month)
-                    .withDayOfMonth(Integer.parseInt(tokens[0]))
-                    .withHour(Integer.parseInt(times[0]))
-                    .withMinute(Integer.parseInt(times[1]))
-                    .atZone(ZoneId.systemDefault())
-                    .toInstant()));
 
                 return item;
             })
@@ -80,13 +54,13 @@ public final class WenWeiPoParser extends Parser {
     @NotNull
     @Override
     public Item updateItem(@NotNull final Item item) throws IOException {
-        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<!-- Content start -->", "!-- Content end -->");
+        final String html = StringUtils.substringBetween(this.contentService.getHtml(item.getUrl()), "<main class=\"mainbody\">", "<div class=\"post-footer\">");
         if (html != null) {
-            String[] descriptions = StringUtils.substringsBetween(html, "<p >", WenWeiPoParser.CLOSE_PARAGRAPH);
-            if (descriptions != null) item.setDescription(String.join(WenWeiPoParser.LINE_BREAKS, descriptions));
+            final String date = StringUtils.substringBetween(html, "<span class=\"publish-date\">", "</span>");
+            if (date != null) item.setPublishDate(Date.from(ZonedDateTime.parse(date, DateTimeFormatter.ofPattern(WenWeiPoParser.DATE_FORMAT)).toInstant()));
 
-            descriptions = StringUtils.substringsBetween(html, "<p>", WenWeiPoParser.CLOSE_PARAGRAPH);
-            if (descriptions != null) item.setDescription((item.getDescription() == null ? "" : item.getDescription()) + String.join(WenWeiPoParser.LINE_BREAKS, descriptions));
+            final String[] descriptions = StringUtils.substringsBetween(html, "<p>", "</p>");
+            if (descriptions != null) item.setDescription(String.join("<br><br>", descriptions));
 
             WenWeiPoParser.processImages(html, item);
         }
@@ -95,17 +69,18 @@ public final class WenWeiPoParser extends Parser {
     }
 
     private static void processImages(@NotNull final String html, @NotNull final Item item) {
-        final String[] imageContainers = StringUtils.substringsBetween(html, "<img ", ">");
+        final String[] imageContainers = StringUtils.substringsBetween(html, "<figure ", "</figure>");
         if (imageContainers != null) {
             item.getImages().clear();
-            item.getImages().addAll(Stream.of(imageContainers)
+            item.getImages().addAll(Arrays.stream(imageContainers)
                 .map(imageContainer -> {
-                    final String imageUrl = StringUtils.substringBetween(imageContainer, "src=\"", WenWeiPoParser.CLOSE_QUOTE);
+                    final String imageUrl = StringUtils.substringBetween(imageContainer, "<img src=\"", "\"");
                     if (imageUrl == null) return null;
 
-                    return new Image(imageUrl, StringUtils.substringBetween(imageContainer, "alt=\"", WenWeiPoParser.CLOSE_QUOTE));
+                    final String imageDescription = StringUtils.substringBetween(imageContainer, "<figcaption style=\"display: table-caption; caption-side: bottom;\">", "</figcaption>");
+
+                    return new Image(imageUrl, imageDescription == null ? null : imageDescription.trim());
                 })
-                .filter(Objects::nonNull)
                 .collect(Collectors.toList()));
         }
     }

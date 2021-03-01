@@ -14,9 +14,13 @@ import lombok.Setter;
 @AllArgsConstructor
 @DynamoDBTable(tableName = "Source")
 public final class Source implements Model {
+    //region Constants
+
     public static final String COLUMN_SOURCE_NAME   = "SourceName";
     public static final String COLUMN_CATEGORY_NAME = "CategoryName";
     public static final String COLUMN_URL           = "Url";
+
+    //endregion
 
     @Getter(onMethod_ = {
         @DynamoDBAttribute(attributeName = Source.COLUMN_SOURCE_NAME),

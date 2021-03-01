@@ -1,7 +1,6 @@
 package com.github.ayltai.hknews.net;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +10,7 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.github.ayltai.hknews.Configuration;
 import com.github.ayltai.hknews.data.model.rss.Root;
 import com.google.gson.Gson;
+
 import lombok.experimental.UtilityClass;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.ClientProtocolException;
@@ -35,9 +35,6 @@ import org.jetbrains.annotations.Nullable;
 
 @UtilityClass
 public class RestClient {
-    private static final String  WEN_WEI_PO_ENDPOINT = "news.wenweipo.com";
-    private static final Charset CHARSET_BIG5        = Charset.forName("Big5");
-
     private static final Gson GSON = new Gson();
 
     private static final CloseableHttpClient CLIENT = HttpClients.custom()
@@ -77,7 +74,7 @@ public class RestClient {
 
     private <T> T request(@NotNull final HttpUriRequest request, @Nullable final Class<T> clazz) throws IOException {
         try (CloseableHttpResponse response = RestClient.CLIENT.execute(request)) {
-            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) return clazz == null ? (T)EntityUtils.toString(response.getEntity(), RestClient.WEN_WEI_PO_ENDPOINT.equals(request.getURI().getHost()) ? RestClient.CHARSET_BIG5 : StandardCharsets.UTF_8) : clazz.isAssignableFrom(Root.class) ? new XmlMapper().readValue(EntityUtils.toString(response.getEntity(), RestClient.WEN_WEI_PO_ENDPOINT.equals(request.getURI().getHost()) ? RestClient.CHARSET_BIG5 : StandardCharsets.UTF_8), clazz) : RestClient.GSON.fromJson(EntityUtils.toString(response.getEntity(), RestClient.WEN_WEI_PO_ENDPOINT.equals(request.getURI().getHost()) ? RestClient.CHARSET_BIG5 : StandardCharsets.UTF_8), clazz);
+            if (response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) return clazz == null ? (T)EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8) : clazz.isAssignableFrom(Root.class) ? new XmlMapper().readValue(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8), clazz) : RestClient.GSON.fromJson(EntityUtils.toString(response.getEntity(), StandardCharsets.UTF_8), clazz);
 
             throw new ClientProtocolException("Received HTTP " + response.getStatusLine().getStatusCode());
         }

@@ -587,16 +587,46 @@
     {
         "sourceName"   : "文匯報",
         "categoryName" : "港聞",
-        "url"          : "http://news.wenweipo.com/list_news.php?cat=000IN&instantCat=hk"
+        "url"          : "https://www.wenweipo.com/todaywenwei/whHK/"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "港聞",
+        "url"          : "https://www.wenweipo.com/immed/hongkong"
     },
     {
         "sourceName"   : "文匯報",
         "categoryName" : "國際",
-        "url"          : "http://news.wenweipo.com/list_news.php?cat=000IN&instantCat=china"
+        "url"          : "https://www.wenweipo.com/todaywenwei/whinternational/"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "國際",
+        "url"          : "https://www.wenweipo.com/immed/world"
     },
     {
         "sourceName"   : "文匯報",
         "categoryName" : "兩岸",
-        "url"          : "http://news.wenweipo.com/list_news.php?cat=000IN&instantCat=world"
+        "url"          : "https://www.wenweipo.com/todaywenwei/whmainland/"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "兩岸",
+        "url"          : "https://www.wenweipo.com/immed/inland"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "經濟",
+        "url"          : "https://www.wenweipo.com/todaywenwei/economic/"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "娛樂",
+        "url"          : "https://www.wenweipo.com/todaywenwei/whentertainment/"
+    },
+    {
+        "sourceName"   : "文匯報",
+        "categoryName" : "副刊",
+        "url"          : "https://www.wenweipo.com/todaywenwei/supplement/"
     }
 ]

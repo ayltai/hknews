@@ -24,6 +24,8 @@ import lombok.Setter;
 @NoArgsConstructor
 @DynamoDBTable(tableName = "Item")
 public final class Item implements Model {
+    //region Constants
+
     public static final String COLUMN_UID           = "Uid";
     public static final String COLUMN_TITLE         = "Title";
     public static final String COLUMN_DESCRIPTION   = "Description";
@@ -33,6 +35,8 @@ public final class Item implements Model {
     public static final String COLUMN_CATEGORY_NAME = "CategoryName";
     public static final String COLUMN_IMAGES        = "Images";
     public static final String COLUMN_VIDEOS        = "Videos";
+
+    //endregion
 
     @Getter(onMethod_ = {
         @DynamoDBHashKey(attributeName = Item.COLUMN_UID),
