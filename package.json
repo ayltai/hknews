@@ -38,7 +38,7 @@
         "cross-env": "^7.0.3",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
-        "eslint": "^7.21.0",
+        "eslint": "^7.22.0",
         "npm-force-resolutions": "^0.0.10",
         "react-app-rewired": "^2.1.8",
         "react-scripts": "^4.0.3",
