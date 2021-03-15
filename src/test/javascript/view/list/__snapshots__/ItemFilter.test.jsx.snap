@@ -4,7 +4,7 @@ exports[`<ItemFilter /> renders without errors 1`] = `
 <form
   __versions={
     Object {
-      "final-form": "4.20.1",
+      "final-form": "4.20.2",
       "react-final-form": "6.5.2",
     }
   }
