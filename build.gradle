@@ -20,7 +20,7 @@ repositories {
 ext {
     awsSdkVersion          = '1.11.974'
     awsLambdaCoreVersion   = '1.2.1'
-    awsLambdaEventsVersion = '3.7.0'
+    awsLambdaEventsVersion = '3.8.0'
     jacksonVersion         = '2.12.2'
     gsonVersion            = '2.8.6'
     jsonVersion            = '20210307'
