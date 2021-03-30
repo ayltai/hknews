@@ -51,7 +51,7 @@
         "lodash": "^4.17.21",
         "prop-types": "^15.7.2",
         "ra-core": "^3.13.3",
-        "ra-i18n-polyglot": "^3.13.3",
+        "ra-i18n-polyglot": "^3.14.1",
         "ra-language-english": "^3.13.3",
         "ra-test": "^3.13.3",
         "react": "^16.14.0",
