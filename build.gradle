@@ -24,7 +24,7 @@ ext {
     jacksonVersion         = '2.12.2'
     gsonVersion            = '2.8.6'
     jsonVersion            = '20210307'
-    lombokVersion          = '1.18.18'
+    lombokVersion          = '1.18.20'
     spotBugsVersion        = '4.2.2'
     jetBrainsVersion       = '20.1.0'
     junitVersion           = '5.7.1'
