@@ -8,7 +8,7 @@ plugins {
 }
 
 group   'com.github.ayltai'
-version '3.3.5'
+version '3.3.6'
 
 sourceCompatibility = JavaVersion.VERSION_11
 targetCompatibility = JavaVersion.VERSION_11
@@ -18,13 +18,13 @@ repositories {
 }
 
 ext {
-    awsSdkVersion          = '1.11.974'
+    awsSdkVersion          = '1.11.992'
     awsLambdaCoreVersion   = '1.2.1'
-    awsLambdaEventsVersion = '3.7.0'
+    awsLambdaEventsVersion = '3.8.0'
     jacksonVersion         = '2.12.2'
     gsonVersion            = '2.8.6'
     jsonVersion            = '20210307'
-    lombokVersion          = '1.18.18'
+    lombokVersion          = '1.18.20'
     spotBugsVersion        = '4.2.2'
     jetBrainsVersion       = '20.1.0'
     junitVersion           = '5.7.1'
