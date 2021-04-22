@@ -55,7 +55,7 @@
         "ra-language-english": "^3.14.2",
         "ra-test": "^3.14.2",
         "react": "^16.14.0",
-        "react-admin": "^3.14.2",
+        "react-admin": "^3.14.4",
         "react-detect-offline": "^2.4.3",
         "react-dom": "^16.14.0",
         "react-image-lightbox": "^5.1.1",
