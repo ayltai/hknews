@@ -34,7 +34,7 @@
         "@apidevtools/swagger-cli": "^4.0.4",
         "@testing-library/jest-dom": "^5.11.10",
         "@testing-library/react": "^11.2.6",
-        "@testing-library/user-event": "^13.1.1",
+        "@testing-library/user-event": "^13.1.6",
         "cross-env": "^7.0.3",
         "enzyme": "^3.11.0",
         "enzyme-adapter-react-16": "^1.15.6",
