@@ -28,7 +28,7 @@ ext {
     spotBugsVersion        = '4.2.2'
     jetBrainsVersion       = '20.1.0'
     junitVersion           = '5.7.1'
-    mockitoVersion         = '3.8.0'
+    mockitoVersion         = '3.10.0'
 }
 
 configurations {
