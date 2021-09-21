@@ -50,7 +50,7 @@
         "@material-ui/icons": "^4.11.2",
         "lodash": "^4.17.21",
         "prop-types": "^15.7.2",
-        "ra-core": "^3.15.2",
+        "ra-core": "^3.18.2",
         "ra-i18n-polyglot": "^3.15.2",
         "ra-language-english": "^3.15.2",
         "ra-test": "^3.15.2",
