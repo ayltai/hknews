@@ -18,7 +18,7 @@ repositories {
 }
 
 ext {
-    awsSdkVersion          = '1.11.1034'
+    awsSdkVersion          = '1.12.113'
     awsLambdaCoreVersion   = '1.2.1'
     awsLambdaEventsVersion = '3.9.0'
     jacksonVersion         = '2.12.2'
