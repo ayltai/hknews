@@ -23,7 +23,7 @@ ext {
     awsLambdaEventsVersion = '3.9.0'
     jacksonVersion         = '2.12.2'
     gsonVersion            = '2.8.7'
-    jsonVersion            = '20210307'
+    jsonVersion            = '20211205'
     lombokVersion          = '1.18.20'
     spotBugsVersion        = '4.2.3'
     jetBrainsVersion       = '21.0.1'
