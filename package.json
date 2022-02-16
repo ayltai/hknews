@@ -41,7 +41,7 @@
         "eslint": "^7.28.0",
         "npm-force-resolutions": "^0.0.10",
         "react-app-rewired": "^2.1.8",
-        "react-scripts": "^4.0.3",
+        "react-scripts": "^5.0.0",
         "react-test-renderer": "^17.0.2",
         "serve": "^11.3.2"
     },
