@@ -61,7 +61,7 @@
         "react-image-lightbox": "^5.1.1",
         "react-router-dom": "^5.2.0",
         "react-timeago": "^6.2.1",
-        "video-react": "^0.14.1"
+        "video-react": "^0.15.0"
     },
     "resolutions": {
         "lodash": "4.17.21"
