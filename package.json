@@ -47,7 +47,7 @@
     },
     "dependencies": {
         "@material-ui/core": "^4.11.4",
-        "@material-ui/icons": "^4.11.2",
+        "@material-ui/icons": "^4.11.3",
         "lodash": "^4.17.21",
         "prop-types": "^15.8.0",
         "ra-core": "^3.15.2",
